@@ -1,0 +1,10 @@
+{
+  "_comment": "Position-based difficulty for AMC 10 problems, following the AoPS Wiki 'Competition ratings' convention (1-10 scale). Edit freely; rerun the scraper to apply.",
+  "bands": [
+    {"from": 1,  "to": 5,  "rating": 1,   "label": "Easy"},
+    {"from": 6,  "to": 10, "rating": 2,   "label": "Easy-Medium"},
+    {"from": 11, "to": 15, "rating": 2.5, "label": "Medium"},
+    {"from": 16, "to": 20, "rating": 3,   "label": "Medium-Hard"},
+    {"from": 21, "to": 25, "rating": 4,   "label": "Hard"}
+  ]
+}

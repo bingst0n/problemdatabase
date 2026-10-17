@@ -1,0 +1,7 @@
+# raw API responses from the AoPS wiki (regenerate with scraper/scrape.py)
+scraper/cache/
+__pycache__/
+*.pyc
+.pytest_cache/
+node_modules/
+.DS_Store

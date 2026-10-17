@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AMC 10 Problem Database</title>
+<link rel="stylesheet" href="vendor/katex/katex.min.css">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="top">
+  <a href="#/" class="brand">AMC 10 Problem Database</a>
+  <form id="search-form" class="search" autocomplete="off" role="search">
+    <input id="q" type="search" placeholder="2019 AMC 10A number 13  ·  2021 fall 10b  ·  inscribed circle" aria-label="Search problems" autofocus>
+    <button type="submit">Search</button>
+    <button type="button" id="toggle-filters" class="ghost" aria-expanded="false" aria-controls="filters">Filters</button>
+  </form>
+</header>
+
+<section id="filters" class="filters" hidden>
+  <div class="filter">
+    <span class="filter-name">Year</span>
+    <select id="year-from" aria-label="From year"></select>
+    <span class="dash">to</span>
+    <select id="year-to" aria-label="To year"></select>
+  </div>
+  <div class="filter">
+    <span class="filter-name">Contest</span>
+    <label><input type="checkbox" data-filter="version" value="A" checked> 10A</label>
+    <label><input type="checkbox" data-filter="version" value="B" checked> 10B</label>
+  </div>
+  <div class="filter">
+    <span class="filter-name">Problem #</span>
+    <input id="num-from" type="number" min="1" max="25" value="1" aria-label="From problem number">
+    <span class="dash">to</span>
+    <input id="num-to" type="number" min="1" max="25" value="25" aria-label="To problem number">
+  </div>
+  <div class="filter" id="difficulty-filter">
+    <span class="filter-name">Difficulty</span>
+  </div>
+  <div class="filter" id="category-filter">
+    <span class="filter-name">Category</span>
+  </div>
+  <div class="filter">
+    <button type="button" id="reset-filters" class="ghost">Reset filters</button>
+  </div>
+</section>
+
+<main id="main">
+  <div id="status" class="status" hidden></div>
+  <section id="results" hidden></section>
+  <article id="problem" hidden></article>
+</main>
+
+<footer class="foot">
+  Problems and solutions are from the <a href="https://artofproblemsolving.com/wiki/" target="_blank" rel="noopener">AoPS Wiki</a>.
+  <span id="generated"></span>
+</footer>
+
+<script src="vendor/katex/katex.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
