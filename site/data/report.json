@@ -1,0 +1,3804 @@
+{
+  "generated_at": "2026-10-17T18:26:31Z",
+  "contests_requested": [
+    "2002_AMC_10A",
+    "2002_AMC_10B",
+    "2003_AMC_10A",
+    "2003_AMC_10B",
+    "2004_AMC_10A",
+    "2004_AMC_10B",
+    "2005_AMC_10A",
+    "2005_AMC_10B",
+    "2006_AMC_10A",
+    "2006_AMC_10B",
+    "2007_AMC_10A",
+    "2007_AMC_10B",
+    "2008_AMC_10A",
+    "2008_AMC_10B",
+    "2009_AMC_10A",
+    "2009_AMC_10B",
+    "2010_AMC_10A",
+    "2010_AMC_10B",
+    "2011_AMC_10A",
+    "2011_AMC_10B",
+    "2012_AMC_10A",
+    "2012_AMC_10B",
+    "2013_AMC_10A",
+    "2013_AMC_10B",
+    "2014_AMC_10A",
+    "2014_AMC_10B",
+    "2015_AMC_10A",
+    "2015_AMC_10B",
+    "2016_AMC_10A",
+    "2016_AMC_10B",
+    "2017_AMC_10A",
+    "2017_AMC_10B",
+    "2018_AMC_10A",
+    "2018_AMC_10B",
+    "2019_AMC_10A",
+    "2019_AMC_10B",
+    "2020_AMC_10A",
+    "2020_AMC_10B",
+    "2021_AMC_10A",
+    "2021_AMC_10B",
+    "2021_Fall_AMC_10A",
+    "2021_Fall_AMC_10B",
+    "2022_AMC_10A",
+    "2022_AMC_10B",
+    "2023_AMC_10A",
+    "2023_AMC_10B",
+    "2024_AMC_10A",
+    "2024_AMC_10B",
+    "2025_AMC_10A",
+    "2025_AMC_10B"
+  ],
+  "contests_skipped": [],
+  "missing_answer_keys": [],
+  "incomplete_answer_keys": [],
+  "missing_problems": [],
+  "missing_answers": [],
+  "answer_mismatches": [
+    {
+      "problem": "2021_AMC_10B_19",
+      "answer_key": "D",
+      "boxed": "C"
+    },
+    {
+      "problem": "2024_AMC_10B_1",
+      "answer_key": "B",
+      "boxed": "D"
+    },
+    {
+      "problem": "2024_AMC_10B_3",
+      "answer_key": "E",
+      "boxed": "C"
+    }
+  ],
+  "unsplit_choices": [
+    "2002_AMC_10B_20",
+    "2015_AMC_10B_8"
+  ],
+  "uncategorized": [
+    "2002_AMC_10A_6",
+    "2003_AMC_10B_14",
+    "2003_AMC_10B_16",
+    "2003_AMC_10B_22",
+    "2004_AMC_10A_8",
+    "2004_AMC_10B_10",
+    "2004_AMC_10B_14",
+    "2004_AMC_10B_3",
+    "2004_AMC_10B_8",
+    "2005_AMC_10A_11",
+    "2005_AMC_10A_7",
+    "2005_AMC_10B_17",
+    "2005_AMC_10B_3",
+    "2007_AMC_10B_2",
+    "2007_AMC_10B_5",
+    "2007_AMC_10B_9",
+    "2008_AMC_10A_1",
+    "2008_AMC_10A_4",
+    "2009_AMC_10A_1",
+    "2009_AMC_10A_13",
+    "2009_AMC_10A_3",
+    "2009_AMC_10B_10",
+    "2009_AMC_10B_15",
+    "2009_AMC_10B_19",
+    "2009_AMC_10B_2",
+    "2009_AMC_10B_3",
+    "2010_AMC_10A_10",
+    "2010_AMC_10A_3",
+    "2010_AMC_10A_6",
+    "2010_AMC_10A_7",
+    "2010_AMC_10B_1",
+    "2010_AMC_10B_15",
+    "2010_AMC_10B_5",
+    "2010_AMC_10B_9",
+    "2011_AMC_10A_2",
+    "2011_AMC_10A_23",
+    "2011_AMC_10A_6",
+    "2011_AMC_10B_1",
+    "2011_AMC_10B_11",
+    "2011_AMC_10B_6",
+    "2012_AMC_10A_3",
+    "2012_AMC_10A_7",
+    "2012_AMC_10B_1",
+    "2013_AMC_10A_17",
+    "2013_AMC_10A_2",
+    "2013_AMC_10A_4",
+    "2013_AMC_10B_1",
+    "2013_AMC_10B_13",
+    "2013_AMC_10B_17",
+    "2013_AMC_10B_5",
+    "2014_AMC_10A_25",
+    "2014_AMC_10B_17",
+    "2014_AMC_10B_2",
+    "2014_AMC_10B_20",
+    "2014_AMC_10B_3",
+    "2014_AMC_10B_4",
+    "2015_AMC_10A_3",
+    "2015_AMC_10A_4",
+    "2015_AMC_10B_1",
+    "2015_AMC_10B_15",
+    "2015_AMC_10B_2",
+    "2015_AMC_10B_3",
+    "2015_AMC_10B_5",
+    "2015_AMC_10B_6",
+    "2015_AMC_10B_7",
+    "2016_AMC_10A_20",
+    "2016_AMC_10A_8",
+    "2017_AMC_10A_1",
+    "2017_AMC_10A_6",
+    "2017_AMC_10B_13",
+    "2017_AMC_10B_5",
+    "2017_AMC_10B_6",
+    "2018_AMC_10A_3",
+    "2018_AMC_10B_1",
+    "2018_AMC_10B_8",
+    "2020_AMC_10A_17",
+    "2020_AMC_10A_3",
+    "2020_AMC_10A_8",
+    "2021_AMC_10A_1",
+    "2021_AMC_10A_10",
+    "2021_AMC_10A_2",
+    "2021_AMC_10A_7",
+    "2021_Fall_AMC_10A_6",
+    "2021_Fall_AMC_10B_1",
+    "2021_Fall_AMC_10B_9",
+    "2022_AMC_10B_11",
+    "2022_AMC_10B_4",
+    "2022_AMC_10B_8",
+    "2023_AMC_10A_2",
+    "2023_AMC_10B_4",
+    "2023_AMC_10B_5",
+    "2024_AMC_10A_1",
+    "2024_AMC_10A_23",
+    "2024_AMC_10A_5",
+    "2024_AMC_10B_2",
+    "2024_AMC_10B_23",
+    "2024_AMC_10B_24",
+    "2024_AMC_10B_3",
+    "2024_AMC_10B_4",
+    "2024_AMC_10B_5",
+    "2025_AMC_10A_19",
+    "2025_AMC_10B_1"
+  ],
+  "guessed_categories": [
+    {
+      "problem": "2003_AMC_10B_2",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2003_AMC_10B_4",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2003_AMC_10B_5",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2003_AMC_10B_7",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2003_AMC_10B_9",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2003_AMC_10B_10",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2003_AMC_10B_11",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2003_AMC_10B_12",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2003_AMC_10B_13",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2003_AMC_10B_17",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2003_AMC_10B_18",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2003_AMC_10B_19",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2003_AMC_10B_20",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2003_AMC_10B_21",
+      "categories": [
+        "probability"
+      ]
+    },
+    {
+      "problem": "2003_AMC_10B_23",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2003_AMC_10B_24",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2003_AMC_10B_25",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2004_AMC_10B_1",
+      "categories": [
+        "combinatorics"
+      ]
+    },
+    {
+      "problem": "2005_AMC_10B_1",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2004_AMC_10B_2",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2004_AMC_10A_5",
+      "categories": [
+        "probability"
+      ]
+    },
+    {
+      "problem": "2004_AMC_10B_4",
+      "categories": [
+        "probability"
+      ]
+    },
+    {
+      "problem": "2005_AMC_10B_4",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2005_AMC_10A_4",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2004_AMC_10B_5",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2005_AMC_10A_5",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2004_AMC_10B_6",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2005_AMC_10B_5",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2005_AMC_10A_6",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2005_AMC_10B_6",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2004_AMC_10B_7",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2005_AMC_10A_8",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2005_AMC_10B_9",
+      "categories": [
+        "probability"
+      ]
+    },
+    {
+      "problem": "2005_AMC_10A_10",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2005_AMC_10A_12",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2004_AMC_10B_11",
+      "categories": [
+        "probability"
+      ]
+    },
+    {
+      "problem": "2005_AMC_10B_11",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2005_AMC_10B_12",
+      "categories": [
+        "probability"
+      ]
+    },
+    {
+      "problem": "2005_AMC_10B_13",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2004_AMC_10B_13",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2004_AMC_10B_15",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2005_AMC_10B_15",
+      "categories": [
+        "probability"
+      ]
+    },
+    {
+      "problem": "2004_AMC_10B_16",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2004_AMC_10B_17",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2005_AMC_10B_18",
+      "categories": [
+        "combinatorics"
+      ]
+    },
+    {
+      "problem": "2004_AMC_10B_19",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2005_AMC_10B_19",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2005_AMC_10B_20",
+      "categories": [
+        "algebra",
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2004_AMC_10A_22",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2004_AMC_10B_21",
+      "categories": [
+        "algebra",
+        "combinatorics"
+      ]
+    },
+    {
+      "problem": "2004_AMC_10B_22",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2005_AMC_10B_22",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2004_AMC_10B_23",
+      "categories": [
+        "probability"
+      ]
+    },
+    {
+      "problem": "2005_AMC_10B_23",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2004_AMC_10B_24",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2005_AMC_10B_25",
+      "categories": [
+        "combinatorics"
+      ]
+    },
+    {
+      "problem": "2007_AMC_10B_3",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2007_AMC_10B_4",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2007_AMC_10B_7",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2007_AMC_10B_8",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2007_AMC_10B_10",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2007_AMC_10B_12",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2007_AMC_10B_13",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2007_AMC_10B_14",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2007_AMC_10B_15",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2007_AMC_10B_16",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2007_AMC_10B_17",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2007_AMC_10B_18",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2007_AMC_10B_19",
+      "categories": [
+        "probability"
+      ]
+    },
+    {
+      "problem": "2007_AMC_10B_21",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2006_AMC_10B_24",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2007_AMC_10B_23",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2007_AMC_10B_24",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2007_AMC_10B_25",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2008_AMC_10A_3",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2008_AMC_10A_6",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2009_AMC_10A_2",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2008_AMC_10A_7",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2009_AMC_10B_1",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2008_AMC_10B_6",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2008_AMC_10B_7",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2009_AMC_10A_4",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2008_AMC_10A_9",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2008_AMC_10B_8",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2009_AMC_10A_5",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2008_AMC_10A_10",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2008_AMC_10B_9",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2009_AMC_10A_6",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2009_AMC_10B_4",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2009_AMC_10A_7",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2009_AMC_10A_8",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2009_AMC_10B_5",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2008_AMC_10B_12",
+      "categories": [
+        "probability"
+      ]
+    },
+    {
+      "problem": "2008_AMC_10A_12",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2009_AMC_10A_9",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2008_AMC_10B_13",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2009_AMC_10B_6",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2008_AMC_10A_13",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2008_AMC_10B_14",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2009_AMC_10B_7",
+      "categories": [
+        "combinatorics"
+      ]
+    },
+    {
+      "problem": "2008_AMC_10B_15",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2008_AMC_10A_14",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2008_AMC_10B_16",
+      "categories": [
+        "probability"
+      ]
+    },
+    {
+      "problem": "2009_AMC_10B_8",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2008_AMC_10B_17",
+      "categories": [
+        "probability"
+      ]
+    },
+    {
+      "problem": "2008_AMC_10B_18",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2008_AMC_10B_19",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2009_AMC_10B_11",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2008_AMC_10B_20",
+      "categories": [
+        "probability"
+      ]
+    },
+    {
+      "problem": "2008_AMC_10B_21",
+      "categories": [
+        "combinatorics"
+      ]
+    },
+    {
+      "problem": "2009_AMC_10A_15",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2008_AMC_10B_22",
+      "categories": [
+        "probability"
+      ]
+    },
+    {
+      "problem": "2009_AMC_10B_14",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2009_AMC_10A_16",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2008_AMC_10B_23",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2008_AMC_10B_24",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2009_AMC_10A_18",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2008_AMC_10A_23",
+      "categories": [
+        "combinatorics"
+      ]
+    },
+    {
+      "problem": "2008_AMC_10B_25",
+      "categories": [
+        "combinatorics"
+      ]
+    },
+    {
+      "problem": "2009_AMC_10A_20",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2008_AMC_10A_24",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2009_AMC_10B_18",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2010_AMC_10A_1",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2010_AMC_10A_2",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2008_AMC_10A_25",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2009_AMC_10B_20",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2010_AMC_10A_4",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2009_AMC_10B_21",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2010_AMC_10A_5",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2010_AMC_10B_2",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2010_AMC_10B_3",
+      "categories": [
+        "combinatorics"
+      ]
+    },
+    {
+      "problem": "2010_AMC_10B_4",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2010_AMC_10A_8",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2010_AMC_10B_6",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2011_AMC_10A_1",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2009_AMC_10B_25",
+      "categories": [
+        "probability"
+      ]
+    },
+    {
+      "problem": "2010_AMC_10B_7",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2010_AMC_10B_8",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2011_AMC_10B_2",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2011_AMC_10A_3",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2010_AMC_10A_11",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2011_AMC_10B_3",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2011_AMC_10A_4",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2011_AMC_10B_4",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2010_AMC_10A_13",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2011_AMC_10B_5",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2010_AMC_10B_10",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2011_AMC_10A_5",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2010_AMC_10B_11",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2011_AMC_10B_7",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2011_AMC_10A_7",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2010_AMC_10B_12",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2011_AMC_10B_8",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2011_AMC_10A_8",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2010_AMC_10B_13",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2011_AMC_10B_10",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2010_AMC_10B_14",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2011_AMC_10A_10",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2011_AMC_10B_12",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2010_AMC_10B_16",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2011_AMC_10B_13",
+      "categories": [
+        "probability"
+      ]
+    },
+    {
+      "problem": "2011_AMC_10A_12",
+      "categories": [
+        "combinatorics"
+      ]
+    },
+    {
+      "problem": "2011_AMC_10B_14",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2010_AMC_10B_17",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2011_AMC_10B_15",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2011_AMC_10A_13",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2010_AMC_10A_20",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2011_AMC_10A_14",
+      "categories": [
+        "geometry",
+        "probability"
+      ]
+    },
+    {
+      "problem": "2010_AMC_10B_19",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2010_AMC_10A_21",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2011_AMC_10A_15",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2010_AMC_10A_22",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2010_AMC_10B_20",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2011_AMC_10A_16",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2011_AMC_10B_19",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2011_AMC_10A_17",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2010_AMC_10B_22",
+      "categories": [
+        "combinatorics"
+      ]
+    },
+    {
+      "problem": "2010_AMC_10A_24",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2011_AMC_10A_18",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2010_AMC_10A_25",
+      "categories": [
+        "algebra",
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2011_AMC_10B_21",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2011_AMC_10A_19",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2010_AMC_10B_24",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2012_AMC_10A_2",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2012_AMC_10A_5",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2012_AMC_10A_6",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2013_AMC_10A_1",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2012_AMC_10A_9",
+      "categories": [
+        "probability"
+      ]
+    },
+    {
+      "problem": "2012_AMC_10A_12",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2013_AMC_10A_5",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2013_AMC_10B_2",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2013_AMC_10A_6",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2012_AMC_10A_13",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2013_AMC_10B_3",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2013_AMC_10A_7",
+      "categories": [
+        "combinatorics"
+      ]
+    },
+    {
+      "problem": "2012_AMC_10A_14",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2013_AMC_10B_4",
+      "categories": [
+        "combinatorics"
+      ]
+    },
+    {
+      "problem": "2013_AMC_10A_8",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2012_AMC_10A_16",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2013_AMC_10A_9",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2013_AMC_10B_6",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2012_AMC_10A_17",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2013_AMC_10A_10",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2013_AMC_10A_11",
+      "categories": [
+        "combinatorics"
+      ]
+    },
+    {
+      "problem": "2013_AMC_10B_8",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2013_AMC_10B_9",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2013_AMC_10B_10",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2013_AMC_10A_13",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2013_AMC_10B_11",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2013_AMC_10B_12",
+      "categories": [
+        "geometry",
+        "probability"
+      ]
+    },
+    {
+      "problem": "2012_AMC_10A_22",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2013_AMC_10B_14",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2012_AMC_10A_23",
+      "categories": [
+        "combinatorics"
+      ]
+    },
+    {
+      "problem": "2013_AMC_10A_21",
+      "categories": [
+        "combinatorics"
+      ]
+    },
+    {
+      "problem": "2012_AMC_10A_25",
+      "categories": [
+        "algebra",
+        "probability"
+      ]
+    },
+    {
+      "problem": "2013_AMC_10B_18",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2014_AMC_10B_1",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2013_AMC_10B_19",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2014_AMC_10B_6",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2014_AMC_10B_7",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2014_AMC_10B_8",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2014_AMC_10B_9",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2015_AMC_10A_1",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2014_AMC_10B_10",
+      "categories": [
+        "combinatorics"
+      ]
+    },
+    {
+      "problem": "2015_AMC_10A_2",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2014_AMC_10B_11",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2014_AMC_10B_12",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2015_AMC_10A_5",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2014_AMC_10B_14",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2015_AMC_10A_6",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2015_AMC_10B_4",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2015_AMC_10A_7",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2014_AMC_10B_16",
+      "categories": [
+        "probability"
+      ]
+    },
+    {
+      "problem": "2015_AMC_10A_8",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2015_AMC_10B_8",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2014_AMC_10B_18",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2015_AMC_10B_10",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2015_AMC_10B_11",
+      "categories": [
+        "number_theory",
+        "probability"
+      ]
+    },
+    {
+      "problem": "2015_AMC_10B_12",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2015_AMC_10B_14",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2014_AMC_10B_24",
+      "categories": [
+        "combinatorics"
+      ]
+    },
+    {
+      "problem": "2015_AMC_10B_16",
+      "categories": [
+        "probability"
+      ]
+    },
+    {
+      "problem": "2015_AMC_10A_17",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2015_AMC_10B_18",
+      "categories": [
+        "probability"
+      ]
+    },
+    {
+      "problem": "2014_AMC_10B_25",
+      "categories": [
+        "probability"
+      ]
+    },
+    {
+      "problem": "2015_AMC_10B_20",
+      "categories": [
+        "combinatorics"
+      ]
+    },
+    {
+      "problem": "2015_AMC_10B_21",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2015_AMC_10B_23",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2016_AMC_10A_5",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2015_AMC_10B_24",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2016_AMC_10A_6",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2016_AMC_10A_7",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2015_AMC_10B_25",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2016_AMC_10A_9",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2017_AMC_10A_2",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2016_AMC_10A_10",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2017_AMC_10A_4",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2016_AMC_10A_11",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2017_AMC_10B_2",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2016_AMC_10A_12",
+      "categories": [
+        "probability"
+      ]
+    },
+    {
+      "problem": "2016_AMC_10A_13",
+      "categories": [
+        "combinatorics"
+      ]
+    },
+    {
+      "problem": "2017_AMC_10A_9",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2016_AMC_10A_14",
+      "categories": [
+        "combinatorics"
+      ]
+    },
+    {
+      "problem": "2016_AMC_10A_15",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2016_AMC_10A_16",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2017_AMC_10B_8",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2016_AMC_10A_17",
+      "categories": [
+        "number_theory",
+        "probability"
+      ]
+    },
+    {
+      "problem": "2017_AMC_10B_9",
+      "categories": [
+        "probability"
+      ]
+    },
+    {
+      "problem": "2016_AMC_10A_18",
+      "categories": [
+        "combinatorics"
+      ]
+    },
+    {
+      "problem": "2017_AMC_10B_10",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2017_AMC_10B_11",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2016_AMC_10A_19",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2017_AMC_10B_12",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2017_AMC_10B_14",
+      "categories": [
+        "probability"
+      ]
+    },
+    {
+      "problem": "2017_AMC_10B_15",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2017_AMC_10B_16",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2016_AMC_10A_23",
+      "categories": [
+        "algebra",
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2017_AMC_10B_18",
+      "categories": [
+        "combinatorics"
+      ]
+    },
+    {
+      "problem": "2018_AMC_10A_1",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2018_AMC_10A_2",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2017_AMC_10B_20",
+      "categories": [
+        "probability"
+      ]
+    },
+    {
+      "problem": "2016_AMC_10A_25",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2017_AMC_10B_21",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2018_AMC_10A_6",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2017_AMC_10B_22",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2017_AMC_10B_23",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2017_AMC_10B_24",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2017_AMC_10B_25",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2018_AMC_10B_4",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2018_AMC_10B_5",
+      "categories": [
+        "combinatorics"
+      ]
+    },
+    {
+      "problem": "2018_AMC_10B_6",
+      "categories": [
+        "probability"
+      ]
+    },
+    {
+      "problem": "2019_AMC_10B_2",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2018_AMC_10B_9",
+      "categories": [
+        "probability"
+      ]
+    },
+    {
+      "problem": "2019_AMC_10B_6",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2018_AMC_10B_11",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2019_AMC_10B_7",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2019_AMC_10B_8",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2018_AMC_10B_13",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2019_AMC_10B_10",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2019_AMC_10B_11",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2018_AMC_10B_16",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2019_AMC_10B_12",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2018_AMC_10B_17",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2019_AMC_10B_13",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2019_AMC_10B_14",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2018_AMC_10B_18",
+      "categories": [
+        "combinatorics"
+      ]
+    },
+    {
+      "problem": "2019_AMC_10B_15",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2019_AMC_10B_16",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2019_AMC_10B_17",
+      "categories": [
+        "probability"
+      ]
+    },
+    {
+      "problem": "2019_AMC_10B_18",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2018_AMC_10B_22",
+      "categories": [
+        "probability"
+      ]
+    },
+    {
+      "problem": "2019_AMC_10B_19",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2018_AMC_10B_23",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2019_AMC_10B_20",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2019_AMC_10B_21",
+      "categories": [
+        "probability"
+      ]
+    },
+    {
+      "problem": "2020_AMC_10A_1",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2020_AMC_10A_2",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2019_AMC_10B_23",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2020_AMC_10A_4",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2020_AMC_10B_2",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2020_AMC_10A_5",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2019_AMC_10B_24",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2020_AMC_10A_6",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2020_AMC_10B_4",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2020_AMC_10B_5",
+      "categories": [
+        "combinatorics"
+      ]
+    },
+    {
+      "problem": "2020_AMC_10A_7",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2021_AMC_10A_3",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2021_AMC_10A_4",
+      "categories": [
+        "probability"
+      ]
+    },
+    {
+      "problem": "2020_AMC_10B_7",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2021_AMC_10B_1",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2020_AMC_10A_9",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2021_AMC_10A_5",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2020_AMC_10B_8",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2021_AMC_10B_2",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2021_AMC_10A_6",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2021_AMC_10B_3",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2021_AMC_10B_4",
+      "categories": [
+        "combinatorics"
+      ]
+    },
+    {
+      "problem": "2020_AMC_10A_11",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2021_AMC_10B_5",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2020_AMC_10A_12",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2020_AMC_10B_11",
+      "categories": [
+        "probability"
+      ]
+    },
+    {
+      "problem": "2021_AMC_10B_6",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2020_AMC_10B_12",
+      "categories": [
+        "combinatorics"
+      ]
+    },
+    {
+      "problem": "2021_AMC_10B_7",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2021_AMC_10A_9",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2020_AMC_10B_13",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2021_AMC_10B_8",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2020_AMC_10A_14",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2021_AMC_10B_9",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2020_AMC_10A_15",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2021_AMC_10A_11",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2020_AMC_10B_15",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2021_AMC_10B_10",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2021_AMC_10B_11",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2020_AMC_10B_16",
+      "categories": [
+        "algebra",
+        "combinatorics"
+      ]
+    },
+    {
+      "problem": "2021_AMC_10B_12",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2021_AMC_10A_13",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2020_AMC_10B_17",
+      "categories": [
+        "geometry",
+        "combinatorics"
+      ]
+    },
+    {
+      "problem": "2021_AMC_10B_13",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2020_AMC_10A_18",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2020_AMC_10B_18",
+      "categories": [
+        "probability"
+      ]
+    },
+    {
+      "problem": "2020_AMC_10A_19",
+      "categories": [
+        "geometry",
+        "combinatorics"
+      ]
+    },
+    {
+      "problem": "2021_AMC_10A_15",
+      "categories": [
+        "combinatorics"
+      ]
+    },
+    {
+      "problem": "2021_AMC_10B_14",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2020_AMC_10B_19",
+      "categories": [
+        "probability"
+      ]
+    },
+    {
+      "problem": "2021_AMC_10B_15",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2021_AMC_10A_16",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2020_AMC_10B_20",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2021_AMC_10B_16",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2020_AMC_10A_20",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2021_AMC_10B_17",
+      "categories": [
+        "probability"
+      ]
+    },
+    {
+      "problem": "2021_AMC_10A_17",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2020_AMC_10A_21",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2021_AMC_10B_18",
+      "categories": [
+        "probability"
+      ]
+    },
+    {
+      "problem": "2020_AMC_10B_22",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2020_AMC_10A_22",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2021_AMC_10A_19",
+      "categories": [
+        "algebra",
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2021_AMC_10B_19",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2020_AMC_10B_23",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2021_AMC_10B_20",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2021_AMC_10A_20",
+      "categories": [
+        "combinatorics"
+      ]
+    },
+    {
+      "problem": "2021_AMC_10B_21",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2021_AMC_10A_21",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2021_AMC_10B_22",
+      "categories": [
+        "number_theory",
+        "probability"
+      ]
+    },
+    {
+      "problem": "2021_AMC_10A_22",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2021_AMC_10B_23",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2020_AMC_10B_25",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2021_Fall_AMC_10A_1",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2021_Fall_AMC_10A_2",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2021_AMC_10A_24",
+      "categories": [
+        "algebra",
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2021_Fall_AMC_10A_3",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2021_AMC_10A_25",
+      "categories": [
+        "combinatorics"
+      ]
+    },
+    {
+      "problem": "2021_Fall_AMC_10A_4",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2021_Fall_AMC_10B_3",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2022_AMC_10B_1",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2021_Fall_AMC_10B_4",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2021_Fall_AMC_10A_5",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2022_AMC_10B_2",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2022_AMC_10A_3",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2022_AMC_10B_3",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2022_AMC_10A_4",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2021_Fall_AMC_10B_6",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2021_Fall_AMC_10A_7",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2022_AMC_10A_5",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2021_Fall_AMC_10A_8",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2022_AMC_10B_5",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2021_Fall_AMC_10B_7",
+      "categories": [
+        "combinatorics"
+      ]
+    },
+    {
+      "problem": "2021_Fall_AMC_10A_9",
+      "categories": [
+        "probability"
+      ]
+    },
+    {
+      "problem": "2022_AMC_10A_6",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2021_Fall_AMC_10B_8",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2022_AMC_10B_6",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2021_Fall_AMC_10A_10",
+      "categories": [
+        "algebra",
+        "probability"
+      ]
+    },
+    {
+      "problem": "2021_Fall_AMC_10A_11",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2022_AMC_10B_7",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2021_Fall_AMC_10B_10",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2022_AMC_10A_8",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2021_Fall_AMC_10A_12",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2021_Fall_AMC_10B_11",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2021_Fall_AMC_10A_13",
+      "categories": [
+        "probability"
+      ]
+    },
+    {
+      "problem": "2022_AMC_10A_10",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2021_Fall_AMC_10B_12",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2022_AMC_10B_9",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2022_AMC_10A_11",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2021_Fall_AMC_10A_14",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2021_Fall_AMC_10B_13",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2021_Fall_AMC_10A_15",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2022_AMC_10B_10",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2022_AMC_10A_12",
+      "categories": [
+        "other"
+      ]
+    },
+    {
+      "problem": "2021_Fall_AMC_10A_16",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2021_Fall_AMC_10B_14",
+      "categories": [
+        "probability"
+      ]
+    },
+    {
+      "problem": "2022_AMC_10A_13",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2022_AMC_10B_12",
+      "categories": [
+        "probability"
+      ]
+    },
+    {
+      "problem": "2021_Fall_AMC_10A_17",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2021_Fall_AMC_10B_15",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2022_AMC_10B_13",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2022_AMC_10A_14",
+      "categories": [
+        "combinatorics"
+      ]
+    },
+    {
+      "problem": "2021_Fall_AMC_10B_16",
+      "categories": [
+        "probability"
+      ]
+    },
+    {
+      "problem": "2022_AMC_10B_14",
+      "categories": [
+        "combinatorics"
+      ]
+    },
+    {
+      "problem": "2022_AMC_10A_15",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2021_Fall_AMC_10A_18",
+      "categories": [
+        "geometry",
+        "combinatorics"
+      ]
+    },
+    {
+      "problem": "2021_Fall_AMC_10B_17",
+      "categories": [
+        "algebra",
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2021_Fall_AMC_10A_19",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2022_AMC_10B_15",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2022_AMC_10A_16",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2022_AMC_10A_17",
+      "categories": [
+        "geometry",
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2022_AMC_10B_16",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2021_Fall_AMC_10A_20",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2021_Fall_AMC_10B_18",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2022_AMC_10A_18",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2021_Fall_AMC_10A_21",
+      "categories": [
+        "probability"
+      ]
+    },
+    {
+      "problem": "2021_Fall_AMC_10B_19",
+      "categories": [
+        "algebra",
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2022_AMC_10A_19",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2022_AMC_10B_17",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2021_Fall_AMC_10A_22",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2022_AMC_10A_20",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2021_Fall_AMC_10B_20",
+      "categories": [
+        "probability"
+      ]
+    },
+    {
+      "problem": "2022_AMC_10A_21",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2021_Fall_AMC_10B_21",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2022_AMC_10B_18",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2021_Fall_AMC_10A_23",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2021_Fall_AMC_10B_22",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2022_AMC_10B_19",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2021_Fall_AMC_10A_24",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2021_Fall_AMC_10B_23",
+      "categories": [
+        "geometry",
+        "probability"
+      ]
+    },
+    {
+      "problem": "2022_AMC_10B_20",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2021_Fall_AMC_10A_25",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2021_Fall_AMC_10B_25",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2022_AMC_10B_22",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2022_AMC_10A_25",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2022_AMC_10B_23",
+      "categories": [
+        "probability"
+      ]
+    },
+    {
+      "problem": "2023_AMC_10B_2",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2022_AMC_10B_24",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2023_AMC_10A_3",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2023_AMC_10B_3",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2024_AMC_10A_2",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2023_AMC_10A_4",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2024_AMC_10A_3",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2023_AMC_10A_5",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2024_AMC_10A_4",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2023_AMC_10A_6",
+      "categories": [
+        "algebra",
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2023_AMC_10B_6",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2024_AMC_10B_1",
+      "categories": [
+        "combinatorics"
+      ]
+    },
+    {
+      "problem": "2023_AMC_10B_7",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2023_AMC_10A_7",
+      "categories": [
+        "probability"
+      ]
+    },
+    {
+      "problem": "2024_AMC_10A_6",
+      "categories": [
+        "combinatorics"
+      ]
+    },
+    {
+      "problem": "2023_AMC_10B_8",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2023_AMC_10A_8",
+      "categories": [
+        "algebra",
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2023_AMC_10B_9",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2024_AMC_10A_7",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2024_AMC_10A_8",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2023_AMC_10A_9",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2023_AMC_10B_10",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2024_AMC_10A_9",
+      "categories": [
+        "combinatorics"
+      ]
+    },
+    {
+      "problem": "2023_AMC_10B_11",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2023_AMC_10A_10",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2024_AMC_10A_10",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2024_AMC_10B_6",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2024_AMC_10A_11",
+      "categories": [
+        "combinatorics"
+      ]
+    },
+    {
+      "problem": "2023_AMC_10B_12",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2024_AMC_10B_7",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2023_AMC_10A_11",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2024_AMC_10A_12",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2024_AMC_10B_8",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2023_AMC_10B_13",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2023_AMC_10A_12",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2024_AMC_10B_9",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2024_AMC_10A_13",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2024_AMC_10B_10",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2023_AMC_10A_13",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2023_AMC_10A_14",
+      "categories": [
+        "number_theory",
+        "probability"
+      ]
+    },
+    {
+      "problem": "2024_AMC_10A_14",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2023_AMC_10B_15",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2023_AMC_10A_15",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2023_AMC_10B_16",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2024_AMC_10A_15",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2023_AMC_10A_16",
+      "categories": [
+        "combinatorics"
+      ]
+    },
+    {
+      "problem": "2024_AMC_10A_16",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2023_AMC_10B_17",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2024_AMC_10A_17",
+      "categories": [
+        "probability"
+      ]
+    },
+    {
+      "problem": "2023_AMC_10A_17",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2023_AMC_10A_18",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2024_AMC_10A_18",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2023_AMC_10B_18",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2023_AMC_10A_19",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2023_AMC_10B_19",
+      "categories": [
+        "geometry",
+        "probability"
+      ]
+    },
+    {
+      "problem": "2024_AMC_10A_19",
+      "categories": [
+        "algebra",
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2024_AMC_10B_16",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2024_AMC_10A_20",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2023_AMC_10B_20",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2023_AMC_10A_21",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2024_AMC_10B_17",
+      "categories": [
+        "combinatorics"
+      ]
+    },
+    {
+      "problem": "2024_AMC_10B_18",
+      "categories": [
+        "combinatorics"
+      ]
+    },
+    {
+      "problem": "2024_AMC_10A_21",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2023_AMC_10B_21",
+      "categories": [
+        "probability"
+      ]
+    },
+    {
+      "problem": "2024_AMC_10B_19",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2023_AMC_10A_23",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2024_AMC_10A_22",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2023_AMC_10B_22",
+      "categories": [
+        "algebra",
+        "combinatorics"
+      ]
+    },
+    {
+      "problem": "2023_AMC_10A_24",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2024_AMC_10B_20",
+      "categories": [
+        "combinatorics"
+      ]
+    },
+    {
+      "problem": "2023_AMC_10B_23",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2024_AMC_10B_21",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2023_AMC_10B_24",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2023_AMC_10A_25",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2024_AMC_10A_24",
+      "categories": [
+        "probability"
+      ]
+    },
+    {
+      "problem": "2024_AMC_10B_22",
+      "categories": [
+        "combinatorics"
+      ]
+    },
+    {
+      "problem": "2024_AMC_10A_25",
+      "categories": [
+        "geometry",
+        "combinatorics"
+      ]
+    },
+    {
+      "problem": "2025_AMC_10A_1",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2025_AMC_10A_2",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2024_AMC_10B_25",
+      "categories": [
+        "geometry",
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2025_AMC_10B_2",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2025_AMC_10A_3",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2025_AMC_10A_4",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2025_AMC_10B_3",
+      "categories": [
+        "geometry",
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2025_AMC_10B_4",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2025_AMC_10A_5",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2025_AMC_10B_5",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2025_AMC_10A_6",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2025_AMC_10B_6",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2025_AMC_10A_7",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2025_AMC_10B_7",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2025_AMC_10B_8",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2025_AMC_10A_8",
+      "categories": [
+        "combinatorics"
+      ]
+    },
+    {
+      "problem": "2025_AMC_10B_9",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2025_AMC_10A_9",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2025_AMC_10B_10",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2025_AMC_10A_10",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2025_AMC_10B_11",
+      "categories": [
+        "probability"
+      ]
+    },
+    {
+      "problem": "2025_AMC_10B_12",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2025_AMC_10A_11",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2025_AMC_10A_12",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2025_AMC_10B_13",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2025_AMC_10A_13",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2025_AMC_10B_14",
+      "categories": [
+        "probability"
+      ]
+    },
+    {
+      "problem": "2025_AMC_10A_14",
+      "categories": [
+        "probability"
+      ]
+    },
+    {
+      "problem": "2025_AMC_10B_15",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2025_AMC_10A_15",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2025_AMC_10B_16",
+      "categories": [
+        "combinatorics"
+      ]
+    },
+    {
+      "problem": "2025_AMC_10A_16",
+      "categories": [
+        "probability"
+      ]
+    },
+    {
+      "problem": "2025_AMC_10B_17",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2025_AMC_10A_17",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2025_AMC_10B_18",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2025_AMC_10B_19",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2025_AMC_10A_18",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2025_AMC_10B_20",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2025_AMC_10B_21",
+      "categories": [
+        "combinatorics"
+      ]
+    },
+    {
+      "problem": "2025_AMC_10B_22",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2025_AMC_10A_20",
+      "categories": [
+        "geometry",
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2025_AMC_10B_23",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2025_AMC_10A_21",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2025_AMC_10B_24",
+      "categories": [
+        "probability"
+      ]
+    },
+    {
+      "problem": "2025_AMC_10B_25",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2025_AMC_10A_22",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2025_AMC_10A_23",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2025_AMC_10A_24",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2025_AMC_10A_25",
+      "categories": [
+        "geometry",
+        "number_theory"
+      ]
+    }
+  ],
+  "image_failures": [],
+  "failed_problems": [],
+  "failed_contests": [],
+  "warnings": [
+    {
+      "problem": "2004_AMC_10A_4",
+      "warning": "kept section after See Also: Video Solution"
+    }
+  ]
+}

@@ -27,7 +27,7 @@ Per problem page, e.g. `2019 AMC 10A Problems/Problem 13`:
 
 | Field | Where it comes from |
 |---|---|
-| Statement | The section under the `Problem` heading, up to the first heading that reads like a solution (`Solution…`, `Video Solution…`, `Answer`, `Method`). Includes any `Diagram`/`Note`/`Remark` sections that appear before the solutions. Redirect notices ("…so both problems redirect to this page") are dropped. |
+| Statement | The section under the `Problem` heading, up to the first heading that reads like a solution (`Solution…`, `Video Solution…`, `Answer`, `Method`). Includes any `Diagram`/`Note`/`Remark` sections that appear before the solutions, and `Diagram`/`Note` sub-headings inside them. Any other sub-heading there — e.g. a "Modified Problem in Certain China Testpapers" variant — ends the statement and is listed first among the solutions, under its own heading. Solution sub-headings nested under any heading (even `Problem`) also end the statement and become solutions. Redirect notices ("…so both problems redirect to this page") are dropped. |
 | Answer choices | The LaTeX line containing `(A)` … `(E)`, split into five choices. If the split fails, the raw LaTeX is kept and shown as one line. |
 | Solutions | Every section from the first `Solution…` heading onward, in order, with its heading text (so "Solution 2 (Casework)" and "Video Solution by X" keep their names). A single `Solutions` section with `Solution 1`, `Solution 2` sub-headings is split into one entry per sub-heading. `See Also` and the nav box are dropped; a solution an editor appended below them is still kept. |
 | Categories | The page's MediaWiki categories (`Introductory Geometry Problems`, etc.). |
@@ -77,15 +77,13 @@ convention from the AoPS "Competition ratings" page, kept in
 
 | Problems | Rating | Label |
 |---|---|---|
-| 1–5 | 1 | Easy |
-| 6–10 | 2 | Easy–Medium |
-| 11–15 | 2.5 | Medium |
-| 16–20 | 3 | Medium–Hard |
-| 21–25 | 4 | Hard |
+| 1–10 | 1-2 | Easy |
+| 11–20 | 1.5-2.5 | Medium |
+| 21–25 | 2.5-4 | Hard |
 
-The rating numbers follow the AoPS 1–10 scale as best recalled; the page
-itself could not be fetched from the build environment, so these values
-should be checked against it.
+These are the AMC 10 ranges from the AoPS "Competition ratings" page
+(1–10 scale, checked 2026-10-17). The page gives ranges, not single values,
+so `difficulty` is the range string.
 
 ## Architecture
 
@@ -123,7 +121,7 @@ except its solutions:
     "choices_tex": "\\textbf{(A) } 110 \\qquad …",
     "answer": "D",
     "answer_source": "answer_key",
-    "difficulty": 2.5, "difficulty_label": "Medium",
+    "difficulty": "1.5-2.5", "difficulty_label": "Medium",
     "categories": ["geometry"],
     "wiki_categories": ["Introductory Geometry Problems"],
     "solution_count": 7
@@ -199,15 +197,19 @@ match opens immediately.
   not re-downloaded.
 - One bad page costs one problem, not the run: the failure is listed under
   `failed_problems` (or `failed_contests`) in `report.json` and the rest
-  continues. Only the Cloudflare IP block stops the run. Output files are
+  continues. Only a Cloudflare block stops the run. Output files are
   written atomically.
-- AoPS is behind Cloudflare and refuses many cloud/datacenter IP ranges with
-  HTTP 403 `error code: 1007`. The scraper detects that and says so; it has to
-  run from an ordinary home connection.
+- AoPS is behind Cloudflare. It refuses many cloud/datacenter IP ranges with
+  HTTP 403 `error code: 1007`, and (since October 2026) challenges every
+  non-browser client on `/wiki/` (HTTP 403, `cf-mitigated: challenge`). The
+  scraper detects both, says so and stops. The cache then has to be filled
+  from a real browser session; see the README.
 - A contest with neither an answer-key page nor a Problem 1 page (e.g. a
   future year) is skipped and reported. A contest whose key alone is missing
   is still scraped, with answers taken from the solutions' `\boxed{}` and the
-  contest listed under `missing_answer_keys`.
+  contest listed under `missing_answer_keys`. Empty placeholder pages (the
+  wiki creates blank 2026 pages before the contest) count as missing and are
+  not cached.
 - `python3 scraper/scrape.py` scrapes everything; `--years 2019-2020` or
   `--contests 2019_AMC_10A` limit it, refreshing only those contests and
   keeping the rest of an existing `index.json`; `--force` ignores the cache;
@@ -220,5 +222,5 @@ match opens immediately.
 - Solutions stay hidden behind a button to avoid spoilers.
 - Video-solution sections are kept as links.
 - Problems with no wiki category get a guessed category, marked as such.
-- Difficulty stays position-based. The AoPS ratings page could not be
-  fetched to confirm the numeric values in `scraper/difficulty.json`.
+- Difficulty stays position-based, using the three AMC 10 bands and ranges
+  from the AoPS ratings page.

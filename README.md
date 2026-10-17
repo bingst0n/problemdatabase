@@ -36,10 +36,21 @@ parser and re-running never re-downloads. Diagrams are saved to
 problems with no or guessed categories, failed image downloads, and
 answer-key/solution disagreements.
 
-AoPS is behind Cloudflare and refuses cloud/datacenter IP addresses (HTTP 403,
-`error code: 1007`), so run the scraper from a normal home connection.
+AoPS is behind Cloudflare. Cloud/datacenter IPs get HTTP 403 `error code: 1007`,
+and since October 2026 every non-browser client gets a browser challenge
+(HTTP 403, `cf-mitigated: challenge`) on all `/wiki/` URLs, including
+`api.php` and the `latex.artofproblemsolving.com` image host, even from a
+home connection. The committed data was fetched from a real Chrome session
+that had passed the challenge. The tab requested the same `api.php` URLs
+the scraper builds, one at a time. Each response was saved as
+`scraper/cache/<title>.json`, named by `Fetcher._cache_path`, and each
+diagram was saved into `site/data/img/` under the name `Fetcher.fetch_image`
+would give it. `scrape.py --years 2002-2025` then ran fully offline
+(0 requests); a plain run would also ask about 2026, whose pages are not
+cached, and stop at the challenge. Re-scraping needs the same approach.
 
-Difficulty is position-based (problems 1–5, 6–10, … map to a rating); edit
+Difficulty is position-based (problems 1–10, 11–20, 21–25 map to the AoPS
+ratings page's ranges); edit
 `scraper/difficulty.json` and re-run to change it. Categories come from the
 wiki's own categories; when a page has none, a keyword scorer guesses one and
 the UI shows it with a dashed tag and a `?`. To pin a category by hand, add

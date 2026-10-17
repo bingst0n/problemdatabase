@@ -52,12 +52,15 @@ _CMD = r"\\(?:textbf|mathbf|mathrm|textrm|text|bf|rm|mathit|textit|textsf|mathsf
 _SP = r"(?:\s|\\[ ,:;!])*"
 LABEL_RE = re.compile(
     r"(?:"
-    + _CMD + r"\s*\{" + _SP + r"\(?" + _SP + r"(?P<l1>[A-E])" + _SP + r"\)?" + _SP + r"\}"  # \textbf{(A) }
+    + _CMD + r"\s*\{(?P<dbl>\{)?" + _SP + r"\(?" + _SP + r"(?P<l1>[A-E])" + _SP + r"\)?" + _SP
+    + r"\}(?(dbl)\})"                                                                        # \textbf{(A) }, \textbf{{(A)}}
     + r"|\(\s*" + _CMD + r"\s*\{\s*(?P<l2>[A-E])\s*\}\s*\)"                                 # (\textbf{A})
     + r"|\{\s*" + _CMD + r"\s*\(?\s*(?P<l3>[A-E])\s*\)?\s*\}"                                # {\bf (A)}
     + r"|\(\s*(?P<l4>[A-E])\s*\)"                                                            # (A)
     + r")"
 )
+# Fallback for wiki typos like '\textbf{(a) }'; only tried when the strict split fails.
+_LABEL_RE_I = re.compile(LABEL_RE.pattern, re.I)
 _SPACING_TOKEN = (
     r"(?:\s+|\\(?:qquad|quad|,|;|:|!|\s)|\\\\|~|\\hspace\*?\{[^}]*\}|\\phantom\{[^}]*\}"
     r"|\\vspace\*?\{[^}]*\}|\\newline|\\hfill|\\hfil)"
@@ -69,6 +72,8 @@ PROBLEM_HEADING = re.compile(r"^\s*problem\b", re.I)
 SOLUTION_HEADING = re.compile(r"solution|answer|video|method", re.I)
 SEE_ALSO_HEADING = re.compile(r"^\s*see\s*also\b", re.I)
 REDIRECT_NOTICE = re.compile(r"redirects? to this page|is from both the", re.I)
+BOILERPLATE_TEXT = re.compile(
+    r"preceded by.*followed by|all amc \d+ problems and solutions|copyrighted.*mathematical association of america", re.I)
 
 
 @dataclass
@@ -118,6 +123,10 @@ def strip_math_delims(alt: str) -> tuple[str, bool]:
     if len(s) >= 4 and s.startswith("\\(") and s.endswith("\\)"):
         return s[2:-2].strip(), False
     if len(s) >= 2 and s.startswith("$") and s.endswith("$"):
+        # '$\$': the final '$' is escaped and nothing else closes the math.
+        trailing = len(s[1:-1]) - len(s[1:-1].rstrip("\\"))
+        if trailing % 2 and not re.search(r"(?<!\\)(?:\\\\)*\$", s[1:-1]):
+            return s[1:].strip(), False
         return s[1:-1].strip(), False
     return s, False
 
@@ -249,6 +258,12 @@ def serialize(nodes: list) -> str:
     return re.sub(r"\n{2,}", "\n", html).strip()
 
 
+def has_visible_content(html: str) -> bool:
+    """False for an empty stub page (only comments, whitespace, empty tags)."""
+    soup = BeautifulSoup(html or "", "lxml")
+    return bool(soup.get_text(strip=True)) or soup.find("img") is not None
+
+
 def plain_text(html: str) -> str:
     soup = BeautifulSoup(html, "lxml")
     for d in soup.find_all("img"):
@@ -263,12 +278,12 @@ def _label_letter(m: re.Match) -> str:
     return m.group("l1") or m.group("l2") or m.group("l3") or m.group("l4")
 
 
-def find_labels(tex: str) -> list[tuple[str, int, int]] | None:
+def find_labels(tex: str, ignore_case: bool = False) -> list[tuple[str, int, int]] | None:
     """Positions of (A)..(E) labels in order, or None if not all five appear."""
     found = []
     expected = "A"
-    for m in LABEL_RE.finditer(tex):
-        letter = m.group("l1") or m.group("l2") or m.group("l3") or m.group("l4")
+    for m in (_LABEL_RE_I if ignore_case else LABEL_RE).finditer(tex):
+        letter = (m.group("l1") or m.group("l2") or m.group("l3") or m.group("l4")).upper()
         if letter == expected:
             found.append((letter, m.start(), m.end()))
             if expected == "E":
@@ -286,18 +301,186 @@ def clean_choice(tex: str) -> str:
     return tex.strip()
 
 
-def split_choices(tex: str) -> list[Choice] | None:
-    labels = find_labels(tex)
+def _braces_balanced(tex: str) -> bool:
+    depth = 0
+    for m in re.finditer(r"\\.|[{}]", tex):
+        if m.group() == "{":
+            depth += 1
+        elif m.group() == "}":
+            depth -= 1
+            if depth < 0:
+                return False
+    return depth == 0
+
+
+# A label sharing its group with the body: \text{(E) more than 4}.
+_LABEL_WITH_BODY = re.compile(r"(" + _CMD + r")\s*\{\s*\(\s*([A-E])\s*\)\s*([^{}\\]*?[A-Za-z0-9][^{}\\]*?)\s*\}")
+
+
+def split_choices(tex: str, ignore_case: bool = False) -> list[Choice] | None:
+    out = _split_choices(tex, ignore_case)
+    if out is None:
+        fixed = _LABEL_WITH_BODY.sub(r"\1{(\2)} \1{\3}", tex)
+        if fixed != tex:
+            out = _split_choices(fixed, ignore_case)
+    return out
+
+
+def _split_choices(tex: str, ignore_case: bool = False) -> list[Choice] | None:
+    labels = find_labels(tex, ignore_case)
     if not labels:
         return None
     out = []
     for i, (letter, _start, end) in enumerate(labels):
         nxt = labels[i + 1][1] if i + 1 < len(labels) else len(tex)
         body = clean_choice(tex[end:nxt])
-        if not body:
+        if not body or not _braces_balanced(body):
             return None
         out.append(Choice(letter, body))
     return out
+
+
+_TEXT_ESCAPES = {"\\": r"\textbackslash{}", "{": r"\{", "}": r"\}", "$": r"\$", "&": r"\&", "#": r"\#",
+                 "%": r"\%", "_": r"\_", "^": r"\textasciicircum{}", "~": r"\textasciitilde{}"}
+
+
+def _label_blocks(label_imgs: list[Tag]) -> list[Tag] | None:
+    """The labels' parent blocks if each label is the first meaningful child
+    of its own block and the blocks are consecutive siblings, else None."""
+    blank = lambda n: (isinstance(n, NavigableString) and not n.strip()) or (isinstance(n, Tag) and n.name == "br")
+    blocks = [img.parent for img in label_imgs]
+    for img, block in zip(label_imgs, blocks):
+        if block.name not in ("p", "div") or not all(blank(n) for n in img.previous_siblings):
+            return None
+    for block, nxt in zip(blocks, blocks[1:]):
+        sib = block.next_sibling
+        while sib is not nxt:
+            if sib is None or not (isinstance(sib, NavigableString) and not sib.strip()):
+                return None
+            sib = sib.next_sibling
+    return blocks
+
+
+def _prose_body(img: Tag, stop: Tag | None) -> tuple[str | None, list]:
+    """The siblings after img (up to stop) as one choice body: prose becomes
+    '\\text{...}', math images keep their raw tex. Returns (body, siblings
+    used); body is None if the run is empty or holds a non-math image."""
+    segs: list[list] = []  # [kind, text]
+    consumed: list = []
+    for sib in img.next_siblings:
+        if sib is stop:
+            break
+        consumed.append(sib)
+        if isinstance(sib, Comment):
+            continue
+        if isinstance(sib, Tag) and sib.name == "img":
+            if not is_math_img(sib):
+                return None, consumed
+            segs.append(["tex", strip_math_delims(sib.get("alt") or "")[0]])
+        elif isinstance(sib, Tag) and sib.name == "br":
+            continue
+        elif isinstance(sib, Tag) and sib.find("img"):
+            return None, consumed
+        else:
+            text = re.sub(r"\s+", " ", sib.get_text() if isinstance(sib, Tag) else str(sib))
+            if segs and segs[-1][0] == "text":
+                segs[-1][1] += text
+            else:
+                segs.append(["text", text])
+    if segs and segs[0][0] == "text":
+        segs[0][1] = segs[0][1].lstrip()
+    if segs and segs[-1][0] == "text":
+        segs[-1][1] = segs[-1][1].rstrip()
+    parts = []
+    for kind, s in segs:
+        if kind == "tex":
+            parts.append(s)
+        elif s.strip():
+            parts.append(r"\text{" + "".join(_TEXT_ESCAPES.get(ch, ch) for ch in s) + "}")
+    return (" ".join(parts) or None), consumed
+
+
+def _prose_choices(label_imgs: list[Tag]) -> list[Choice] | None:
+    """Choices written as label-only math images followed by prose, e.g.
+    '[$\\textbf{(A) }$] It is a negative number. <br/>'. Bodies become
+    '\\text{...}' (math images inside a body keep their raw tex). Removes the
+    labels and bodies from the tree on success. Also accepts each label
+    opening its own block ('<p>[label] body</p>' x5, consecutive siblings),
+    in which case the blocks are removed."""
+    parent = label_imgs[0].parent
+    blocks = None
+    if any(img.parent is not parent for img in label_imgs):
+        blocks = _label_blocks(label_imgs)
+        if blocks is None:
+            return None
+    out, consumed = [], []
+    for i, img in enumerate(label_imgs):
+        nxt = label_imgs[i + 1] if i + 1 < len(label_imgs) else None
+        body, used = _prose_body(img, nxt)
+        if body is None:
+            return None
+        consumed += used
+        out.append(Choice(chr(ord("A") + i), body))
+    if blocks:
+        for block in blocks:  # emptied too: a block may be a top-level statement node
+            block.clear()
+            block.extract()
+        return out
+    # Drop the line break / whitespace that led into the choice list.
+    prev = label_imgs[0].previous_sibling
+    while (isinstance(prev, NavigableString) and not isinstance(prev, Comment) and not prev.strip()) \
+            or (isinstance(prev, Tag) and prev.name == "br"):
+        before = prev.previous_sibling
+        consumed.append(prev)
+        prev = before
+    for node in consumed + label_imgs:
+        node.extract()
+    return out
+
+
+def _split_candidates(candidates: list[tuple[Tag, str]], ignore_case: bool) -> tuple[list[Choice], str] | None:
+    """Split the last candidate(s) into choices; on success remove them (and
+    any wrappers left empty) from the tree and return (choices, raw_tex)."""
+    for start in range(len(candidates) - 1, -1, -1):
+        used = candidates[start:]
+        joined = " ".join(t for _, t in used)
+        choices = split_choices(joined, ignore_case)
+        if choices:
+            for img, _ in used:
+                _remove_img(img)
+            return choices, joined
+    return None
+
+
+def _remove_img(img: Tag) -> None:
+    """Remove img and any wrappers it leaves empty."""
+    parent = img.parent
+    img.decompose()
+    while parent is not None and isinstance(parent, Tag) and parent.name in ("p", "div", "center", "span") \
+            and not parent.get_text(strip=True) and not parent.find(("img", "table", "ul", "ol")):
+        grand = parent.parent
+        parent.decompose()
+        parent = grand
+
+
+def _trailing_label_choices(img: Tag, tex: str) -> tuple[list[Choice], str] | None:
+    """'[$... \\textbf{(E) }$]more than [$4$]': the last label closes the math
+    image and its body is the rest of the paragraph. On success removes the
+    image and that body from the tree."""
+    labels = find_labels(tex)
+    if not labels or clean_choice(tex[labels[-1][2]:]) or img.parent is None or img.parent.name != "p":
+        return None
+    body, used = _prose_body(img, None)
+    if body is None:
+        return None
+    joined = tex + " " + body
+    choices = split_choices(joined)
+    if not choices or choices[-1].tex != body:
+        return None
+    for node in used:
+        node.extract()
+    _remove_img(img)
+    return choices, joined
 
 
 def extract_choices(statement_nodes: list) -> tuple[list[Choice] | None, str | None]:
@@ -317,20 +500,23 @@ def extract_choices(statement_nodes: list) -> tuple[list[Choice] | None, str | N
                 candidates.append((img, tex))
     if not candidates:
         return None, None
-    for start in range(len(candidates) - 1, -1, -1):
-        used = candidates[start:]
-        joined = " ".join(t for _, t in used)
-        choices = split_choices(joined)
+    found = _split_candidates(candidates, False) or _trailing_label_choices(*candidates[-1])
+    if found:
+        return found
+    # Prose choices: exactly the labels A..E as standalone label-only images.
+    label_only, letters = [], []
+    for img, tex in candidates:
+        m = LABEL_RE.fullmatch(clean_choice(tex))
+        if m:
+            label_only.append((img, tex))
+            letters.append(m.group("l1") or m.group("l2") or m.group("l3") or m.group("l4"))
+    if letters == list("ABCDE"):
+        choices = _prose_choices([img for img, _ in label_only])
         if choices:
-            for img, _ in used:
-                parent = img.parent
-                img.decompose()
-                while parent is not None and isinstance(parent, Tag) and parent.name in ("p", "div", "center", "span") \
-                        and not parent.get_text(strip=True) and not parent.find(("img", "table", "ul", "ol")):
-                    grand = parent.parent
-                    parent.decompose()
-                    parent = grand
-            return choices, joined
+            return choices, " ".join(f"{tex} {c.tex}" for (_, tex), c in zip(label_only, choices))
+    found = _split_candidates(candidates, True)
+    if found:
+        return found
     # Could not split; return the raw tex from the last candidate that carries
     # an (A) label onwards, so the whole choice line is displayed as one piece.
     start = 0
@@ -425,6 +611,33 @@ def split_sections(root: Tag) -> list[tuple[str | None, list]]:
     return sections
 
 
+def split_sub_solutions(nodes: list) -> tuple[list, list[tuple[str, list]]]:
+    """Split a section on <h3> headings that name a solution ("Solution 2",
+    "Video Solution"; same test as SOLUTION_HEADING for h2s); other h3s (Note,
+    Case 1) stay inside. Returns the nodes
+    before the first such h3 and the (heading, nodes) parts after it."""
+    lead: list = []
+    subs: list[tuple[str, list]] = []
+    for n in nodes:
+        if isinstance(n, Tag) and n.name == "h3" and SOLUTION_HEADING.search(heading_text(n)):
+            subs.append((heading_text(n), []))
+        elif subs:
+            subs[-1][1].append(n)
+        else:
+            lead.append(n)
+    return lead, subs
+
+
+def _split_at_h3(nodes: list) -> tuple[list, tuple[str, list] | None]:
+    """Cut statement nodes at the first <h3> (e.g. 'Modified Problem in ...'):
+    returns the nodes before it and that h3's (heading, nodes), if any.
+    Diagram/Note h3s belong to the statement and do not cut."""
+    for i, n in enumerate(nodes):
+        if isinstance(n, Tag) and n.name == "h3" and not re.search(r"diagram|note", heading_text(n), re.I):
+            return nodes[:i], (heading_text(n), nodes[i + 1:])
+    return nodes, None
+
+
 def _drop_redirect_notice(nodes: list) -> list:
     out = []
     for n in nodes:
@@ -434,25 +647,22 @@ def _drop_redirect_notice(nodes: list) -> list:
     return out
 
 
-def _split_nested_solutions(heading: str, nodes: list) -> list[tuple[str, list]]:
-    """A page written as one "Solutions" h2 with "Solution 1", "Solution 2" h3
-    children becomes one section per h3. Sub-headings that are not solutions
-    ("Case 1" under "Solution 2 (Casework)") leave the section alone."""
-    h3s = [n for n in nodes if isinstance(n, Tag) and n.name == "h3"]
-    if not any(SOLUTION_HEADING.search(heading_text(h)) for h in h3s):
-        return [(heading, nodes)]
-    out: list[tuple[str, list]] = []
-    cur_heading, cur_nodes = heading, []
-    for n in nodes:
-        if isinstance(n, Tag) and n.name == "h3":
-            if any(not _is_blank(x) for x in cur_nodes):
-                out.append((cur_heading, cur_nodes))
-            cur_heading, cur_nodes = heading_text(n), []
-        else:
-            cur_nodes.append(n)
-    if any(not _is_blank(x) for x in cur_nodes):
-        out.append((cur_heading, cur_nodes))
-    return out
+def _is_boilerplate(n) -> bool:
+    """The contest nav box or the MAA copyright notice (with its AMC logo)."""
+    if not isinstance(n, Tag):
+        return False
+    if n.name == "div" and "print" in (n.get("class") or []):
+        return True
+    text = re.sub(r"\s+", " ", n.get_text(" ").replace("\xa0", " "))
+    return bool(BOILERPLATE_TEXT.search(text)) or any("AMC_Logo" in (img.get("src") or "") for img in n.find_all("img"))
+
+
+def _cut_at_boilerplate(nodes: list) -> list:
+    """A solution section ends where the nav box or the MAA notice starts."""
+    for i, n in enumerate(nodes):
+        if _is_boilerplate(n):
+            return nodes[:i]
+    return nodes
 
 
 def parse_problem_page(html: str, wiki_categories: list[str] | None = None) -> ParsedProblem:
@@ -479,20 +689,33 @@ def parse_problem_page(html: str, wiki_categories: list[str] | None = None) -> P
                 solution_sections.append((heading, nodes))
                 warnings.append(f"kept section after See Also: {heading}")
             continue
+        # h3 solutions can sit under any h2, even "Problem"; they end the statement.
+        nodes, subs = split_sub_solutions(nodes)
+        # Any other h3 also ends the statement and becomes its own section.
+        extra = None
         if phase == "lead" and PROBLEM_HEADING.match(heading):
             # A real Problem heading supersedes any lead text.
+            nodes, extra = _split_at_h3(nodes)
             statement_nodes = [n for n in nodes]
             phase = "statement"
-            continue
-        if phase in ("lead", "statement") and not SOLUTION_HEADING.search(heading):
+        elif phase in ("lead", "statement") and not SOLUTION_HEADING.search(heading):
+            nodes, extra = _split_at_h3(nodes)
             statement_nodes.extend(nodes)  # e.g. a "Diagram" or "Note" section before the solutions
             phase = "statement"
-            continue
-        phase = "solutions"
-        solution_sections.append((heading, nodes))
+        else:
+            phase = "solutions"
+            solution_sections.append((heading, nodes))  # blank wrapper leads are dropped by serialize
+        if extra:
+            phase = "solutions"
+            solution_sections.append(extra)
+        if subs:
+            phase = "solutions"
+            solution_sections.extend(subs)
 
     statement_nodes = _drop_redirect_notice(statement_nodes)
-    solution_sections = [part for heading, nodes in solution_sections for part in _split_nested_solutions(heading, nodes)]
+    # The nav box / MAA notice can sit inside the last solution section (a See Also
+    # heading wrapped in a div, missing, or with a solution appended below it).
+    solution_sections = [(heading, _cut_at_boilerplate(nodes)) for heading, nodes in solution_sections]
 
     if not statement_nodes:
         warnings.append("no problem statement found")

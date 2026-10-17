@@ -11,8 +11,10 @@ re-download. Diagrams are downloaded into site/data/img/ (skip with
 --no-images). Output: site/data/index.json, site/data/solutions/<contest>.json,
 site/data/images.json, site/data/report.json.
 
-Note: AoPS sits behind Cloudflare and blocks many cloud/datacenter IP ranges
-(HTTP 403 "error code: 1007"). Run this from an ordinary home connection.
+Note: AoPS sits behind Cloudflare. It blocks many cloud/datacenter IP ranges
+(HTTP 403 "error code: 1007") and, since October 2026, challenges every
+non-browser client on /wiki/; see the README for filling the cache from a
+browser session.
 """
 from __future__ import annotations
 
@@ -33,7 +35,8 @@ import requests
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from contests import Contest, all_contests, page_url, parse_contest_id  # noqa: E402
 from parse import (  # noqa: E402
-    guess_categories, image_urls, parse_answer_key, parse_problem_page, rewrite_image_srcs,
+    guess_categories, has_visible_content, image_urls, parse_answer_key, parse_problem_page,
+    rewrite_image_srcs,
 )
 
 HERE = Path(__file__).resolve().parent
@@ -88,7 +91,7 @@ class Fetcher:
 
     def parse_page(self, title: str) -> dict | None:
         """action=parse for a page. Returns the `parse` object, or None if the
-        page does not exist."""
+        page does not exist or is an empty stub (no visible content)."""
         path = self._cache_path(title)
         data = None
         if path.exists() and not self.force:
@@ -98,13 +101,15 @@ class Fetcher:
                 data = None  # truncated cache file from an interrupted run: refetch
         if data is None:
             data = self._request(title)
-            if "parse" in data:
-                write_json(path, data)  # only real pages are cached; errors and missing pages are re-asked
+            if "parse" in data and has_visible_content(data["parse"].get("text", "")):
+                write_json(path, data)  # only real pages are cached; errors, missing pages and empty stubs are re-asked
         if "error" in data:
             code = data["error"].get("code")
             if code in ("missingtitle", "nosuchpageid", "invalidtitle"):
                 return None
             raise RuntimeError(f"API error for {title!r}: {data['error']}")
+        if not has_visible_content(data["parse"].get("text", "")):
+            return None
         return data["parse"]
 
     def _request(self, title: str) -> dict:
@@ -141,6 +146,11 @@ class Fetcher:
                 raise BlockedError(
                     "AoPS (Cloudflare) refuses this IP address: HTTP 403 'error code: 1007'. "
                     "Run the scraper from an ordinary home connection, not a cloud/datacenter host.")
+            if r.status_code == 403 and r.headers.get("cf-mitigated") == "challenge":
+                raise BlockedError(
+                    "AoPS (Cloudflare) answered with a browser challenge (HTTP 403, cf-mitigated: challenge); "
+                    "as of 2026-10 it does this for every non-browser client on /wiki/. The pages have to be "
+                    "fetched from a real browser session into scraper/cache/ (see README).")
             r.raise_for_status()
             try:
                 return r.json()
@@ -277,7 +287,9 @@ def scrape_problem(contest: Contest, n: int, fetcher: Fetcher, bands: list[dict]
     if pid in overrides:
         categories, category_source = list(overrides[pid]), "override"
     elif not categories:
-        categories = guess_categories(parsed.statement_text, has_diagram='class="diagram"' in parsed.statement_html)
+        choice_text = " ".join(c.tex for c in parsed.choices) if parsed.choices else (parsed.choices_tex or "")
+        categories = guess_categories(parsed.statement_text + " " + choice_text,
+                                      has_diagram='class="diagram"' in parsed.statement_html)
         category_source = "guessed" if categories else None
     with lock:
         if category_source == "guessed":

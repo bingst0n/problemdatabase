@@ -9,7 +9,7 @@ sys.path.insert(0, str(HERE.parent))
 from contests import Contest, all_contests, parse_contest_id  # noqa: E402
 from parse import (  # noqa: E402
     boxed_letter, guess_categories, image_urls, map_categories, parse_answer_key, parse_problem_page,
-    rewrite_image_srcs, split_choices,
+    rewrite_image_srcs, split_choices, strip_math_delims,
 )
 
 FIX = HERE / "fixtures"
@@ -41,6 +41,20 @@ class ChoiceSplitting(unittest.TestCase):
         got = [c.tex for c in split_choices(tex)]
         self.assertEqual(got[0], r"\text{Monday}")
         self.assertEqual(got[4], r"\text{Friday}")
+
+    def test_doubled_brace_labels(self):
+        tex = (r"\textbf{(A)}\ -20\qquad\textbf{{(B)}}\ -15\qquad\textbf{{(C)}}\ -10\qquad"
+               r"\textbf{{(D)}}\ 0\qquad\textbf{{(E)}}\ 2")
+        self.assertEqual([c.tex for c in split_choices(tex)], ["-20", "-15", "-10", "0", "2"])
+
+    def test_unbalanced_body_returns_none(self):
+        # A label the regex only half-matches would leave brace debris in the bodies.
+        tex = r"\textbf{(A)}\ 1\qquad\textbf{[(B)}}\ 2\qquad\textbf{(C)}\ 3\qquad\textbf{(D)}\ 4\qquad\textbf{(E)}\ 5"
+        self.assertIsNone(split_choices(tex))
+
+    def test_label_sharing_text_group_with_body(self):
+        tex = r"\text{(A)}\ 0 \qquad \text{(B)}\ 1 \qquad \text{(C)}\ 2 \qquad \text{(D)}\ 4 \qquad \text{(E) more than 4}"
+        self.assertEqual([c.tex for c in split_choices(tex)], ["0", "1", "2", "4", r"\text{more than 4}"])
 
     def test_incomplete_returns_none(self):
         self.assertIsNone(split_choices(r"\textbf{(A) } 1 \qquad \textbf{(B) } 2"))
@@ -171,6 +185,173 @@ class OldProblemPage(unittest.TestCase):
         self.assertEqual(p.categories, [])
 
 
+class NestedSolutions(unittest.TestCase):
+    @staticmethod
+    def page(body):
+        return ('<div class="mw-parser-output"><h2><span class="mw-headline">Problem</span></h2><p>What is 1+1?</p>'
+                + body + '<h2><span class="mw-headline">See Also</span></h2><p>Preceded by</p></div>')
+
+    @staticmethod
+    def h(level, text):
+        return f'<h{level}><span class="mw-headline">{text}</span></h{level}>'
+
+    def test_wrapper_with_empty_lead_is_split(self):
+        p = parse_problem_page(self.page(
+            self.h(2, "Solutions") + "\n" + self.h(3, "Solution 1") + "<p>one</p>"
+            + self.h(3, "Solution 2 (Trig)") + "<p>two</p>" + self.h(3, "Video Solution") + "<p>vid</p>"
+            + self.h(2, "Solution 5") + "<p>five</p>"), [])
+        self.assertEqual([s.heading for s in p.solutions],
+                         ["Solution 1", "Solution 2 (Trig)", "Video Solution", "Solution 5"])
+        self.assertEqual(p.solutions[1].html, "<p>two</p>")
+
+    def test_real_lead_kept_before_h3_solutions(self):
+        p = parse_problem_page(self.page(
+            self.h(2, "Solution 3") + "<p>lead</p>" + self.h(3, "Solution 4") + "<p>four</p>"
+            + self.h(3, "Solution 5 (Brute Force)") + "<p>five</p>"), [])
+        self.assertEqual([s.heading for s in p.solutions], ["Solution 3", "Solution 4", "Solution 5 (Brute Force)"])
+        self.assertEqual(p.solutions[0].html, "<p>lead</p>")
+
+    def test_other_h3_stays_inside(self):
+        p = parse_problem_page(self.page(
+            self.h(2, "Solution 1") + "<p>lead</p>" + self.h(3, "Note") + "<p>note</p>"
+            + self.h(2, "Solution 2") + "<p>x</p>" + self.h(3, "Case 1") + "<p>c1</p>"
+            + self.h(3, "Solution 3") + "<p>three</p>"), [])
+        self.assertEqual([s.heading for s in p.solutions], ["Solution 1", "Solution 2", "Solution 3"])
+        self.assertIn("<h3>Note</h3>", p.solutions[0].html)
+        self.assertIn("<p>note</p>", p.solutions[0].html)
+        self.assertIn("<h3>Case 1</h3>", p.solutions[1].html)
+        self.assertNotIn("three", p.solutions[1].html)
+
+    def test_h3_solutions_under_problem_heading(self):
+        html = ('<div class="mw-parser-output">' + self.h(2, "Problem") + '<p>Find P.</p>'
+                '<p><img class="latex" alt="$\\textbf{(A) } 1 \\qquad\\textbf{(B) } 2 \\qquad\\textbf{(C) } 3'
+                ' \\qquad\\textbf{(D) } 4 \\qquad\\textbf{(E) } 5$"/></p>'
+                + self.h(3, "Solution 1") + '<p><img class="latex" alt="$P = \\boxed{\\textbf{(B) } 2}$"/></p>'
+                + self.h(3, "Solution 2") + "<p>two</p>" + self.h(2, "Solution 3") + "<p>three</p></div>")
+        p = parse_problem_page(html, [])
+        self.assertEqual([s.heading for s in p.solutions], ["Solution 1", "Solution 2", "Solution 3"])
+        self.assertEqual([c.tex for c in p.choices], ["1", "2", "3", "4", "5"])
+        self.assertNotIn("<h3", p.statement_html)
+        self.assertEqual(p.statement_text, "Find P.")
+        self.assertEqual(p.boxed_answer, "B")
+
+    def test_variant_h3_ends_statement(self):
+        # 2024 AMC 10B #3: a variant problem (with its own choices) under the Problem heading.
+        def choices(n):
+            return ('<p><img class="latex" alt="$\\textbf{(A) } 1 \\qquad\\textbf{(B) } 2 \\qquad\\textbf{(C) } 3'
+                    ' \\qquad\\textbf{(D) } 4 \\qquad\\textbf{(E) } ' + n + '$"/></p>')
+        html = ('<div class="mw-parser-output">' + self.h(2, "Problem") + '<p>Find P.</p>' + choices("5")
+                + self.h(3, "Modified Problem in Certain China Testpapers") + '<p>Find Q.</p>' + choices("9")
+                + self.h(3, "Solution for Certain China Testpapers") + "<p>q</p>"
+                + self.h(2, "Solution 1") + "<p>one</p></div>")
+        p = parse_problem_page(html, [])
+        self.assertEqual(p.statement_text, "Find P.")
+        self.assertEqual([c.tex for c in p.choices], ["1", "2", "3", "4", "5"])
+        self.assertEqual([s.heading for s in p.solutions],
+                         ["Modified Problem in Certain China Testpapers", "Solution for Certain China Testpapers",
+                          "Solution 1"])
+        self.assertIn("Find Q.", p.solutions[0].html)
+        self.assertIn("(E) } 9", p.solutions[0].html)
+
+    def test_diagram_and_note_h3_stay_in_statement(self):
+        html = ('<div class="mw-parser-output">' + self.h(2, "Problem") + '<p>Find P.</p>'
+                + self.h(3, "Three-Dimensional Diagram") + '<p>pic</p>' + self.h(3, "Diagrams") + '<p>moved</p>'
+                + self.h(3, "Note") + '<p>careful</p>' + self.h(3, "Solution 1") + "<p>one</p></div>")
+        p = parse_problem_page(html, [])
+        self.assertIn("<h3>Three-Dimensional Diagram</h3><p>pic</p>", p.statement_html)
+        self.assertIn("<h3>Diagrams</h3><p>moved</p>", p.statement_html)
+        self.assertIn("<h3>Note</h3><p>careful</p>", p.statement_html)
+        self.assertEqual([s.heading for s in p.solutions], ["Solution 1"])
+
+
+class ProseChoices(unittest.TestCase):
+    @staticmethod
+    def img(tex):
+        return f'<img class="latex" alt="${tex}$"/>'
+
+    @classmethod
+    def label(cls, letter):
+        return cls.img(r"\textbf{(" + letter + ") }")
+
+    def test_label_images_followed_by_prose(self):
+        rows = ["It is a negative number ending with a 1.", "It is a positive number ending with a 1.",
+                "It is a negative number ending with a 5.", "It is 50% of " + self.img("x^2") + " & more.",
+                "It is a negative number ending with a 0."]
+        body = "".join(f"\n{self.label(l)} {r} <br/>" for l, r in zip("ABCDE", rows))
+        html = ('<div class="mw-parser-output"><h2><span class="mw-headline">Problem</span></h2>'
+                '<p>What is greater than ' + self.img("-2015") + "?\n<br/>" + body + "\n</p>"
+                '<h2><span class="mw-headline">Solution</span></h2><p>' + self.img("\\boxed{\\textbf{(C)}}")
+                + "</p></div>")
+        p = parse_problem_page(html, [])
+        self.assertEqual([c.label for c in p.choices], list("ABCDE"))
+        self.assertEqual(p.choices[0].tex, r"\text{It is a negative number ending with a 1.}")
+        self.assertEqual(p.choices[3].tex, r"\text{It is 50\% of } x^2 \text{ \& more.}")
+        self.assertNotIn("(A)", p.statement_html)
+        self.assertNotIn("negative", p.statement_html)
+        self.assertEqual(p.statement_html.replace("\n", ""), '<p>What is greater than <span class="tex">-2015</span>?</p>')
+        self.assertEqual(p.boxed_answer, "C")
+        self.assertEqual(p.warnings, [])
+
+    def test_each_label_in_its_own_paragraph(self):
+        rows = ["Liliane has " + self.img(str(n) + "\\%") + " more soda than Alice." for n in (20, 25, 45, 75, 100)]
+        body = "".join(f"<p>{self.label(l)} {r}\n</p>" for l, r in zip("ABCDE", rows))
+        html = ('<div class="mw-parser-output"><h2><span class="mw-headline">Problem</span></h2>'
+                '<p>Who has more soda?\n</p>' + body
+                + '<h2><span class="mw-headline">Solution</span></h2><p>' + self.img("\\boxed{\\textbf{(A)}}")
+                + "</p></div>")
+        p = parse_problem_page(html, [])
+        self.assertEqual([c.label for c in p.choices], list("ABCDE"))
+        self.assertEqual(p.choices[0].tex, r"\text{Liliane has } 20\% \text{ more soda than Alice.}")
+        self.assertEqual(p.statement_html.replace("\n", ""), "<p>Who has more soda?</p>")
+
+    def test_own_paragraphs_must_be_consecutive(self):
+        body = "".join(f"<p>{self.label(l)} choice {l}</p>" + ("<p>gap</p>" if l == "B" else "")
+                       for l in "ABCDE")
+        html = ('<div class="mw-parser-output"><h2><span class="mw-headline">Problem</span></h2>'
+                '<p>Pick one.</p>' + body + "</div>")
+        p = parse_problem_page(html, [])
+        self.assertIsNone(p.choices)
+        self.assertIn("choice E", p.statement_html)
+
+
+class TrailingLabelChoices(unittest.TestCase):
+    def test_last_label_body_follows_the_math(self):
+        # 2025 AMC 10A #9: the (E) label closes the image; its body is the rest of the paragraph.
+        tex = r"\textbf{(A) } 1 \qquad\textbf{(B) } 2 \qquad\textbf{(C) } 3 \qquad\textbf{(D) } 4 \qquad\textbf{(E) }"
+        html = ('<div class="mw-parser-output"><h2><span class="mw-headline">Problem</span></h2>'
+                '<p>For how many <img class="latex" alt="$a$"/>?\n</p>'
+                f'<p><img class="latex" alt="${tex}$"/>more than <img class="latex" alt="$4$"/>\n</p>'
+                '<h2><span class="mw-headline">Solution</span></h2><p><img class="latex" alt="$\\boxed{\\textbf{(D) } 4}$"/></p></div>')
+        p = parse_problem_page(html, [])
+        self.assertEqual([c.tex for c in p.choices], ["1", "2", "3", "4", r"\text{more than } 4"])
+        self.assertEqual(p.statement_html.replace("\n", ""), '<p>For how many <span class="tex">a</span>?</p>')
+        self.assertEqual(p.warnings, [])
+
+
+class LowercaseLabelTypo(unittest.TestCase):
+    def test_lowercase_label_retried(self):
+        tex = r"\textbf{(a) } \frac16 \qquad \textbf{(B) }\frac15 \qquad \textbf{(C) } \frac14 \qquad \textbf{(D) } \frac13 \qquad \textbf{(E) } \frac12"
+        self.assertIsNone(split_choices(tex))
+        got = [(c.label, c.tex) for c in split_choices(tex, ignore_case=True)]
+        self.assertEqual(got, [("A", r"\frac16"), ("B", r"\frac15"), ("C", r"\frac14"), ("D", r"\frac13"), ("E", r"\frac12")])
+        html = ('<div class="mw-parser-output"><h2><span class="mw-headline">Problem</span></h2><p>Probability?</p>'
+                f'<p><img class="latex" alt="${tex}$"/></p></div>')
+        p = parse_problem_page(html, [])
+        self.assertEqual([c.label for c in p.choices], list("ABCDE"))
+        self.assertEqual(p.statement_text, "Probability?")
+
+
+class EscapedDollarAlt(unittest.TestCase):
+    def test_unclosed_escaped_dollar(self):
+        self.assertEqual(strip_math_delims(r"$\$"), (r"\$", False))
+        self.assertEqual(strip_math_delims(r"$5\$"), (r"5\$", False))
+        self.assertEqual(strip_math_delims(r"$\$5$"), (r"\$5", False))  # properly closed: unchanged
+        self.assertEqual(strip_math_delims(r"$a\\$"), (r"a\\", False))  # '\\' is a line break, '$' closes
+        html = ('<div class="mw-parser-output"><h2><span class="mw-headline">Problem</span></h2>'
+                '<p>A pill costs <img class="latex" alt="$\\$"/><img class="latex" alt="$1$"/> more.</p></div>')
+        self.assertIn('<span class="tex">\\$</span><span class="tex">1</span>', parse_problem_page(html, []).statement_html)
+
+
 class AnswerKey(unittest.TestCase):
     def test_ordered_list(self):
         key = parse_answer_key((FIX / "answer_key.html").read_text(encoding="utf-8"))
@@ -223,6 +404,25 @@ class SectioningVariants(unittest.TestCase):
         self.assertNotIn("Preceded by", json.dumps([s.html for s in p.solutions]))
         self.assertIn("kept section after See Also: Video Solution", p.warnings)
         self.assertEqual(p.boxed_answer, "C")
+
+    def test_section_after_see_also_is_cut_at_nav_box_and_maa_notice(self):
+        nav = ('<table class="wikitable"><tr><td>Preceded&#160;by<br/>Problem 3</td><td>Followed&#160;by<br/>Problem 5</td></tr>'
+               '<tr><td><a href="/wiki/index.php?title=AMC_10_Problems_and_Solutions"> All AMC 10 Problems and Solutions</a></td></tr></table>')
+        maa = ('<div class="print"><div><div><p><a href="/wiki/index.php?title=File:AMC_Logo.png">'
+               '<img src="https://artofproblemsolving.com/wiki/images/d/d1/AMC_Logo.png"/></a></p></div>'
+               '<div><p>These problems are copyrighted &#169; by the <a href="https://www.maa.org">Mathematical Association of America</a>.</p></div></div></div>')
+        html = ('<div class="mw-parser-output"><h2><span class="mw-headline">Problem</span></h2><p>Q</p>'
+                '<h2><span class="mw-headline">Solution</span></h2><p>x</p>'
+                '<h2><span class="mw-headline">See also</span></h2>' + nav +
+                '<h2><span class="mw-headline">Video Solution</span></h2><p><a href="https://youtu.be/x">video</a></p>'
+                '<p>by someone</p>' + maa + nav + '</div>')
+        p = parse_problem_page(html, [])
+        self.assertEqual([s.heading for s in p.solutions], ["Solution", "Video Solution"])
+        video = p.solutions[1].html
+        self.assertIn("youtu.be/x", video)
+        self.assertIn("by someone", video)
+        for junk in ("AMC_Logo", "Mathematical Association", "Preceded", "Followed", "All AMC 10"):
+            self.assertNotIn(junk, video)
 
     def test_redirect_notice_under_problem_heading_is_dropped(self):
         html = '''<div class="mw-parser-output"><h2><span class="mw-headline">Problem</span></h2>

@@ -71,7 +71,7 @@ main { flex: 1; width: 100%; max-width: 880px; margin: 0 auto; padding: 20px 16p
 .card { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 20px; margin: 14px 0; }
 .statement { font-size: 1.04rem; }
 .statement p, .solution p { margin: 0 0 0.8em; }
-.statement img, .solution img { max-width: 100%; height: auto; }
+.statement img, .solution img { max-width: 100%; height: auto; background: #fff; border-radius: 4px; }
 .statement .diagram, .solution .diagram { display: block; margin: 10px auto; }
 .tex-display { display: block; margin: 0.6em 0; overflow-x: auto; }
 .katex { font-size: 1.05em; }

@@ -89,7 +89,7 @@ class ScrapeEndToEnd(unittest.TestCase):
         self.assertEqual(p13["redirected_to"], "2019 AMC 12A Problems/Problem 10")
         self.assertEqual(p13["categories"], ["geometry"])
         self.assertEqual(p13["category_source"], "wiki")
-        self.assertEqual(p13["difficulty"], 2.5)
+        self.assertEqual(p13["difficulty"], "1.5-2.5")
         self.assertEqual([c["tex"] for c in p13["choices"]], ["90", "100", "105", "110", "120"])
         self.assertEqual(p13["solution_count"], 3)
         # diagram downloaded and rewritten to a local path
@@ -127,6 +127,25 @@ class ScrapeEndToEnd(unittest.TestCase):
         self.assertIn("https://latex.artofproblemsolving.com/0/0/0/000asy.png", p13["statement_html"])
         self.assertFalse((self.out / "img").exists())
         self.assertFalse((self.out / "images.json").exists())
+
+
+class EmptyStubPages(unittest.TestCase):
+    def test_empty_stub_is_treated_as_missing(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            f = scrape.Fetcher(Path(tmp), 0, False)
+            stubs = {
+                "Stub": '<div class="mw-parser-output">\n<!-- NewPP limit report -->\n</div>',
+                "Stub Key": '<div class="mw-parser-output"><ol>' + '<li class="mw-empty-elt"></li>\n' * 25 + "</ol></div>",
+                "Real": PAGE_OLD,
+                "Diagram Only": '<div class="mw-parser-output"><p><img alt="[asy]draw(x);[/asy]" src="/x.png"/></p></div>',
+            }
+            for title, text in stubs.items():
+                f._cache_path(title).write_text(json.dumps({"parse": {"title": title, "text": text}}))
+            self.assertIsNone(f.parse_page("Stub"))
+            self.assertIsNone(f.parse_page("Stub Key"))
+            self.assertEqual(f.parse_page("Real")["title"], "Real")
+            self.assertEqual(f.parse_page("Diagram Only")["title"], "Diagram Only")
+            self.assertEqual(f.requests_made, 0)
 
 
 if __name__ == "__main__":
@@ -249,15 +268,27 @@ class CacheBehaviour(unittest.TestCase):
         self.assertEqual(list(Path(self.tmp.name).glob("*.json")), [])
         self.replies = [StubResponse(200, "<html>challenge</html>", json_ok=False),
                         StubResponse(503, "busy"),
-                        StubResponse(200, json.dumps({"parse": {"title": "Y", "text": ""}}))]
+                        StubResponse(200, json.dumps({"parse": {"title": "Y", "text": "<p>y</p>"}}))]
         self.assertEqual(self.fetcher.parse_page("Y")["title"], "Y")
 
     def test_corrupt_cache_file_is_refetched(self):
         (Path(self.tmp.name) / "Z.json").write_text("{truncated")
-        self.replies = [StubResponse(200, json.dumps({"parse": {"title": "Z", "text": ""}}))]
+        self.replies = [StubResponse(200, json.dumps({"parse": {"title": "Z", "text": "<p>z</p>"}}))]
         self.assertEqual(self.fetcher.parse_page("Z")["title"], "Z")
 
     def test_cloudflare_1007_raises_blocked(self):
         self.replies = [StubResponse(403, "error code: 1007")]
         with self.assertRaises(scrape.BlockedError):
             self.fetcher.parse_page("W")
+
+    def test_cloudflare_challenge_raises_blocked(self):
+        r = StubResponse(403, "<html>Just a moment...</html>")
+        r.headers = {"cf-mitigated": "challenge"}
+        self.replies = [r]
+        with self.assertRaisesRegex(scrape.BlockedError, "browser challenge"):
+            self.fetcher.parse_page("W")
+
+    def test_empty_stub_is_not_cached(self):
+        self.replies = [StubResponse(200, json.dumps({"parse": {"title": "S", "text": "<div><!-- x --></div>"}}))]
+        self.assertIsNone(self.fetcher.parse_page("S"))
+        self.assertEqual(list(Path(self.tmp.name).glob("*.json")), [])  # re-asked once the page is filled in

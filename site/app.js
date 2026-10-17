@@ -17,8 +17,46 @@
     macros: {
       '\\overarc': '\\overset{\\frown}{#1}',
       '\\emph': '\\textit{#1}',
+      '\\textdollar': '\\$',
+      '\\mathdollar': '\\$',
+      '\\textsubscript': '_{\\text{#1}}',
+      '\\cent': '\\text{¢}',
+      '\\linebreak': '\\\\',
+      '\\break': '\\\\',
+      '\\mbox': '\\text{#1}',
+      '\\framebox': '\\fbox{#1}',
+      '\\smiley': '\\text{☺}',
+      '\\l': '\\ell',
+      '\\hdots': '\\ldots',
+      '\\Square': '\\square',
+      '\\lefteqn': '\\mathrlap{#1}',
+      '\\textsuperscript': '\\text{$^{\\text{#1}}$}',
+      '\\iddots': '{\\raisebox{0.1em}{.}\\raisebox{0.45em}{.}\\raisebox{0.8em}{.}}',
+      '\\time': '\\times',
     },
   };
+
+  // Rewrite wiki LaTeX that KaTeX cannot parse into equivalents it can.
+  function prepTex(tex, display) {
+    tex = tex
+      .replace(/\\begin\{(tabular|array)\}\s*\[[tbc]\]/g, '\\begin{array}')
+      .replace(/\\(begin|end)\{tabular\}/g, '\\$1{array}')
+      .replace(/\\begin\{eqnarray\*?\}/g, '\\begin{array}{rcl}')
+      .replace(/\\end\{eqnarray\*?\}/g, '\\end{array}')
+      .replace(/\\multicolumn\{\d+\}\{[^{}]*\}/g, '')
+      .replace(/\\renewcommand\{\\arraystretch\}/g, '\\def\\arraystretch')
+      .replace(/\\(begin|end)\{centering\}/g, '')
+      .replace(/\\(color|textcolor)\[rgb\]\{\s*([\d.]+)\s*,\s*([\d.]+)\s*,\s*([\d.]+)\s*\}/g, (m, cmd, ...rgb) =>
+        '\\' + cmd + '{#' + rgb.slice(0, 3).map(v => Math.round(Math.min(1, +v) * 255).toString(16).padStart(2, '0')).join('') + '}')
+      .replace(/\\\\\s+(\[\s*-?[\d.]+\s*(?:ex|em|pt|mm|cm|in|mu)\s*\])/g, '\\\\$1')
+      .replace(/((?:^|[^\\])\\[,;:! ])\s*\^/g, '$1{}^')
+      .replace(/(?<!\\)\\\)([^]*?)(?<!\\)\\\(/g, '\\text{$1}');
+    if (!display) {
+      const inline = { align: 'aligned', alignat: 'alignedat', gather: 'gathered' };
+      tex = tex.replace(/\\(begin|end)\{(align|alignat|gather)\*?\}/g, (m, be, env) => '\\' + be + '{' + inline[env] + '}');
+    }
+    return tex;
+  }
 
   const state = {
     problems: [], byId: new Map(), contests: [], solutions: new Map(),
@@ -52,13 +90,15 @@
     if (typeof katex === 'undefined') return;
     for (const node of $$('.tex, .tex-display', root)) {
       if (node.dataset.rendered) continue;
-      const tex = node.textContent;
+      const display = node.classList.contains('tex-display');
+      const raw = node.textContent;
+      const tex = prepTex(raw, display);
       node.dataset.rendered = '1';
       try {
-        katex.render(tex, node, Object.assign({}, KATEX_OPTS, { displayMode: node.classList.contains('tex-display') }));
+        katex.render(tex, node, Object.assign({}, KATEX_OPTS, { displayMode: display }));
       } catch (e) {
         // throwOnError:false only covers parse errors; anything else falls back to the raw LaTeX.
-        node.textContent = tex;
+        node.textContent = raw;
         node.classList.add('tex-error');
         node.title = e.message;
       }
@@ -183,7 +223,7 @@
       filters.yearFrom = years[0]; filters.yearTo = years[years.length - 1];
     }
 
-    const diffs = Array.from(new Set(state.problems.map(p => p.difficulty).filter(d => d != null))).sort((a, b) => a - b);
+    const diffs = Array.from(new Set(state.problems.map(p => p.difficulty).filter(d => d != null))).sort((a, b) => parseFloat(a) - parseFloat(b));
     const diffBox = $('#difficulty-filter');
     for (const d of diffs) {
       const label = (state.problems.find(p => p.difficulty === d) || {}).difficulty_label;
