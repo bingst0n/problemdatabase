@@ -59,6 +59,7 @@ main { flex: 1; width: 100%; max-width: 880px; margin: 0 auto; padding: 20px 16p
 .tags { display: flex; flex-wrap: wrap; gap: 6px; }
 .tag { font-size: 0.78rem; padding: 1px 8px; border-radius: 999px; background: var(--tag); color: var(--muted); }
 .tag.diff { background: var(--accent-soft); color: var(--accent); }
+.tag.guess { background: transparent; border: 1px dashed var(--muted); }
 
 .crumbs { font-size: 0.93rem; margin-bottom: 10px; }
 .problem-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 16px; margin-bottom: 6px; }

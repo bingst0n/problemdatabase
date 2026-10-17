@@ -37,7 +37,10 @@ Per problem page, e.g. `2019 AMC 10A Problems/Problem 13`:
 LaTeX arrives in the wiki's rendered HTML as `<img alt="$…$">`; the `alt`
 text is the LaTeX source, so it is stored as text and rendered client-side
 with KaTeX. Asymptote diagrams have no LaTeX equivalent, so their rendered PNGs
-are kept as `<img>` tags pointing at AoPS (hotlinked, not mirrored).
+(and any wiki-uploaded images) are downloaded into `site/data/img/`, named by
+a hash of their source URL, and referenced with relative paths. The site works
+offline once scraped. `site/data/images.json` maps each file back to its
+source URL.
 
 ## Tags
 
@@ -51,9 +54,22 @@ are kept as `<img>` tags pointing at AoPS (hotlinked, not mirrored).
 | Geometry | `geometry` |
 | Algebra | `algebra` |
 | any other `… Problems` category (Trigonometry, Logic, …) | `other` |
-| no categories on the page | `uncategorized` (shown as a filter so gaps are visible) |
 
-A problem can carry several tags.
+A problem can carry several tags. Each problem records where its tags came
+from (`category_source`):
+
+| Source | Meaning |
+|---|---|
+| `wiki` | the page had at least one `… Problems` category |
+| `override` | listed in `scraper/category_overrides.json` (hand-set; beats everything) |
+| `guessed` | the page had no category, so a keyword scorer over the statement and choices picked one; shown with a dashed tag and a `?` in the UI |
+| `null` | nothing matched; shown as `Uncategorized` in the filter so gaps stay visible |
+
+The guesser scores each subject by weighted keyword hits (e.g. "divisible",
+"digit" → number theory; "probability", "random" → probability; "triangle",
+"area" → geometry; a diagram nudges geometry) and assigns the top subject when
+the score clears a small threshold, plus a second subject only when it is
+nearly as strong. It is deliberately conservative.
 
 **Difficulty.** The wiki has no per-problem rating. V1 uses the position-based
 convention from the AoPS "Competition ratings" page, kept in
@@ -173,21 +189,23 @@ match opens immediately.
 - Descriptive User-Agent; at most a few requests per second (default 4
   workers, 0.25 s minimum spacing); exponential backoff on 429/5xx.
 - Raw API responses cached under `scraper/cache/` (git-ignored) so re-runs
-  and parser fixes do not re-fetch.
+  and parser fixes do not re-fetch. Images already in `site/data/img/` are
+  not re-downloaded.
+- AoPS is behind Cloudflare and refuses many cloud/datacenter IP ranges with
+  HTTP 403 `error code: 1007`. The scraper detects that and says so; it has to
+  run from an ordinary home connection.
 - A contest whose answer-key page is missing (e.g. a future year) is skipped
   and reported.
 - `python3 scraper/scrape.py` scrapes everything; `--years 2019-2020` or
-  `--contests 2019_AMC_10A` limit it; `--force` ignores the cache.
+  `--contests 2019_AMC_10A` limit it; `--force` ignores the cache;
+  `--no-images` keeps AoPS image URLs instead of downloading.
 
-## Open questions (answers change the build)
+## Decisions
 
-1. Include the 2000 and 2001 "AMC 10" (pre-A/B) contests?
-2. Difficulty: is the position-based rating enough for V1, or do you want
-   per-problem ratings you can edit by hand (an overrides file)?
-3. Categories: use only the wiki's categories (some problems have none), or
-   also guess a category from the statement when the wiki has none?
-4. Diagrams: keep hotlinking AoPS's PNGs, or mirror them into the repo so the
-   site works offline?
-5. Solutions: hidden behind a button by default (current), or shown inline
-   under the problem?
-6. Should video-solution sections (YouTube links) be kept, or dropped?
+- 2002 onward only; the 2000 and 2001 plain "AMC 10" are not included.
+- Diagrams are downloaded into the repo, not hotlinked.
+- Solutions stay hidden behind a button to avoid spoilers.
+- Video-solution sections are kept as links.
+- Problems with no wiki category get a guessed category, marked as such.
+- Difficulty stays position-based. The AoPS ratings page could not be
+  fetched to confirm the numeric values in `scraper/difficulty.json`.

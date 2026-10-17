@@ -8,7 +8,8 @@ sys.path.insert(0, str(HERE.parent))
 
 from contests import Contest, all_contests, parse_contest_id  # noqa: E402
 from parse import (  # noqa: E402
-    boxed_letter, map_categories, parse_answer_key, parse_problem_page, split_choices,
+    boxed_letter, guess_categories, image_urls, map_categories, parse_answer_key, parse_problem_page,
+    rewrite_image_srcs, split_choices,
 )
 
 FIX = HERE / "fixtures"
@@ -69,6 +70,47 @@ class Categories(unittest.TestCase):
                          ["combinatorics", "probability"])
         self.assertEqual(map_categories(["Pages with broken file links"]), [])
         self.assertEqual(map_categories([]), [])
+
+
+class GuessCategories(unittest.TestCase):
+    def test_guesses(self):
+        cases = [
+            ("How many positive integers less than 1000 are divisible by 7 but not by 11?", ["number_theory"]),
+            ("A fair 6-sided die is rolled twice. What is the probability that the sum of the two rolls is 7?", ["probability"]),
+            ("Triangle ABC has AB = 5, BC = 12, and a right angle at B. What is the area of \\triangle ABC?", ["geometry"]),
+            ("What is the value of 2x + 3 when x = 4?", ["algebra"]),
+            ("In how many ways can 5 people be seated in a row of 5 chairs?", ["combinatorics"]),
+            ("What is \\sin 30^\\circ + \\cos 60^\\circ?", ["other"]),
+            ("What is the sum of the digits of the smallest perfect square that is a multiple of 12?", ["number_theory"]),
+        ]
+        for text, want in cases:
+            self.assertEqual(guess_categories(text), want, text)
+
+    def test_too_thin_stays_uncategorized(self):
+        self.assertEqual(guess_categories("What is 2+2?"), [])
+        self.assertEqual(guess_categories(""), [])
+
+    def test_diagram_nudges_geometry(self):
+        self.assertEqual(guess_categories("Find the shaded region.", has_diagram=True), ["geometry"])
+
+
+class ImageHelpers(unittest.TestCase):
+    HTML = ('<p><img alt="diagram" class="diagram" src="https://latex.artofproblemsolving.com/a/b/c/abc.png"/>'
+            ' <img alt="x" src="https://artofproblemsolving.com/wiki/images/1/2/pic.png"/>'
+            ' <img alt="local" src="data/img/already.png"/></p>')
+
+    def test_image_urls(self):
+        self.assertEqual(image_urls(self.HTML), [
+            "https://latex.artofproblemsolving.com/a/b/c/abc.png",
+            "https://artofproblemsolving.com/wiki/images/1/2/pic.png",
+        ])
+        self.assertEqual(image_urls(""), [])
+
+    def test_rewrite(self):
+        out = rewrite_image_srcs(self.HTML, {"https://latex.artofproblemsolving.com/a/b/c/abc.png": "data/img/abc.png"})
+        self.assertIn('src="data/img/abc.png"', out)
+        self.assertIn('src="https://artofproblemsolving.com/wiki/images/1/2/pic.png"', out)  # unmapped stays
+        self.assertIn('src="data/img/already.png"', out)
 
 
 class ProblemPage(unittest.TestCase):

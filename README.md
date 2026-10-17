@@ -30,12 +30,20 @@ python3 scraper/scrape.py --workers 2 --delay 0.5      # gentler on the wiki
 ```
 
 Raw API responses are cached in `scraper/cache/` (git-ignored), so fixing the
-parser and re-running never re-downloads. After each run read
+parser and re-running never re-downloads. Diagrams are saved to
+`site/data/img/` (`--no-images` to skip). After each run read
 `site/data/report.json`: it lists problems whose answer choices did not split,
-problems with no wiki category, and answer-key/solution disagreements.
+problems with no or guessed categories, failed image downloads, and
+answer-key/solution disagreements.
+
+AoPS is behind Cloudflare and refuses cloud/datacenter IP addresses (HTTP 403,
+`error code: 1007`), so run the scraper from a normal home connection.
 
 Difficulty is position-based (problems 1–5, 6–10, … map to a rating); edit
-`scraper/difficulty.json` and re-run to change it.
+`scraper/difficulty.json` and re-run to change it. Categories come from the
+wiki's own categories; when a page has none, a keyword scorer guesses one and
+the UI shows it with a dashed tag and a `?`. To pin a category by hand, add
+`{"2019_AMC_10A_13": ["geometry"]}` to `scraper/category_overrides.json`.
 
 ## Search
 

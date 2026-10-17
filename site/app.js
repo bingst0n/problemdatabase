@@ -235,7 +235,11 @@
   function tagNodes(p) {
     const tags = [];
     if (p.difficulty != null) tags.push(h('span', { class: 'tag diff' }, (p.difficulty_label ? p.difficulty_label + ' · ' : '') + p.difficulty));
-    for (const c of p._cats) tags.push(h('span', { class: 'tag' }, CATEGORY_LABELS[c] || c));
+    const guessed = p.category_source === 'guessed';
+    for (const c of p._cats) {
+      tags.push(h('span', { class: guessed ? 'tag guess' : 'tag', title: guessed ? 'Guessed from the statement; the wiki has no category for this problem' : null },
+        (CATEGORY_LABELS[c] || c) + (guessed ? '?' : '')));
+    }
     return tags;
   }
 

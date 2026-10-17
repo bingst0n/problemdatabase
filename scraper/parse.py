@@ -479,6 +479,132 @@ def parse_problem_page(html: str, wiki_categories: list[str] | None = None) -> P
     )
 
 
+# --------------------------------------------------------------------------- images
+
+IMG_SRC_RE = re.compile(r'<img\b[^>]*\bsrc="([^"]+)"')
+
+
+def image_urls(html: str) -> list[str]:
+    """Remote image URLs referenced by stored HTML (diagrams and wiki uploads)."""
+    seen: list[str] = []
+    for url in IMG_SRC_RE.findall(html or ""):
+        if url.startswith("http") and url not in seen:
+            seen.append(url)
+    return seen
+
+
+def rewrite_image_srcs(html: str, mapping: dict[str, str]) -> str:
+    """Replace remote src values with local paths from mapping (url -> path)."""
+    def rep(m: re.Match) -> str:
+        url = m.group(1)
+        local = mapping.get(url)
+        if not local:
+            return m.group(0)
+        return m.group(0).replace('src="%s"' % url, 'src="%s"' % local)
+    return IMG_SRC_RE.sub(rep, html or "")
+
+
+# --------------------------------------------------------------------------- category guessing
+
+# Keyword hints for problems the wiki has not categorized. Weights are per
+# pattern; repeated hits of one pattern count at most three times. Applied to
+# the statement plus the answer choices, lower-cased, LaTeX included.
+_GEOMETRY_NOISE = re.compile(r"perfect (?:square|cube)s?|square roots?|squared|squares? of|sum of (?:the )?squares")
+CATEGORY_HINTS: dict[str, list[tuple[str, int]]] = {
+    "geometry": [
+        (r"\\triangle|\btriangles?\b", 3), (r"\bcircles?\b|\bcircular\b|\bsemicircle", 3),
+        (r"\\angle|\bangles?\b", 3), (r"\bsquares?\b", 2),
+        (r"\brectangles?\b|\brectangular\b", 3),
+        (r"\bpolygon|\bhexagon|\bpentagon|\boctagon|\bquadrilateral|\btrapezoid|\brhombus|\bparallelogram", 3),
+        (r"\bperpendicular|\bparallel\b", 2), (r"\bdiameter|\bradius|\bradii|\bchord|\btangent\b", 3),
+        (r"\barea\b|\bperimeter|\bvolume|\bsurface area", 3), (r"\bcubes?\b", 1),
+        (r"\bsphere|\bcylinder|\bcone\b|\bpyramid|\bprism|\btetrahedron", 3),
+        (r"\bvertex|\bvertices", 2), (r"\bdiagonals?\b", 2), (r"\bmidpoint", 3),
+        (r"\binscribed|\bcircumscribed", 3),
+        (r"\bisosceles|\bequilateral|\bright triangle|\bhypotenuse|\baltitude", 3),
+        (r"\^\s*\{?\\circ|\bdegrees?\b", 2), (r"\bsegments?\b|\\overline", 2),
+        (r"\bcollinear|\bcongruent|\bsimilar\b", 2), (r"\bcoordinate|\bplane\b|\bx-axis|\by-axis", 2),
+        (r"\bdistance\b|\blength\b", 1), (r"\blines?\b|\bpoints?\b", 1), (r"\\pi\b", 1),
+        (r"\breflect|\brotat|\bslope\b", 1),
+    ],
+    "number_theory": [
+        (r"\bdivisible|\bdivisors?\b|\bdivides\b|\bdivisibility", 3), (r"\bprimes?\b", 3),
+        (r"\bfactors?\b|\bfactorization", 2), (r"\bremainder|\bmodulo|\bmod\b|\\pmod|\\equiv", 3),
+        (r"\bdigits?\b", 3), (r"\bgcd|\blcm|\bgreatest common|\bleast common|\bcommon multiple|\bcommon divisor", 3),
+        (r"\bmultiples? of\b", 2), (r"\bin base\b|\bbase[- ]\d+|\bbase[- ](?:ten|two|seven|eight)", 3),
+        (r"\bperfect (?:square|cube|power)", 3), (r"\bpalindrome", 3),
+        (r"\b(?:units|tens|hundreds|last|leading) digit", 3), (r"\brelatively prime|\bcoprime", 3),
+        (r"\bpositive integers?\b|\bintegers?\b", 1), (r"\bodd\b|\beven\b", 1), (r"\bconsecutive", 1),
+        (r"\bsum of (?:the |its )?digits|\bdigit sum", 3), (r"\d!", 1),
+    ],
+    "combinatorics": [
+        (r"\bhow many ways|\bnumber of ways|\bin how many|\bhow many (?:different|distinct|possible)", 4),
+        (r"\barrange|\barrangements?\b", 3), (r"\bpermutation|\bcombination", 3),
+        (r"\bchoose|\bchosen|\bselect|\bselected", 2),
+        (r"\bcommittee|\bsubsets?\b|\bhandshake|\btournament|\bseat", 3), (r"\bdistinct\b", 1),
+        (r"\bpaths?\b|\broutes?\b", 2), (r"\bgrid\b", 1), (r"\bcolou?r|\bpainted", 2),
+        (r"\\binom|\\dbinom|\\choose", 3), (r"\bsequences? of\b|\bstrings?\b|\bbinary\b", 2),
+        (r"\bcount\b|\bcounting", 2), (r"\bhow many\b", 1), (r"\bat least one\b", 1),
+        (r"\bdifferent (?:ways|orders|arrangements)", 3), (r"\bteams?\b|\bgames? (?:are )?played", 1),
+        (r"\bordered (?:pairs|triples)", 2), (r"\bpairs?\b", 1),
+    ],
+    "probability": [
+        (r"\bprobabilit", 5), (r"\brandom|\bat random", 4), (r"\bexpected (?:value|number)", 4),
+        (r"\bchance\b|\blikely\b|\bodds\b", 3), (r"\bfair\b|\bcoins?\b|\bflip|\btoss", 2),
+        (r"\bdice\b|\bdie\b|\brolled|\brolls?\b", 3), (r"\bdeck\b|\bcards?\b|\bdrawn\b|\bdraws?\b", 2),
+        (r"\bspinner|\bmarbles?\b|\bballs?\b|\bbag\b|\burn\b", 1),
+    ],
+    "algebra": [
+        (r"\bequations?\b|\bsolve\b|\bsolutions?\b", 2), (r"\bpolynomial|\broots?\b|\bquadratic|\bcubic\b", 3),
+        (r"\bfunction|\bf\s*\(", 3),
+        (r"\b(?:arithmetic|geometric) (?:sequence|progression|series)|\bsequence\b|\bseries\b", 3),
+        (r"\bmean\b|\bmedian|\bmode\b|\baverage|\bstandard deviation", 3), (r"\bpercent|%", 3),
+        (r"\bspeed|\brate\b|\bmiles per hour|\bmph\b|\bper hour|\bminutes\b|\bhours\b", 2),
+        (r"\bages?\b|\byears old|\bolder|\byounger", 3), (r"\bcost|\bprice|\bdollars|\bcents|\$\d", 3),
+        (r"\bratio\b|\bproportion", 2), (r"\blinear|\bexponents?\b|\blogarithm|\\log\b|\\ln\b", 3),
+        (r"\\sqrt", 1), (r"\breal numbers?\b|\breal\b", 2), (r"\babsolute value|\\lvert|\\left\||\|x", 2),
+        (r"\binequalit", 2), (r"\bsystem of\b", 2),
+        (r"\bminimum|\bmaximum|\b(?:largest|smallest|least|greatest) possible", 1),
+        (r"\\lfloor|\\lceil|\bfloor\b", 2), (r"\bsum\b|\bproduct\b", 1), (r"\bvalue of\b", 2),
+        (r"\b[xy]\b", 1), (r"\bcompute|\bevaluate|\bsimplif", 2), (r"\\frac|\bfraction\b", 1),
+        (r"\bnumber line", 2), (r"\bwork(?:s|ed|ing)?\b", 1),
+    ],
+    "other": [
+        (r"\\sin\b|\\cos\b|\\tan\b|\bsine\b|\bcosine\b|\btrigonometr", 4),
+        (r"\bknight|\bknave|\bliar|\balways lies|\balways tells|\btruth", 4),
+        (r"\blogic\b|\bstatements? (?:is|are) (?:true|false)", 3),
+    ],
+}
+_HINTS_COMPILED = {cat: [(re.compile(pat), w) for pat, w in hints] for cat, hints in CATEGORY_HINTS.items()}
+
+
+def guess_categories(text: str, has_diagram: bool = False) -> list[str]:
+    """Keyword-based guess for an uncategorized problem. Returns [] when the
+    evidence is too thin, so the problem stays visibly uncategorized."""
+    low = (text or "").lower()
+    geo_text = _GEOMETRY_NOISE.sub(" ", low)
+    scores: dict[str, int] = {}
+    for cat, hints in _HINTS_COMPILED.items():
+        hay = geo_text if cat == "geometry" else low
+        total = 0
+        for pat, w in hints:
+            n = len(pat.findall(hay))
+            if n:
+                total += w * min(n, 3)
+        scores[cat] = total
+    if has_diagram:
+        scores["geometry"] += 4
+    best = max(scores, key=lambda c: scores[c])
+    if scores[best] < 3:
+        return []
+    out = [best]
+    for cat, sc in sorted(scores.items(), key=lambda kv: -kv[1]):
+        if cat != best and sc >= 6 and sc >= 0.7 * scores[best]:
+            out.append(cat)
+            break
+    return [c for c in CATEGORY_ORDER if c in out]
+
+
 # --------------------------------------------------------------------------- answer key
 
 def parse_answer_key(html: str) -> dict[int, str]:
