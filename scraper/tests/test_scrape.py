@@ -131,3 +131,133 @@ class ScrapeEndToEnd(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class FailingFetcher(FakeFetcher):
+    """Raises on one problem page; the run must survive it."""
+
+    def parse_page(self, title):
+        if title == "2019 AMC 10A Problems/Problem 4":
+            raise RuntimeError("API error for the page: {'code': 'readonly'}")
+        return super().parse_page(title)
+
+
+class BlockedFetcher(FakeFetcher):
+    def parse_page(self, title):
+        raise scrape.BlockedError("error code: 1007")
+
+
+class Robustness(unittest.TestCase):
+    def setUp(self):
+        self._real = scrape.Fetcher
+        self.tmp = tempfile.TemporaryDirectory()
+        self.out = Path(self.tmp.name) / "data"
+        self.cache = Path(self.tmp.name) / "cache"
+        self.noover = Path(self.tmp.name) / "none.json"
+
+    def tearDown(self):
+        scrape.Fetcher = self._real
+        self.tmp.cleanup()
+
+    def args(self, *extra):
+        return ["--out", str(self.out), "--cache", str(self.cache), "--overrides", str(self.noover),
+                "--years", "2019", "--workers", "2", "--no-images", *extra]
+
+    def test_one_bad_page_costs_one_problem(self):
+        scrape.Fetcher = FailingFetcher
+        self.assertEqual(scrape.main(self.args()), 0)
+        index = json.loads((self.out / "index.json").read_text())
+        report = json.loads((self.out / "report.json").read_text())
+        ids = {p["id"] for p in index["problems"]}
+        self.assertEqual(len(ids), 23)
+        self.assertNotIn("2019_AMC_10A_4", ids)
+        self.assertEqual([f["problem"] for f in report["failed_problems"]], ["2019_AMC_10A_4"])
+        self.assertIn("readonly", report["failed_problems"][0]["error"])
+        self.assertEqual(report["failed_contests"], [])
+        self.assertEqual(report["missing_problems"], ["2019_AMC_10A_7"])
+        self.assertFalse(list(self.out.glob("*.tmp")))
+
+    def test_cloudflare_block_stops_the_run(self):
+        scrape.Fetcher = BlockedFetcher
+        with self.assertRaises(scrape.BlockedError):
+            scrape.main(self.args())
+
+    def test_limited_run_keeps_other_contests_in_index(self):
+        scrape.Fetcher = FakeFetcher
+        self.out.mkdir(parents=True)
+        foreign = {"id": "2018_AMC_10B_1", "contest_id": "2018_AMC_10B", "year": 2018, "fall": False, "version": "B", "number": 1}
+        (self.out / "index.json").write_text(json.dumps({
+            "contests": [{"id": "2018_AMC_10B", "year": 2018, "fall": False, "version": "B"},
+                         {"id": "2019_AMC_10A", "year": 2019, "fall": False, "version": "A", "stale": True}],
+            "problems": [foreign, {"id": "2019_AMC_10A_99", "contest_id": "2019_AMC_10A", "year": 2019, "fall": False, "version": "A", "number": 99}],
+        }))
+        self.assertEqual(scrape.main(self.args("--contests", "2019_AMC_10A")), 0)
+        index = json.loads((self.out / "index.json").read_text())
+        self.assertEqual([c["id"] for c in index["contests"]], ["2018_AMC_10B", "2019_AMC_10A"])
+        self.assertNotIn("stale", index["contests"][1])  # the rescraped contest replaced its old entry
+        ids = [p["id"] for p in index["problems"]]
+        self.assertIn("2018_AMC_10B_1", ids)
+        self.assertNotIn("2019_AMC_10A_99", ids)
+        self.assertEqual(len(ids), 1 + 24)
+
+
+class StubResponse:
+    def __init__(self, status, body, json_ok=True):
+        self.status_code, self.text, self._json_ok = status, body, json_ok
+        self.headers = {}
+        self.content = body.encode()
+
+    def json(self):
+        if not self._json_ok:
+            raise ValueError("not json")
+        return json.loads(self.text)
+
+    def raise_for_status(self):
+        if self.status_code >= 400:
+            raise RuntimeError(f"HTTP {self.status_code}")
+
+
+class CacheBehaviour(unittest.TestCase):
+    """The real Fetcher with a stubbed HTTP session."""
+
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        self.fetcher = scrape.Fetcher(Path(self.tmp.name), 0.0, False)
+        self.replies = []
+        self.fetcher.session.get = lambda url, params=None, timeout=None: self.replies.pop(0)
+        self._sleep = scrape.time.sleep
+        scrape.time.sleep = lambda s: None
+
+    def tearDown(self):
+        scrape.time.sleep = self._sleep
+        self.tmp.cleanup()
+
+    def test_only_real_pages_are_cached(self):
+        self.replies = [StubResponse(200, json.dumps({"error": {"code": "missingtitle"}}))]
+        self.assertIsNone(self.fetcher.parse_page("Nope"))
+        self.assertEqual(list(Path(self.tmp.name).glob("*.json")), [])  # missing page: not cached
+        self.replies = [StubResponse(200, json.dumps({"parse": {"title": "X", "text": "<p>x</p>"}}))]
+        self.assertEqual(self.fetcher.parse_page("X")["title"], "X")
+        self.assertEqual(len(list(Path(self.tmp.name).glob("*.json"))), 1)
+        self.assertEqual(self.fetcher.parse_page("X")["title"], "X")  # served from cache, no reply consumed
+        self.assertFalse(list(Path(self.tmp.name).glob("*.tmp")))
+
+    def test_transient_error_is_not_cached_and_non_json_is_retried(self):
+        self.replies = [StubResponse(200, json.dumps({"error": {"code": "readonly"}}))]
+        with self.assertRaises(RuntimeError):
+            self.fetcher.parse_page("Y")
+        self.assertEqual(list(Path(self.tmp.name).glob("*.json")), [])
+        self.replies = [StubResponse(200, "<html>challenge</html>", json_ok=False),
+                        StubResponse(503, "busy"),
+                        StubResponse(200, json.dumps({"parse": {"title": "Y", "text": ""}}))]
+        self.assertEqual(self.fetcher.parse_page("Y")["title"], "Y")
+
+    def test_corrupt_cache_file_is_refetched(self):
+        (Path(self.tmp.name) / "Z.json").write_text("{truncated")
+        self.replies = [StubResponse(200, json.dumps({"parse": {"title": "Z", "text": ""}}))]
+        self.assertEqual(self.fetcher.parse_page("Z")["title"], "Z")
+
+    def test_cloudflare_1007_raises_blocked(self):
+        self.replies = [StubResponse(403, "error code: 1007")]
+        with self.assertRaises(scrape.BlockedError):
+            self.fetcher.parse_page("W")

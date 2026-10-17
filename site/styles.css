@@ -75,6 +75,7 @@ main { flex: 1; width: 100%; max-width: 880px; margin: 0 auto; padding: 20px 16p
 .statement .diagram, .solution .diagram { display: block; margin: 10px auto; }
 .tex-display { display: block; margin: 0.6em 0; overflow-x: auto; }
 .katex { font-size: 1.05em; }
+.tex-error { font-family: ui-monospace, monospace; font-size: 0.9em; color: #b3261e; }
 .katex-display { margin: 0.4em 0; }
 table { border-collapse: collapse; margin: 0.6em 0; }
 td, th { border: 1px solid var(--line); padding: 3px 8px; }

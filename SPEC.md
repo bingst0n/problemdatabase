@@ -27,9 +27,9 @@ Per problem page, e.g. `2019 AMC 10A Problems/Problem 13`:
 
 | Field | Where it comes from |
 |---|---|
-| Statement | The section under the `Problem` heading, up to the first solution heading. Includes any `Diagram`/`Note` sections that appear before the solutions. |
+| Statement | The section under the `Problem` heading, up to the first heading that reads like a solution (`Solution…`, `Video Solution…`, `Answer`, `Method`). Includes any `Diagram`/`Note`/`Remark` sections that appear before the solutions. Redirect notices ("…so both problems redirect to this page") are dropped. |
 | Answer choices | The LaTeX line containing `(A)` … `(E)`, split into five choices. If the split fails, the raw LaTeX is kept and shown as one line. |
-| Solutions | Every section from the first `Solution…` heading up to `See Also`, in order, with its heading text (so "Solution 2 (Casework)" and "Video Solution by X" keep their names). |
+| Solutions | Every section from the first `Solution…` heading onward, in order, with its heading text (so "Solution 2 (Casework)" and "Video Solution by X" keep their names). A single `Solutions` section with `Solution 1`, `Solution 2` sub-headings is split into one entry per sub-heading. `See Also` and the nav box are dropped; a solution an editor appended below them is still kept. |
 | Categories | The page's MediaWiki categories (`Introductory Geometry Problems`, etc.). |
 | Correct answer | The contest's `… Answer Key` page. The first `\boxed{…(D)…}` in the solutions is used as a cross-check and as a fallback when the key is missing. |
 | Redirects | AMC 10 problems shared with the AMC 12 redirect to the AMC 12 page. Redirects are followed and the original title is recorded. |
@@ -138,13 +138,17 @@ when a problem is opened:
 {"2019_AMC_10A_13": [{"heading": "Solution 1", "html": "<p>…</p>"}, …]}
 ```
 
-`site/data/report.json` — what the scrape could not do: missing pages,
-problems whose choices did not split, answer-key/boxed-answer disagreements,
-uncategorized problems. Meant to be read after each scrape.
+`site/data/report.json` — what the scrape could not do: skipped contests,
+missing pages, pages that failed to parse or download (`failed_problems`,
+`failed_contests`), problems whose choices did not split, answer-key/boxed
+disagreements, failed image downloads, guessed and uncategorized problems.
+Meant to be read after each scrape.
 
 Stored HTML is a whitelist of plain tags (`p, ul, ol, li, table, …`). Math is
 `<span class="tex">…</span>` (inline) or `<div class="tex-display">…</div>`
-(display) holding raw LaTeX; diagrams are `<img class="diagram">`.
+(display) holding raw LaTeX; diagrams are `<img class="diagram">`. Links
+survive only with absolute `http(s)` targets; in-page anchors and other
+schemes are reduced to their text so they cannot trigger the site's router.
 
 ## Search
 
@@ -188,16 +192,25 @@ match opens immediately.
 - Endpoint: `api.php?action=parse&page=<title>&prop=text|categories&redirects=1`.
 - Descriptive User-Agent; at most a few requests per second (default 4
   workers, 0.25 s minimum spacing); exponential backoff on 429/5xx.
-- Raw API responses cached under `scraper/cache/` (git-ignored) so re-runs
-  and parser fixes do not re-fetch. Images already in `site/data/img/` are
+- Raw API responses for pages that exist are cached under `scraper/cache/`
+  (git-ignored) so re-runs and parser fixes do not re-fetch; missing pages
+  and API errors are never cached, so a contest that appears on the wiki
+  later is picked up by the next run. Images already in `site/data/img/` are
   not re-downloaded.
+- One bad page costs one problem, not the run: the failure is listed under
+  `failed_problems` (or `failed_contests`) in `report.json` and the rest
+  continues. Only the Cloudflare IP block stops the run. Output files are
+  written atomically.
 - AoPS is behind Cloudflare and refuses many cloud/datacenter IP ranges with
   HTTP 403 `error code: 1007`. The scraper detects that and says so; it has to
   run from an ordinary home connection.
-- A contest whose answer-key page is missing (e.g. a future year) is skipped
-  and reported.
+- A contest with neither an answer-key page nor a Problem 1 page (e.g. a
+  future year) is skipped and reported. A contest whose key alone is missing
+  is still scraped, with answers taken from the solutions' `\boxed{}` and the
+  contest listed under `missing_answer_keys`.
 - `python3 scraper/scrape.py` scrapes everything; `--years 2019-2020` or
-  `--contests 2019_AMC_10A` limit it; `--force` ignores the cache;
+  `--contests 2019_AMC_10A` limit it, refreshing only those contests and
+  keeping the rest of an existing `index.json`; `--force` ignores the cache;
   `--no-images` keeps AoPS image URLs instead of downloading.
 
 ## Decisions

@@ -44,6 +44,7 @@ CATEGORY_KEYWORDS = [
     ("algebra", "algebra"),
 ]
 CATEGORY_ORDER = ["algebra", "geometry", "number_theory", "combinatorics", "probability", "other"]
+_CONTEST_CATEGORY = re.compile(r"(?:\d{4}\s+(?:fall\s+|spring\s+)?)?(?:amc|aime|aimo|ajhsme|ahsme|usa|usamo|usajmo|imo|hmmt|arml|mathcounts|putnam|jbmo)\b")
 
 _FACTORY = BeautifulSoup("", "html.parser")
 
@@ -65,6 +66,7 @@ _LEADING_SPACING = re.compile(r"^(?:" + _SPACING_TOKEN + r")+")
 _TRAILING_SPACING = re.compile(r"(?:" + _SPACING_TOKEN + r")+$")
 
 PROBLEM_HEADING = re.compile(r"^\s*problem\b", re.I)
+SOLUTION_HEADING = re.compile(r"solution|answer|video|method", re.I)
 SEE_ALSO_HEADING = re.compile(r"^\s*see\s*also\b", re.I)
 REDIRECT_NOTICE = re.compile(r"redirects? to this page|is from both the", re.I)
 
@@ -154,7 +156,10 @@ def _wrap(nodes: list) -> Tag:
 
 def _replace_img(img: Tag) -> None:
     alt = img.get("alt") or ""
-    src = absolutize(img.get("src") or "")
+    src = absolutize((img.get("src") or "").strip())
+    if not src.lower().startswith(("http://", "https://")) and not is_math_img(img):
+        img.decompose()
+        return
     if is_asy(img):
         new = _FACTORY.new_tag("img", src=src, alt="diagram")
         new["class"] = "diagram"
@@ -210,7 +215,11 @@ def sanitize(tag: Tag) -> None:
                         child.unwrap()
                         continue
             if "href" in attrs:
-                attrs["href"] = absolutize(attrs["href"])
+                href = absolutize((attrs["href"] or "").strip())
+                if not href.lower().startswith(("http://", "https://")):
+                    child.unwrap()  # in-page anchors, javascript:, mailto: ... keep the text only
+                    continue
+                attrs["href"] = href
             child.attrs = attrs
         else:
             child.unwrap()
@@ -249,6 +258,10 @@ def plain_text(html: str) -> str:
 
 
 # --------------------------------------------------------------------------- choices
+
+def _label_letter(m: re.Match) -> str:
+    return m.group("l1") or m.group("l2") or m.group("l3") or m.group("l4")
+
 
 def find_labels(tex: str) -> list[tuple[str, int, int]] | None:
     """Positions of (A)..(E) labels in order, or None if not all five appear."""
@@ -318,8 +331,13 @@ def extract_choices(statement_nodes: list) -> tuple[list[Choice] | None, str | N
                     parent.decompose()
                     parent = grand
             return choices, joined
-    # Could not split; return the last candidate's raw tex for display.
-    return None, candidates[-1][1]
+    # Could not split; return the raw tex from the last candidate that carries
+    # an (A) label onwards, so the whole choice line is displayed as one piece.
+    start = 0
+    for i, (_, t) in enumerate(candidates):
+        if any(_label_letter(m) == "A" for m in LABEL_RE.finditer(t)):
+            start = i
+    return None, " ".join(t for _, t in candidates[start:])
 
 
 # --------------------------------------------------------------------------- boxed answer
@@ -379,6 +397,8 @@ def map_categories(wiki_categories: list[str]) -> list[str]:
         low = name.lower()
         if not low.endswith("problems"):
             continue  # maintenance categories etc.
+        if _CONTEST_CATEGORY.match(low):
+            continue  # "AMC 10 Problems", "2019 AMC 10A Problems": a contest, not a subject
         hit = None
         for kw, tag in CATEGORY_KEYWORDS:
             if kw in low:
@@ -414,6 +434,27 @@ def _drop_redirect_notice(nodes: list) -> list:
     return out
 
 
+def _split_nested_solutions(heading: str, nodes: list) -> list[tuple[str, list]]:
+    """A page written as one "Solutions" h2 with "Solution 1", "Solution 2" h3
+    children becomes one section per h3. Sub-headings that are not solutions
+    ("Case 1" under "Solution 2 (Casework)") leave the section alone."""
+    h3s = [n for n in nodes if isinstance(n, Tag) and n.name == "h3"]
+    if not any(SOLUTION_HEADING.search(heading_text(h)) for h in h3s):
+        return [(heading, nodes)]
+    out: list[tuple[str, list]] = []
+    cur_heading, cur_nodes = heading, []
+    for n in nodes:
+        if isinstance(n, Tag) and n.name == "h3":
+            if any(not _is_blank(x) for x in cur_nodes):
+                out.append((cur_heading, cur_nodes))
+            cur_heading, cur_nodes = heading_text(n), []
+        else:
+            cur_nodes.append(n)
+    if any(not _is_blank(x) for x in cur_nodes):
+        out.append((cur_heading, cur_nodes))
+    return out
+
+
 def parse_problem_page(html: str, wiki_categories: list[str] | None = None) -> ParsedProblem:
     soup = BeautifulSoup(html, "lxml")
     root = soup.find("div", class_="mw-parser-output") or soup.body or soup
@@ -430,20 +471,28 @@ def parse_problem_page(html: str, wiki_categories: list[str] | None = None) -> P
                 statement_nodes.extend(lead)  # pages with no "Problem" heading
             continue
         if SEE_ALSO_HEADING.match(heading):
-            break
+            phase = "after_see_also"
+            continue
+        if phase == "after_see_also":
+            # Editors sometimes append a solution below the nav box; keep it, skip the rest.
+            if SOLUTION_HEADING.search(heading):
+                solution_sections.append((heading, nodes))
+                warnings.append(f"kept section after See Also: {heading}")
+            continue
         if phase == "lead" and PROBLEM_HEADING.match(heading):
             # A real Problem heading supersedes any lead text.
             statement_nodes = [n for n in nodes]
             phase = "statement"
             continue
-        is_solution = bool(re.search(r"solution|answer|remark|note|video|method", heading, re.I))
-        if phase in ("lead", "statement") and not is_solution:
-            statement_nodes.extend(nodes)  # e.g. a "Diagram" section before the solutions
-            if phase == "lead":
-                phase = "statement"
+        if phase in ("lead", "statement") and not SOLUTION_HEADING.search(heading):
+            statement_nodes.extend(nodes)  # e.g. a "Diagram" or "Note" section before the solutions
+            phase = "statement"
             continue
         phase = "solutions"
         solution_sections.append((heading, nodes))
+
+    statement_nodes = _drop_redirect_notice(statement_nodes)
+    solution_sections = [part for heading, nodes in solution_sections for part in _split_nested_solutions(heading, nodes)]
 
     if not statement_nodes:
         warnings.append("no problem statement found")
@@ -509,7 +558,9 @@ def rewrite_image_srcs(html: str, mapping: dict[str, str]) -> str:
 # Keyword hints for problems the wiki has not categorized. Weights are per
 # pattern; repeated hits of one pattern count at most three times. Applied to
 # the statement plus the answer choices, lower-cased, LaTeX included.
-_GEOMETRY_NOISE = re.compile(r"perfect (?:square|cube)s?|square roots?|squared|squares? of|sum of (?:the )?squares")
+_GEOMETRY_NOISE = re.compile(
+    r"perfect (?:square|cube)s?|square roots?|squared|(?:sum|difference) of (?:the |two |three )?squares"
+    r"|square numbers?|(?:two|three|four|consecutive|distinct|positive|odd|even) squares")
 CATEGORY_HINTS: dict[str, list[tuple[str, int]]] = {
     "geometry": [
         (r"\\triangle|\btriangles?\b", 3), (r"\bcircles?\b|\bcircular\b|\bsemicircle", 3),
@@ -525,14 +576,15 @@ CATEGORY_HINTS: dict[str, list[tuple[str, int]]] = {
         (r"\^\s*\{?\\circ|\bdegrees?\b", 2), (r"\bsegments?\b|\\overline", 2),
         (r"\bcollinear|\bcongruent|\bsimilar\b", 2), (r"\bcoordinate|\bplane\b|\bx-axis|\by-axis", 2),
         (r"\bdistance\b|\blength\b", 1), (r"\blines?\b|\bpoints?\b", 1), (r"\\pi\b", 1),
-        (r"\breflect|\brotat|\bslope\b", 1),
+        (r"\breflect|\brotat|\bslope\b", 1), (r"\bshaded\b|\bregions?\b", 2),
     ],
     "number_theory": [
         (r"\bdivisible|\bdivisors?\b|\bdivides\b|\bdivisibility", 3), (r"\bprimes?\b", 3),
         (r"\bfactors?\b|\bfactorization", 2), (r"\bremainder|\bmodulo|\bmod\b|\\pmod|\\equiv", 3),
         (r"\bdigits?\b", 3), (r"\bgcd|\blcm|\bgreatest common|\bleast common|\bcommon multiple|\bcommon divisor", 3),
-        (r"\bmultiples? of\b", 2), (r"\bin base\b|\bbase[- ]\d+|\bbase[- ](?:ten|two|seven|eight)", 3),
-        (r"\bperfect (?:square|cube|power)", 3), (r"\bpalindrome", 3),
+        (r"\bmultiples? of\b", 2),
+        (r"\bin base\b|\bbase-\d+\b|\bbase (?:ten|two|three|four|five|six|seven|eight|nine|twelve|sixteen)\b", 3),
+        (r"\bperfect (?:square|cube|power)|\b(?:sum|difference) of (?:two |the )?squares", 3), (r"\bpalindrome", 3),
         (r"\b(?:units|tens|hundreds|last|leading) digit", 3), (r"\brelatively prime|\bcoprime", 3),
         (r"\bpositive integers?\b|\bintegers?\b", 1), (r"\bodd\b|\beven\b", 1), (r"\bconsecutive", 1),
         (r"\bsum of (?:the |its )?digits|\bdigit sum", 3), (r"\d!", 1),
@@ -542,6 +594,7 @@ CATEGORY_HINTS: dict[str, list[tuple[str, int]]] = {
         (r"\barrange|\barrangements?\b", 3), (r"\bpermutation|\bcombination", 3),
         (r"\bchoose|\bchosen|\bselect|\bselected", 2),
         (r"\bcommittee|\bsubsets?\b|\bhandshake|\btournament|\bseat", 3), (r"\bdistinct\b", 1),
+        (r"\bguarantee|\bensure|\bpigeonhole|\bworst case", 3),
         (r"\bpaths?\b|\broutes?\b", 2), (r"\bgrid\b", 1), (r"\bcolou?r|\bpainted", 2),
         (r"\\binom|\\dbinom|\\choose", 3), (r"\bsequences? of\b|\bstrings?\b|\bbinary\b", 2),
         (r"\bcount\b|\bcounting", 2), (r"\bhow many\b", 1), (r"\bat least one\b", 1),
@@ -550,18 +603,20 @@ CATEGORY_HINTS: dict[str, list[tuple[str, int]]] = {
     ],
     "probability": [
         (r"\bprobabilit", 5), (r"\brandom|\bat random", 4), (r"\bexpected (?:value|number)", 4),
-        (r"\bchance\b|\blikely\b|\bodds\b", 3), (r"\bfair\b|\bcoins?\b|\bflip|\btoss", 2),
-        (r"\bdice\b|\bdie\b|\brolled|\brolls?\b", 3), (r"\bdeck\b|\bcards?\b|\bdrawn\b|\bdraws?\b", 2),
+        (r"\bchance\b|\blikely\b|\bodds\b", 3), (r"\bfair (?:coin|die|dice)|\bflip|\btoss", 3),
+        (r"\bcoins?\b", 1), (r"\bdice\b|\bdie\b|\brolled|\brolls?\b", 3),
+        (r"\bdeck\b|\bcards?\b", 2), (r"\bdrawn\b|\bdraws?\b", 1),
         (r"\bspinner|\bmarbles?\b|\bballs?\b|\bbag\b|\burn\b", 1),
     ],
     "algebra": [
         (r"\bequations?\b|\bsolve\b|\bsolutions?\b", 2), (r"\bpolynomial|\broots?\b|\bquadratic|\bcubic\b", 3),
         (r"\bfunction|\bf\s*\(", 3),
-        (r"\b(?:arithmetic|geometric) (?:sequence|progression|series)|\bsequence\b|\bseries\b", 3),
+        (r"\b(?:arithmetic|geometric) (?:sequence|progression|series)|\bsequence\b", 3),
         (r"\bmean\b|\bmedian|\bmode\b|\baverage|\bstandard deviation", 3), (r"\bpercent|%", 3),
         (r"\bspeed|\brate\b|\bmiles per hour|\bmph\b|\bper hour|\bminutes\b|\bhours\b", 2),
         (r"\bages?\b|\byears old|\bolder|\byounger", 3), (r"\bcost|\bprice|\bdollars|\bcents|\$\d", 3),
-        (r"\bratio\b|\bproportion", 2), (r"\blinear|\bexponents?\b|\blogarithm|\\log\b|\\ln\b", 3),
+        (r"\bnickels?\b|\bdimes?\b|\bquarters?\b|\bpenn(?:y|ies)\b", 3),
+        (r"\bratio\b|\bproportion", 2), (r"\blinear|\bexponents?\b|\blogarithm|\\log(?![a-z])|\\ln(?![a-z])", 3),
         (r"\\sqrt", 1), (r"\breal numbers?\b|\breal\b", 2), (r"\babsolute value|\\lvert|\\left\||\|x", 2),
         (r"\binequalit", 2), (r"\bsystem of\b", 2),
         (r"\bminimum|\bmaximum|\b(?:largest|smallest|least|greatest) possible", 1),
@@ -571,8 +626,8 @@ CATEGORY_HINTS: dict[str, list[tuple[str, int]]] = {
     ],
     "other": [
         (r"\\sin\b|\\cos\b|\\tan\b|\bsine\b|\bcosine\b|\btrigonometr", 4),
-        (r"\bknight|\bknave|\bliar|\balways lies|\balways tells|\btruth", 4),
-        (r"\blogic\b|\bstatements? (?:is|are) (?:true|false)", 3),
+        (r"\bknights? and knaves|\bknaves?\b|\bliars?\b|\balways lies|\balways tells? the truth|\btruth-?tellers?\b", 4),
+        (r"\blogic\b", 3),
     ],
 }
 _HINTS_COMPILED = {cat: [(re.compile(pat), w) for pat, w in hints] for cat, hints in CATEGORY_HINTS.items()}
@@ -590,11 +645,12 @@ def guess_categories(text: str, has_diagram: bool = False) -> list[str]:
         for pat, w in hints:
             n = len(pat.findall(hay))
             if n:
-                total += w * min(n, 3)
+                total += w * min(n, 3 if w >= 2 else 2)  # weak words cannot clear the threshold alone
         scores[cat] = total
     if has_diagram:
-        scores["geometry"] += 4
-    best = max(scores, key=lambda c: scores[c])
+        scores["geometry"] += 2
+    # Ties go to the more specific subject; geometry's catch-alls make it the last resort.
+    best = max(["algebra", "number_theory", "combinatorics", "probability", "other", "geometry"], key=lambda c: scores[c])
     if scores[best] < 3:
         return []
     out = [best]

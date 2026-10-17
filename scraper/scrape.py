@@ -43,6 +43,18 @@ USER_AGENT = (
     "https://github.com/bingst0n/problemdatabase)"
 )
 PROBLEMS_PER_CONTEST = 25
+RETRY_STATUSES = (429, 500, 502, 503, 504, 520, 521, 522, 523, 524)
+
+
+class BlockedError(RuntimeError):
+    """AoPS refuses this client outright; retrying is pointless."""
+
+
+def write_json(path: Path, obj, indent: int | None = None) -> None:
+    """Atomic JSON write: a killed run never leaves a truncated file behind."""
+    tmp = path.with_name(path.name + ".tmp")
+    tmp.write_text(json.dumps(obj, ensure_ascii=False, indent=indent), encoding="utf-8")
+    tmp.replace(path)
 
 
 class Fetcher:
@@ -78,11 +90,16 @@ class Fetcher:
         """action=parse for a page. Returns the `parse` object, or None if the
         page does not exist."""
         path = self._cache_path(title)
+        data = None
         if path.exists() and not self.force:
-            data = json.loads(path.read_text(encoding="utf-8"))
-        else:
+            try:
+                data = json.loads(path.read_text(encoding="utf-8"))
+            except ValueError:
+                data = None  # truncated cache file from an interrupted run: refetch
+        if data is None:
             data = self._request(title)
-            path.write_text(json.dumps(data, ensure_ascii=False), encoding="utf-8")
+            if "parse" in data:
+                write_json(path, data)  # only real pages are cached; errors and missing pages are re-asked
         if "error" in data:
             code = data["error"].get("code")
             if code in ("missingtitle", "nosuchpageid", "invalidtitle"):
@@ -113,7 +130,7 @@ class Fetcher:
                 time.sleep(delay)
                 delay *= 2
                 continue
-            if r.status_code in (429, 500, 502, 503, 504):
+            if r.status_code in RETRY_STATUSES:
                 retry_after = r.headers.get("Retry-After")
                 sleep_for = float(retry_after) if retry_after and retry_after.isdigit() else delay
                 print(f"  HTTP {r.status_code} on {title!r}; retrying in {sleep_for:.0f}s", file=sys.stderr)
@@ -121,11 +138,17 @@ class Fetcher:
                 delay *= 2
                 continue
             if r.status_code == 403 and "error code: 1007" in r.text:
-                raise RuntimeError(
+                raise BlockedError(
                     "AoPS (Cloudflare) refuses this IP address: HTTP 403 'error code: 1007'. "
                     "Run the scraper from an ordinary home connection, not a cloud/datacenter host.")
             r.raise_for_status()
-            return r.json()
+            try:
+                return r.json()
+            except ValueError:
+                print(f"  non-JSON reply for {title!r}; retrying in {delay:.0f}s", file=sys.stderr)
+                time.sleep(delay)
+                delay *= 2
+                continue
         raise RuntimeError(f"gave up fetching {title!r}")
 
     def fetch_image(self, url: str, img_dir: Path) -> str | None:
@@ -150,16 +173,24 @@ class Fetcher:
                 time.sleep(delay)
                 delay *= 2
                 continue
-            if r.status_code in (429, 500, 502, 503, 504):
+            if r.status_code in RETRY_STATUSES:
                 time.sleep(delay)
                 delay *= 2
                 continue
             if r.status_code != 200 or not r.content:
                 print(f"  image HTTP {r.status_code} {url}", file=sys.stderr)
                 return None
-            tmp = path.with_suffix(path.suffix + ".part")
-            tmp.write_bytes(r.content)
-            tmp.replace(path)
+            # Unique temp name per thread: two workers fetching the same URL must not share one .part file.
+            tmp = path.with_name(f"{name}.{threading.get_ident()}.part")
+            try:
+                tmp.write_bytes(r.content)
+                tmp.replace(path)
+            except OSError as e:
+                tmp.unlink(missing_ok=True)
+                if path.exists() and path.stat().st_size > 0:
+                    return name  # another worker finished first; same bytes
+                print(f"  image write failed {url}: {e}", file=sys.stderr)
+                return None
             with self._lock:
                 self.images_downloaded += 1
             return name
@@ -192,90 +223,113 @@ def scrape_contest(contest: Contest, fetcher: Fetcher, bands: list[dict], report
     problems: list[dict] = []
     solutions: dict[str, list[dict]] = {}
     for n in range(1, PROBLEMS_PER_CONTEST + 1):
-        title = contest.problem_title(n)
-        page = fetcher.parse_page(title)
         pid = contest.problem_id(n)
-        if page is None:
-            report["missing_problems"].append(pid)
+        try:
+            result = scrape_problem(contest, n, fetcher, bands, report, overrides, img_dir, image_manifest, lock,
+                                    answer_key.get(n))
+        except BlockedError:
+            raise
+        except Exception as e:  # one bad page must not end a long run
+            print(f"  {pid} FAILED: {e!r}", file=sys.stderr)
+            with lock:
+                report["failed_problems"].append({"problem": pid, "error": repr(e)})
             continue
-        cats = [c["category"] if isinstance(c, dict) else str(c) for c in page.get("categories", [])]
-        parsed = parse_problem_page(page["text"], cats)
+        if result is None:
+            with lock:
+                report["missing_problems"].append(pid)
+            continue
+        problem, solution_list = result
+        problems.append(problem)
+        solutions[pid] = solution_list
+    return problems, solutions
 
-        final_title = page.get("title") or title
-        redirected_to = final_title if final_title != title else None
 
-        key_answer = answer_key.get(n)
-        answer = key_answer or parsed.boxed_answer
-        source = "answer_key" if key_answer else ("boxed" if parsed.boxed_answer else None)
+def scrape_problem(contest: Contest, n: int, fetcher: Fetcher, bands: list[dict], report: dict,
+                   overrides: dict[str, list[str]], img_dir: Path | None, image_manifest: dict[str, str],
+                   lock: threading.Lock, key_answer: str | None) -> tuple[dict, list[dict]] | None:
+    """One problem page -> (index entry, solutions). None if the page is missing."""
+    title = contest.problem_title(n)
+    page = fetcher.parse_page(title)
+    pid = contest.problem_id(n)
+    if page is None:
+        return None
+    cats = [c["category"] if isinstance(c, dict) else str(c) for c in page.get("categories", [])]
+    parsed = parse_problem_page(page["text"], cats)
+
+    final_title = page.get("title") or title
+    redirected_to = final_title if final_title != title else None
+
+    answer = key_answer or parsed.boxed_answer
+    source = "answer_key" if key_answer else ("boxed" if parsed.boxed_answer else None)
+    with lock:
         if key_answer and parsed.boxed_answer and key_answer != parsed.boxed_answer:
             report["answer_mismatches"].append({"problem": pid, "answer_key": key_answer, "boxed": parsed.boxed_answer})
         if answer is None:
             report["missing_answers"].append(pid)
         if parsed.choices is None:
             report["unsplit_choices"].append(pid)
-        categories, category_source = parsed.categories, ("wiki" if parsed.categories else None)
-        if pid in overrides:
-            categories, category_source = list(overrides[pid]), "override"
-        elif not categories:
-            choice_text = " ".join(c.tex for c in parsed.choices) if parsed.choices else (parsed.choices_tex or "")
-            categories = guess_categories(parsed.statement_text + " " + choice_text,
-                                          has_diagram='class="diagram"' in parsed.statement_html)
-            category_source = "guessed" if categories else None
-        if category_source == "guessed":
-            report["guessed_categories"].append({"problem": pid, "categories": categories})
-        if not categories:
-            report["uncategorized"].append(pid)
-
-        statement_html = parsed.statement_html
-        solution_list = [asdict(s) for s in parsed.solutions]
-        if img_dir is not None:
-            urls = image_urls(statement_html)
-            for s in solution_list:
-                urls += [u for u in image_urls(s["html"]) if u not in urls]
-            mapping: dict[str, str] = {}
-            for u in urls:
-                name = fetcher.fetch_image(u, img_dir)
-                if name:
-                    mapping[u] = "data/img/" + name
-                    with lock:
-                        image_manifest[name] = u
-                else:
-                    with lock:
-                        report["image_failures"].append({"problem": pid, "url": u})
-            statement_html = rewrite_image_srcs(statement_html, mapping)
-            for s in solution_list:
-                s["html"] = rewrite_image_srcs(s["html"], mapping)
         for w in parsed.warnings:
             if "choices" in w:
                 continue
             report["warnings"].append({"problem": pid, "warning": w})
 
-        rating, label = difficulty_for(n, bands)
-        problems.append({
-            "id": pid,
-            "contest_id": contest.id,
-            "year": contest.year,
-            "fall": contest.fall,
-            "version": contest.version,
-            "number": n,
-            "title": f"{contest.name} Problem {n}",
-            "url": page_url(title),
-            "redirected_to": redirected_to,
-            "statement_html": statement_html,
-            "statement_text": parsed.statement_text,
-            "choices": [asdict(c) for c in parsed.choices] if parsed.choices else None,
-            "choices_tex": parsed.choices_tex,
-            "answer": answer,
-            "answer_source": source,
-            "difficulty": rating,
-            "difficulty_label": label,
-            "categories": categories,
-            "category_source": category_source,
-            "wiki_categories": parsed.wiki_categories,
-            "solution_count": len(parsed.solutions),
-        })
-        solutions[pid] = solution_list
-    return problems, solutions
+    categories, category_source = parsed.categories, ("wiki" if parsed.categories else None)
+    if pid in overrides:
+        categories, category_source = list(overrides[pid]), "override"
+    elif not categories:
+        categories = guess_categories(parsed.statement_text, has_diagram='class="diagram"' in parsed.statement_html)
+        category_source = "guessed" if categories else None
+    with lock:
+        if category_source == "guessed":
+            report["guessed_categories"].append({"problem": pid, "categories": categories})
+        if not categories:
+            report["uncategorized"].append(pid)
+
+    statement_html = parsed.statement_html
+    solution_list = [asdict(s) for s in parsed.solutions]
+    if img_dir is not None:
+        urls = image_urls(statement_html)
+        for s in solution_list:
+            urls += [u for u in image_urls(s["html"]) if u not in urls]
+        mapping: dict[str, str] = {}
+        for u in urls:
+            name = fetcher.fetch_image(u, img_dir)
+            if name:
+                mapping[u] = "data/img/" + name
+                with lock:
+                    image_manifest[name] = u
+            else:
+                with lock:
+                    report["image_failures"].append({"problem": pid, "url": u})
+        statement_html = rewrite_image_srcs(statement_html, mapping)
+        for s in solution_list:
+            s["html"] = rewrite_image_srcs(s["html"], mapping)
+
+    rating, label = difficulty_for(n, bands)
+    problem = {
+        "id": pid,
+        "contest_id": contest.id,
+        "year": contest.year,
+        "fall": contest.fall,
+        "version": contest.version,
+        "number": n,
+        "title": f"{contest.name} Problem {n}",
+        "url": page_url(title),
+        "redirected_to": redirected_to,
+        "statement_html": statement_html,
+        "statement_text": parsed.statement_text,
+        "choices": [asdict(c) for c in parsed.choices] if parsed.choices else None,
+        "choices_tex": parsed.choices_tex,
+        "answer": answer,
+        "answer_source": source,
+        "difficulty": rating,
+        "difficulty_label": label,
+        "categories": categories,
+        "category_source": category_source,
+        "wiki_categories": parsed.wiki_categories,
+        "solution_count": len(solution_list),
+    }
+    return problem, solution_list
 
 
 def parse_years(spec: str) -> tuple[int, int]:
@@ -328,6 +382,8 @@ def main(argv: list[str] | None = None) -> int:
         "uncategorized": [],
         "guessed_categories": [],
         "image_failures": [],
+        "failed_problems": [],
+        "failed_contests": [],
         "warnings": [],
     }
 
@@ -358,9 +414,16 @@ def main(argv: list[str] | None = None) -> int:
 
     def work(c: Contest) -> None:
         t0 = time.monotonic()
-        problems, solutions = scrape_contest(c, fetcher, bands, report, overrides, img_dir, image_manifest, lock)
-        (out_dir / "solutions" / f"{c.id}.json").write_text(
-            json.dumps(solutions, ensure_ascii=False), encoding="utf-8")
+        try:
+            problems, solutions = scrape_contest(c, fetcher, bands, report, overrides, img_dir, image_manifest, lock)
+        except BlockedError:
+            raise
+        except Exception as e:
+            print(f"{c.name}: FAILED: {e!r}", file=sys.stderr)
+            with lock:
+                report["failed_contests"].append({"contest": c.id, "error": repr(e)})
+            return
+        write_json(out_dir / "solutions" / f"{c.id}.json", solutions)
         with lock:
             all_problems.extend(problems)
             contest_meta.append({"id": c.id, "name": c.name, "year": c.year, "fall": c.fall,
@@ -368,7 +431,25 @@ def main(argv: list[str] | None = None) -> int:
         print(f"{c.name}: {len(problems)} problems in {time.monotonic() - t0:.1f}s", file=sys.stderr)
 
     with ThreadPoolExecutor(max_workers=max(1, args.workers)) as pool:
-        list(pool.map(work, live))
+        futures = [pool.submit(work, c) for c in live]
+        for f in futures:
+            f.result()  # BlockedError (and nothing else) propagates and ends the run
+
+    # Keep contests from an earlier run that this run did not (re)scrape, so a
+    # --years/--contests run refreshes its contests without emptying the index.
+    index_path = out_dir / "index.json"
+    done = {c["id"] for c in contest_meta}
+    if index_path.exists():
+        try:
+            old = json.loads(index_path.read_text(encoding="utf-8"))
+        except ValueError:
+            old = {}
+        kept_contests = [c for c in old.get("contests", []) if c.get("id") not in done]
+        kept_problems = [p for p in old.get("problems", []) if p.get("contest_id") not in done]
+        if kept_contests:
+            print(f"keeping {len(kept_contests)} contests from the previous index.json", file=sys.stderr)
+        contest_meta.extend(kept_contests)
+        all_problems.extend(kept_problems)
 
     def sort_key(p: dict):
         return (p["year"], p["fall"], p["version"], p["number"])
@@ -384,11 +465,10 @@ def main(argv: list[str] | None = None) -> int:
         "contests": contest_meta,
         "problems": all_problems,
     }
-    (out_dir / "index.json").write_text(json.dumps(index, ensure_ascii=False), encoding="utf-8")
+    write_json(index_path, index)
     if img_dir is not None:
-        (out_dir / "images.json").write_text(
-            json.dumps(dict(sorted(image_manifest.items())), ensure_ascii=False, indent=0), encoding="utf-8")
-    (out_dir / "report.json").write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
+        write_json(out_dir / "images.json", dict(sorted(image_manifest.items())), indent=0)
+    write_json(out_dir / "report.json", report, indent=2)
 
     print(
         f"\n{len(all_problems)} problems from {len(contest_meta)} contests "
@@ -399,6 +479,7 @@ def main(argv: list[str] | None = None) -> int:
         f"  missing answers: {len(report['missing_answers'])}\n"
         f"  answer mismatches (key vs boxed): {len(report['answer_mismatches'])}\n"
         f"  missing problem pages: {len(report['missing_problems'])}\n"
+        f"  failed: {len(report['failed_problems'])} problems, {len(report['failed_contests'])} contests\n"
         f"  details: {out_dir / 'report.json'}",
         file=sys.stderr,
     )

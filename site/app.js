@@ -17,7 +17,6 @@
     macros: {
       '\\overarc': '\\overset{\\frown}{#1}',
       '\\emph': '\\textit{#1}',
-      '\\degree': '^{\\circ}',
     },
   };
 
@@ -55,7 +54,14 @@
       if (node.dataset.rendered) continue;
       const tex = node.textContent;
       node.dataset.rendered = '1';
-      katex.render(tex, node, Object.assign({}, KATEX_OPTS, { displayMode: node.classList.contains('tex-display') }));
+      try {
+        katex.render(tex, node, Object.assign({}, KATEX_OPTS, { displayMode: node.classList.contains('tex-display') }));
+      } catch (e) {
+        // throwOnError:false only covers parse errors; anything else falls back to the raw LaTeX.
+        node.textContent = tex;
+        node.classList.add('tex-error');
+        node.title = e.message;
+      }
     }
     for (const a of $$('a[href^="http"]', root)) {
       a.target = '_blank';
@@ -77,7 +83,7 @@
       p._search = [
         p.title, p.statement_text || '', cats.map(c => CATEGORY_LABELS[c] || c).join(' '),
         p.difficulty_label || '',
-      ].join(' ').toLowerCase();
+      ].join(' ').toLowerCase().replace(/[’']/g, '');
       p._contestName = contestName(p);
       state.byId.set(p.id, p);
     }
@@ -87,6 +93,7 @@
   // Plain-text preview of a statement: drop LaTeX commands so snippets read naturally.
   function snippetText(t) {
     return (t || '')
+      .replace(/\\([$%&#_{}])/g, '$1')
       .replace(/\^\{?\\circ\}?/g, '°')
       .replace(/\\(?:left|right|,|;|!|quad|qquad)/g, '')
       .replace(/\\[a-zA-Z]+\s*/g, '')
@@ -282,12 +289,13 @@
     art.replaceChildren();
     if (!p) {
       art.append(h('p', { class: 'status' }, 'No problem with id ', h('code', {}, id), '. ', h('a', { href: '#/' }, 'Back to all problems')));
+      document.title = 'AMC 10 Problem Database';
       show('problem');
       return;
     }
-    const siblings = state.problems.filter(x => x.contest_id === p.contest_id);
-    const prev = siblings.find(x => x.number === p.number - 1);
-    const next = siblings.find(x => x.number === p.number + 1);
+    const siblings = state.problems.filter(x => x.contest_id === p.contest_id).sort((a, b) => a.number - b.number);
+    const prev = siblings.filter(x => x.number < p.number).pop();   // nearest, so a missing page does not break the chain
+    const next = siblings.find(x => x.number > p.number);
 
     const back = state.lastQuery ? '#/search/' + encodeURIComponent(state.lastQuery) : '#/';
     art.append(h('nav', { class: 'crumbs' }, h('a', { href: back }, '← Back to results')));
@@ -329,8 +337,8 @@
     let loaded = false;
     solBtn.addEventListener('click', async () => {
       if (!loaded) {
-        loaded = true;
         solBtn.disabled = true;
+        solBox.replaceChildren();
         try {
           const data = await loadSolutions(p.contest_id);
           const sols = data[p.id] || [];
@@ -339,12 +347,15 @@
             solBox.append(h('section', { class: 'solution' }, h('h3', {}, s.heading), h('div', { html: s.html })));
           }
           renderMath(solBox);
+          loaded = true;
         } catch (e) {
-          solBox.append(h('p', { class: 'unparsed' }, 'Could not load solutions (' + e.message + ').'));
+          solBox.append(h('p', { class: 'unparsed' }, 'Could not load solutions (' + e.message + '). Click the button to retry.'));
         }
         solBtn.disabled = false;
+        solBox.hidden = false;
+      } else {
+        solBox.hidden = !solBox.hidden;
       }
-      solBox.hidden = !solBox.hidden;
       solBtn.textContent = (solBox.hidden ? 'Show' : 'Hide') + ' solutions' + (count ? ' (' + count + ')' : '');
     });
     art.append(h('section', { class: 'card solutions' },
@@ -374,7 +385,13 @@
   // ------------------------------------------------------------------ routing
 
   function route() {
-    const hash = decodeURIComponent(location.hash || '');
+    let hash = location.hash || '';
+    if (hash && !hash.startsWith('#/')) return;  // an in-content anchor, not a route: leave the view alone
+    try {
+      hash = decodeURIComponent(hash);
+    } catch (e) {
+      hash = '';  // malformed percent-escape: fall back to the full list rather than a blank page
+    }
     let m;
     if ((m = hash.match(/^#\/problem\/(.+)$/))) {
       renderProblem(m[1]);
@@ -382,6 +399,7 @@
     }
     if ((m = hash.match(/^#\/search\/(.*)$/))) {
       $('#q').value = m[1];
+      document.title = 'AMC 10 Problem Database';
       renderResults(m[1]);
       return;
     }

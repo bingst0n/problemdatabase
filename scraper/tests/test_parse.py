@@ -206,3 +206,89 @@ class Contests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class SectioningVariants(unittest.TestCase):
+    def test_note_before_solutions_is_statement_and_sections_after_see_also_are_kept(self):
+        html = '''<div class="mw-parser-output"><h2><span class="mw-headline">Problem</span></h2>
+<p>Find x. <img class="latex" alt="$\\textbf{(A) } 1 \\qquad \\textbf{(B) } 2 \\qquad \\textbf{(C) } 3 \\qquad \\textbf{(D) } 4 \\qquad \\textbf{(E) } 5$"/></p>
+<h2><span class="mw-headline">Note</span></h2><p>The figure is not to scale.</p>
+<h2><span class="mw-headline">Solution 1</span></h2><p>Answer <img class="latex" alt="$\\boxed{\\textbf{(C) } 3}$"/>.</p>
+<h2><span class="mw-headline">Remark</span></h2><p>A remark.</p>
+<h2><span class="mw-headline">See Also</span></h2><table><tr><td>Preceded by</td></tr></table>
+<h2><span class="mw-headline">Video Solution</span></h2><p><a href="https://youtu.be/x">video</a></p></div>'''
+        p = parse_problem_page(html, [])
+        self.assertIn("not to scale", p.statement_text)
+        self.assertEqual([s.heading for s in p.solutions], ["Solution 1", "Remark", "Video Solution"])
+        self.assertNotIn("Preceded by", json.dumps([s.html for s in p.solutions]))
+        self.assertIn("kept section after See Also: Video Solution", p.warnings)
+        self.assertEqual(p.boxed_answer, "C")
+
+    def test_redirect_notice_under_problem_heading_is_dropped(self):
+        html = '''<div class="mw-parser-output"><h2><span class="mw-headline">Problem</span></h2>
+<p>The following problem is from both the 2019 AMC 10A #13 and 2019 AMC 12A #10, so both problems redirect to this page.</p>
+<p>Real statement.</p><h2><span class="mw-headline">Solution</span></h2><p>x</p></div>'''
+        p = parse_problem_page(html, [])
+        self.assertEqual(p.statement_text, "Real statement.")
+
+    def test_nested_solutions_are_split_by_h3_but_cases_are_not(self):
+        html = '''<div class="mw-parser-output"><h2><span class="mw-headline">Problem</span></h2><p>Q</p>
+<h2><span class="mw-headline">Solutions</span></h2>
+<h3><span class="mw-headline">Solution 1</span></h3><p>First.</p>
+<h3><span class="mw-headline">Solution 2 (Fast)</span></h3><p>Second.</p>
+<h2><span class="mw-headline">Solution 3 (Casework)</span></h2>
+<h3><span class="mw-headline">Case 1</span></h3><p>c1</p><h3><span class="mw-headline">Case 2</span></h3><p>c2</p></div>'''
+        p = parse_problem_page(html, [])
+        self.assertEqual([s.heading for s in p.solutions], ["Solution 1", "Solution 2 (Fast)", "Solution 3 (Casework)"])
+        self.assertIn("First.", p.solutions[0].html)
+        self.assertIn("<h3>Case 1</h3>", p.solutions[2].html)
+
+    def test_unsplit_choices_fallback_keeps_the_whole_line(self):
+        html = '''<div class="mw-parser-output"><h2><span class="mw-headline">Problem</span></h2>
+<p>Which figure? <img class="latex" alt="$\\textbf{(A)}$"/> <img class="asy-image" alt="[asy]a[/asy]" src="//latex.artofproblemsolving.com/a.png"/>
+<img class="latex" alt="$\\textbf{(B)}$"/> <img class="asy-image" alt="[asy]b[/asy]" src="//latex.artofproblemsolving.com/b.png"/>
+<img class="latex" alt="$\\textbf{(C)}$"/> <img class="latex" alt="$\\textbf{(D)}$"/> <img class="latex" alt="$\\textbf{(E)}$"/></p>
+<h2><span class="mw-headline">Solution</span></h2><p>x</p></div>'''
+        p = parse_problem_page(html, [])
+        self.assertIsNone(p.choices)
+        for letter in "ABCDE":
+            self.assertIn("(%s)" % letter, p.choices_tex)
+        self.assertIn("(A)", p.statement_html)  # nothing was removed from the statement
+
+    def test_fragment_and_script_links_are_unwrapped(self):
+        html = '''<div class="mw-parser-output"><h2><span class="mw-headline">Problem</span></h2>
+<p>See <a href="#Solution_2">below</a>, <a href="javascript:alert(1)">this</a>, <a href="/wiki/index.php/Circle">circle</a>
+and <img src="data:image/png;base64,AAAA" alt="x"/>.</p><h2><span class="mw-headline">Solution</span></h2><p>x</p></div>'''
+        p = parse_problem_page(html, [])
+        self.assertNotIn("#Solution_2", p.statement_html)
+        self.assertNotIn("javascript:", p.statement_html)
+        self.assertNotIn("data:", p.statement_html)
+        self.assertIn("below", p.statement_html)
+        self.assertIn('<a href="https://artofproblemsolving.com/wiki/index.php/Circle">circle</a>', p.statement_html)
+
+
+class CategoryMappingMore(unittest.TestCase):
+    def test_contest_categories_are_not_subjects(self):
+        self.assertEqual(map_categories(["AMC 10 Problems", "Introductory Geometry Problems"]), ["geometry"])
+        self.assertEqual(map_categories(["AMC 10 Problems"]), [])
+        self.assertEqual(map_categories(["2019 AMC 10A Problems", "AMC Problems"]), [])
+        self.assertEqual(map_categories(["Intermediate Number Theory Problems"]), ["number_theory"])
+
+
+class GuessCategoriesMore(unittest.TestCase):
+    def test_review_cases(self):
+        cases = [
+            ("What is the value of \\log_2 32 + \\log_{10} 1000?", ["algebra"]),
+            ("A triangle has base 10 and height 4. What is its area?", ["geometry"]),
+            ("How many positive integers less than 50 can be written as the sum of two squares?", ["number_theory"]),
+            ("Mary has 20 coins, all nickels and dimes, worth $1.65 in total. How many dimes does she have?", ["algebra"]),
+            ("A bag has 10 red and 6 blue balls. What is the smallest number of balls that must be drawn to guarantee 3 of one color?", ["combinatorics"]),
+            ("A knight is on a chessboard. In how many ways can the knight reach the opposite corner in 4 moves?", ["combinatorics"]),
+        ]
+        for text, want in cases:
+            self.assertEqual(guess_categories(text), want, text)
+
+    def test_boilerplate_and_weak_words_do_not_decide(self):
+        self.assertNotIn("other", guess_categories("Which of the following statements is true for all real numbers x and y?"))
+        self.assertEqual(guess_categories("Team A scored 3 points, then 2 points, then 4 points."), [])
+        self.assertNotIn("geometry", guess_categories("The World Series is played in 7 games."))
