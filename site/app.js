@@ -237,7 +237,8 @@
       catBox.append(h('label', {}, h('input', { type: 'checkbox', 'data-filter': 'category', value: c }), ' ' + CATEGORY_LABELS[c]));
     }
 
-    $('#filters').addEventListener('change', readFilters);
+    $('#filters').addEventListener('change', (e) => { if (e.target.type !== 'number') readFilters(); });
+    $('#filters').addEventListener('input', (e) => { if (e.target.type === 'number') readFilters(); });
     $('#reset-filters').addEventListener('click', () => {
       for (const cb of $$('#filters input[type=checkbox]')) cb.checked = cb.dataset.filter === 'version';
       if (years.length) { from.value = years[0]; to.value = years[years.length - 1]; }
@@ -261,6 +262,7 @@
     filters.categories = new Set($$('input[data-filter=category]:checked').map(i => i.value));
     updateFilterBadge();
     if ($('#problem').hidden) renderResults(state.lastQuery);
+    else navigate(state.lastQuery ? '#/search/' + encodeURIComponent(state.lastQuery) : '#/');
   }
 
   function updateFilterBadge() {
@@ -329,7 +331,7 @@
     art.replaceChildren();
     if (!p) {
       art.append(h('p', { class: 'status' }, 'No problem with id ', h('code', {}, id), '. ', h('a', { href: '#/' }, 'Back to all problems')));
-      document.title = 'AMC 10 Problem Database';
+      document.title = 'imodb';
       show('problem');
       return;
     }
@@ -408,7 +410,7 @@
     renderMath(art);
     show('problem');
     window.scrollTo(0, 0);
-    document.title = p._contestName + ' Problem ' + p.number + ' · AMC 10 Problem Database';
+    document.title = p._contestName + ' Problem ' + p.number + ' · imodb';
   }
 
   function showNoData(err) {
@@ -439,12 +441,12 @@
     }
     if ((m = hash.match(/^#\/search\/(.*)$/))) {
       $('#q').value = m[1];
-      document.title = 'AMC 10 Problem Database';
+      document.title = 'imodb';
       renderResults(m[1]);
       return;
     }
     $('#q').value = '';
-    document.title = 'AMC 10 Problem Database';
+    document.title = 'imodb';
     renderResults('');
   }
 
@@ -465,7 +467,26 @@
     }
   }
 
+  function initTheme() {
+    const btn = $('#theme-toggle'), sys = matchMedia('(prefers-color-scheme: dark)');
+    const current = () => document.documentElement.dataset.theme || (sys.matches ? 'dark' : 'light');
+    const paint = () => {
+      const dark = current() === 'dark';
+      btn.textContent = dark ? '☀' : '☾';
+      btn.setAttribute('aria-label', dark ? 'Switch to light mode' : 'Switch to dark mode');
+    };
+    btn.addEventListener('click', () => {
+      const next = current() === 'dark' ? 'light' : 'dark';
+      document.documentElement.dataset.theme = next;
+      try { localStorage.setItem('imodb-theme', next); } catch (e) { /* storage blocked: theme just won't persist */ }
+      paint();
+    });
+    sys.addEventListener('change', paint);
+    paint();
+  }
+
   async function init() {
+    initTheme();
     $('#search-form').addEventListener('submit', onSubmit);
     document.addEventListener('keydown', (e) => {
       if (e.key === '/' && document.activeElement !== $('#q') && !/input|textarea|select/i.test(document.activeElement.tagName)) {

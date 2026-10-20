@@ -3,18 +3,20 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>AMC 10 Problem Database</title>
+<title>imodb</title>
+<script>try { var t = localStorage.getItem('imodb-theme'); if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t; } catch (e) {}</script>
 <link rel="stylesheet" href="vendor/katex/katex.min.css">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 <header class="top">
-  <a href="#/" class="brand">AMC 10 Problem Database</a>
+  <a href="#/" class="brand">imodb</a>
   <form id="search-form" class="search" autocomplete="off" role="search">
     <input id="q" type="search" placeholder="2019 AMC 10A number 13  ·  2021 fall 10b  ·  inscribed circle" aria-label="Search problems" autofocus>
     <button type="submit">Search</button>
     <button type="button" id="toggle-filters" class="ghost" aria-expanded="false" aria-controls="filters">Filters</button>
   </form>
+  <button type="button" id="theme-toggle" class="ghost" aria-label="Toggle dark mode">☾</button>
 </header>
 
 <section id="filters" class="filters" hidden>

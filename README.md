@@ -1,4 +1,4 @@
-# AMC 10 Problem Database
+# imodb
 
 A local, searchable database of AMC 10A and AMC 10B problems (2002–present),
 taken from the [AoPS Wiki](https://artofproblemsolving.com/wiki/). Type
