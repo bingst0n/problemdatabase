@@ -100,9 +100,16 @@ class GuessCategories(unittest.TestCase):
         for text, want in cases:
             self.assertEqual(guess_categories(text), want, text)
 
-    def test_too_thin_stays_uncategorized(self):
-        self.assertEqual(guess_categories("What is 2+2?"), [])
-        self.assertEqual(guess_categories(""), [])
+    def test_no_hints_falls_to_other(self):
+        self.assertEqual(guess_categories("What is 2+2?"), ["other"])
+        self.assertEqual(guess_categories(""), ["other"])
+
+    def test_solution_text_used_only_when_statement_scores_zero(self):
+        sol = "Each outcome has probability 1/6, so the expected value is 3.5."
+        self.assertEqual(guess_categories("What is 2+2?", fallback_text=sol), ["probability"])
+        self.assertEqual(guess_categories("A triangle has base 10 and height 4. What is its area?",
+                                          fallback_text=sol), ["geometry"])
+        self.assertEqual(guess_categories("What is 2+2?", fallback_text="Add them."), ["other"])
 
     def test_diagram_nudges_geometry(self):
         self.assertEqual(guess_categories("Find the shaded region.", has_diagram=True), ["geometry"])
@@ -490,5 +497,6 @@ class GuessCategoriesMore(unittest.TestCase):
 
     def test_boilerplate_and_weak_words_do_not_decide(self):
         self.assertNotIn("other", guess_categories("Which of the following statements is true for all real numbers x and y?"))
-        self.assertEqual(guess_categories("Team A scored 3 points, then 2 points, then 4 points."), [])
+        # Weak words alone still yield a single best guess, never a second tag.
+        self.assertEqual(len(guess_categories("Team A scored 3 points, then 2 points, then 4 points.")), 1)
         self.assertNotIn("geometry", guess_categories("The World Series is played in 7 games."))

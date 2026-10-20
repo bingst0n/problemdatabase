@@ -35,7 +35,7 @@ import requests
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from contests import Contest, all_contests, page_url, parse_contest_id  # noqa: E402
 from parse import (  # noqa: E402
-    guess_categories, has_visible_content, image_urls, parse_answer_key, parse_problem_page,
+    guess_categories, has_visible_content, image_urls, parse_answer_key, parse_problem_page, plain_text,
     rewrite_image_srcs,
 )
 
@@ -289,8 +289,9 @@ def scrape_problem(contest: Contest, n: int, fetcher: Fetcher, bands: list[dict]
     elif not categories:
         choice_text = " ".join(c.tex for c in parsed.choices) if parsed.choices else (parsed.choices_tex or "")
         categories = guess_categories(parsed.statement_text + " " + choice_text,
-                                      has_diagram='class="diagram"' in parsed.statement_html)
-        category_source = "guessed" if categories else None
+                                      has_diagram='class="diagram"' in parsed.statement_html,
+                                      fallback_text=" ".join(plain_text(s.html) for s in parsed.solutions))
+        category_source = "guessed"
     with lock:
         if category_source == "guessed":
             report["guessed_categories"].append({"problem": pid, "categories": categories})

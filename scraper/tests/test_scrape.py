@@ -104,13 +104,16 @@ class ScrapeEndToEnd(unittest.TestCase):
         self.assertEqual(p5["category_source"], "override")
 
         p1 = by_id["2019_AMC_10A_1"]
-        self.assertEqual(p1["categories"], [])  # "tiles ... how many times" is too thin to guess
-        self.assertIsNone(p1["category_source"])
-        self.assertIn("2019_AMC_10A_1", report["uncategorized"])
+        self.assertEqual(p1["categories"], ["combinatorics"])  # thin evidence still gets the top scorer
+        self.assertEqual(p1["category_source"], "guessed")
+        self.assertEqual(report["uncategorized"], [])
         p2 = by_id["2019_AMC_10A_2"]
         self.assertEqual(p2["categories"], ["number_theory"])
         self.assertEqual(p2["category_source"], "guessed")
-        self.assertEqual([g["problem"] for g in report["guessed_categories"]], ["2019_AMC_10A_2"])
+        guessed = [g["problem"] for g in report["guessed_categories"]]
+        self.assertIn("2019_AMC_10A_1", guessed)
+        self.assertIn("2019_AMC_10A_2", guessed)
+        self.assertTrue(all(p["categories"] for p in index["problems"]))
         self.assertEqual(p1["answer"], "D")  # from the answer key (fixture key says D for #1)
         # old-style pages all box C; the key says C for 5, 10, 15, 20, 25 -> 23 old pages - 5 = 18 disagreements
         self.assertEqual(len(report["answer_mismatches"]), 18)

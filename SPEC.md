@@ -62,14 +62,15 @@ from (`category_source`):
 |---|---|
 | `wiki` | the page had at least one `… Problems` category |
 | `override` | listed in `scraper/category_overrides.json` (hand-set; beats everything) |
-| `guessed` | the page had no category, so a keyword scorer over the statement and choices picked one; shown with a dashed tag and a `?` in the UI |
-| `null` | nothing matched; shown as `Uncategorized` in the filter so gaps stay visible |
+| `guessed` | the page had no category, so a keyword scorer over the statement and choices (or, failing that, the solutions) picked one |
 
 The guesser scores each subject by weighted keyword hits (e.g. "divisible",
 "digit" → number theory; "probability", "random" → probability; "triangle",
-"area" → geometry; a diagram nudges geometry) and assigns the top subject when
-the score clears a small threshold, plus a second subject only when it is
-nearly as strong. It is deliberately conservative.
+"area" → geometry; a diagram nudges geometry) and always assigns the top
+subject, plus a second subject only when it is nearly as strong. If the
+statement and choices match nothing, the solutions' text is scored instead;
+if that matches nothing too, the problem gets `other`. Every problem has a
+category.
 
 **Difficulty.** The wiki has no per-problem rating. V1 uses the position-based
 convention from the AoPS "Competition ratings" page, kept in
@@ -162,7 +163,7 @@ left is free text matched against the statement.
 | `inscribed circle` | every problem whose statement contains both words |
 | `2019 triangle` | 2019 problems mentioning "triangle" |
 
-Below the box, filters narrow the result set and combine with the query:
+A sidebar of filters, always visible, narrows the result set and combines with the query:
 
 - Year range (from/to)
 - Contest (10A, 10B)
@@ -221,6 +222,6 @@ match opens immediately.
 - Diagrams are downloaded into the repo, not hotlinked.
 - Solutions stay hidden behind a button to avoid spoilers.
 - Video-solution sections are kept as links.
-- Problems with no wiki category get a guessed category, marked as such.
+- Problems with no wiki category get a guessed category (`category_source: "guessed"` in the data; the UI shows it like any other).
 - Difficulty stays position-based, using the three AMC 10 bands and ranges
   from the AoPS ratings page.

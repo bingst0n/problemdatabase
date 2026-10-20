@@ -856,9 +856,11 @@ CATEGORY_HINTS: dict[str, list[tuple[str, int]]] = {
 _HINTS_COMPILED = {cat: [(re.compile(pat), w) for pat, w in hints] for cat, hints in CATEGORY_HINTS.items()}
 
 
-def guess_categories(text: str, has_diagram: bool = False) -> list[str]:
-    """Keyword-based guess for an uncategorized problem. Returns [] when the
-    evidence is too thin, so the problem stays visibly uncategorized."""
+def guess_categories(text: str, has_diagram: bool = False, fallback_text: str = "") -> list[str]:
+    """Keyword-based guess for an uncategorized problem. Always returns a
+    category: the top scorer when any hint matched, else ["other"]. When
+    `text` matches nothing, `fallback_text` (e.g. the solutions) is scored
+    instead, so the statement's own evidence always wins when it has any."""
     low = (text or "").lower()
     geo_text = _GEOMETRY_NOISE.sub(" ", low)
     scores: dict[str, int] = {}
@@ -874,8 +876,8 @@ def guess_categories(text: str, has_diagram: bool = False) -> list[str]:
         scores["geometry"] += 2
     # Ties go to the more specific subject; geometry's catch-alls make it the last resort.
     best = max(["algebra", "number_theory", "combinatorics", "probability", "other", "geometry"], key=lambda c: scores[c])
-    if scores[best] < 3:
-        return []
+    if scores[best] == 0:
+        return guess_categories(fallback_text) if fallback_text else ["other"]
     out = [best]
     for cat, sc in sorted(scores.items(), key=lambda kv: -kv[1]):
         if cat != best and sc >= 6 and sc >= 0.7 * scores[best]:

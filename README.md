@@ -52,8 +52,8 @@ cached, and stop at the challenge. Re-scraping needs the same approach.
 Difficulty is position-based (problems 1–10, 11–20, 21–25 map to the AoPS
 ratings page's ranges); edit
 `scraper/difficulty.json` and re-run to change it. Categories come from the
-wiki's own categories; when a page has none, a keyword scorer guesses one and
-the UI shows it with a dashed tag and a `?`. To pin a category by hand, add
+wiki's own categories; when a page has none, a keyword scorer guesses one from
+the statement (falling back to the solutions, then `other`). To pin a category by hand, add
 `{"2019_AMC_10A_13": ["geometry"]}` to `scraper/category_overrides.json`.
 
 ## Search

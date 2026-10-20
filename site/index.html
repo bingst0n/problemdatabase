@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>imodb</title>
 <script>try { var t = localStorage.getItem('imodb-theme'); if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t; } catch (e) {}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=Space+Grotesk:wght@400;500;600;700&display=swap">
 <link rel="stylesheet" href="vendor/katex/katex.min.css">
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -12,14 +15,14 @@
 <header class="top">
   <a href="#/" class="brand">imodb</a>
   <form id="search-form" class="search" autocomplete="off" role="search">
-    <input id="q" type="search" placeholder="2019 AMC 10A number 13  ·  2021 fall 10b  ·  inscribed circle" aria-label="Search problems" autofocus>
+    <input id="q" type="search" aria-label="Search problems" autofocus>
     <button type="submit">Search</button>
-    <button type="button" id="toggle-filters" class="ghost" aria-expanded="false" aria-controls="filters">Filters</button>
   </form>
   <button type="button" id="theme-toggle" class="ghost" aria-label="Toggle dark mode">☾</button>
 </header>
 
-<section id="filters" class="filters" hidden>
+<div class="layout">
+<aside id="filters" class="filters" aria-label="Filters">
   <div class="filter">
     <span class="filter-name">Year</span>
     <select id="year-from" aria-label="From year"></select>
@@ -46,13 +49,14 @@
   <div class="filter">
     <button type="button" id="reset-filters" class="ghost">Reset filters</button>
   </div>
-</section>
+</aside>
 
 <main id="main">
   <div id="status" class="status" hidden></div>
   <section id="results" hidden></section>
   <article id="problem" hidden></article>
 </main>
+</div>
 
 <footer class="foot">
   Problems and solutions are from the <a href="https://artofproblemsolving.com/wiki/" target="_blank" rel="noopener">AoPS Wiki</a>.

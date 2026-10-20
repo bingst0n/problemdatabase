@@ -234,7 +234,7 @@
     const catBox = $('#category-filter');
     for (const c of CATEGORY_ORDER) {
       if (!present.has(c)) continue;
-      catBox.append(h('label', {}, h('input', { type: 'checkbox', 'data-filter': 'category', value: c }), ' ' + CATEGORY_LABELS[c]));
+      catBox.append(h('label', { class: 'cat-' + c }, h('input', { type: 'checkbox', 'data-filter': 'category', value: c }), h('span', { class: 'swatch' }), CATEGORY_LABELS[c]));
     }
 
     $('#filters').addEventListener('change', (e) => { if (e.target.type !== 'number') readFilters(); });
@@ -244,11 +244,6 @@
       if (years.length) { from.value = years[0]; to.value = years[years.length - 1]; }
       $('#num-from').value = 1; $('#num-to').value = 25;
       readFilters();
-    });
-    $('#toggle-filters').addEventListener('click', (e) => {
-      const panel = $('#filters');
-      panel.hidden = !panel.hidden;
-      e.currentTarget.setAttribute('aria-expanded', String(!panel.hidden));
     });
   }
 
@@ -260,17 +255,8 @@
     filters.versions = new Set($$('input[data-filter=version]:checked').map(i => i.value));
     filters.difficulties = new Set($$('input[data-filter=difficulty]:checked').map(i => i.value));
     filters.categories = new Set($$('input[data-filter=category]:checked').map(i => i.value));
-    updateFilterBadge();
     if ($('#problem').hidden) renderResults(state.lastQuery);
     else navigate(state.lastQuery ? '#/search/' + encodeURIComponent(state.lastQuery) : '#/');
-  }
-
-  function updateFilterBadge() {
-    const yearsAll = state.contests.length === 0 ||
-      (filters.yearFrom <= Math.min(...state.contests.map(c => c.year)) && filters.yearTo >= Math.max(...state.contests.map(c => c.year)));
-    const active = !yearsAll || filters.versions.size !== 2 || filters.numFrom !== 1 || filters.numTo !== 25 ||
-      filters.difficulties.size || filters.categories.size;
-    $('#toggle-filters').textContent = active ? 'Filters •' : 'Filters';
   }
 
   // ------------------------------------------------------------------ views
@@ -284,11 +270,7 @@
   function tagNodes(p) {
     const tags = [];
     if (p.difficulty != null) tags.push(h('span', { class: 'tag diff' }, (p.difficulty_label ? p.difficulty_label + ' · ' : '') + p.difficulty));
-    const guessed = p.category_source === 'guessed';
-    for (const c of p._cats) {
-      tags.push(h('span', { class: guessed ? 'tag guess' : 'tag', title: guessed ? 'Guessed from the statement; the wiki has no category for this problem' : null },
-        (CATEGORY_LABELS[c] || c) + (guessed ? '?' : '')));
-    }
+    for (const c of p._cats) tags.push(h('span', { class: 'tag cat cat-' + c }, CATEGORY_LABELS[c] || c));
     return tags;
   }
 
@@ -500,7 +482,6 @@
       return;
     }
     buildFilters();
-    updateFilterBadge();
     window.addEventListener('hashchange', route);
     route();
   }

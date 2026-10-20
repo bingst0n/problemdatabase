@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-17T18:26:31Z",
+  "generated_at": "2026-10-20T19:34:30Z",
   "contests_requested": [
     "2002_AMC_10A",
     "2002_AMC_10B",
@@ -78,110 +78,7 @@
     "2002_AMC_10B_20",
     "2015_AMC_10B_8"
   ],
-  "uncategorized": [
-    "2002_AMC_10A_6",
-    "2003_AMC_10B_14",
-    "2003_AMC_10B_16",
-    "2003_AMC_10B_22",
-    "2004_AMC_10A_8",
-    "2004_AMC_10B_10",
-    "2004_AMC_10B_14",
-    "2004_AMC_10B_3",
-    "2004_AMC_10B_8",
-    "2005_AMC_10A_11",
-    "2005_AMC_10A_7",
-    "2005_AMC_10B_17",
-    "2005_AMC_10B_3",
-    "2007_AMC_10B_2",
-    "2007_AMC_10B_5",
-    "2007_AMC_10B_9",
-    "2008_AMC_10A_1",
-    "2008_AMC_10A_4",
-    "2009_AMC_10A_1",
-    "2009_AMC_10A_13",
-    "2009_AMC_10A_3",
-    "2009_AMC_10B_10",
-    "2009_AMC_10B_15",
-    "2009_AMC_10B_19",
-    "2009_AMC_10B_2",
-    "2009_AMC_10B_3",
-    "2010_AMC_10A_10",
-    "2010_AMC_10A_3",
-    "2010_AMC_10A_6",
-    "2010_AMC_10A_7",
-    "2010_AMC_10B_1",
-    "2010_AMC_10B_15",
-    "2010_AMC_10B_5",
-    "2010_AMC_10B_9",
-    "2011_AMC_10A_2",
-    "2011_AMC_10A_23",
-    "2011_AMC_10A_6",
-    "2011_AMC_10B_1",
-    "2011_AMC_10B_11",
-    "2011_AMC_10B_6",
-    "2012_AMC_10A_3",
-    "2012_AMC_10A_7",
-    "2012_AMC_10B_1",
-    "2013_AMC_10A_17",
-    "2013_AMC_10A_2",
-    "2013_AMC_10A_4",
-    "2013_AMC_10B_1",
-    "2013_AMC_10B_13",
-    "2013_AMC_10B_17",
-    "2013_AMC_10B_5",
-    "2014_AMC_10A_25",
-    "2014_AMC_10B_17",
-    "2014_AMC_10B_2",
-    "2014_AMC_10B_20",
-    "2014_AMC_10B_3",
-    "2014_AMC_10B_4",
-    "2015_AMC_10A_3",
-    "2015_AMC_10A_4",
-    "2015_AMC_10B_1",
-    "2015_AMC_10B_15",
-    "2015_AMC_10B_2",
-    "2015_AMC_10B_3",
-    "2015_AMC_10B_5",
-    "2015_AMC_10B_6",
-    "2015_AMC_10B_7",
-    "2016_AMC_10A_20",
-    "2016_AMC_10A_8",
-    "2017_AMC_10A_1",
-    "2017_AMC_10A_6",
-    "2017_AMC_10B_13",
-    "2017_AMC_10B_5",
-    "2017_AMC_10B_6",
-    "2018_AMC_10A_3",
-    "2018_AMC_10B_1",
-    "2018_AMC_10B_8",
-    "2020_AMC_10A_17",
-    "2020_AMC_10A_3",
-    "2020_AMC_10A_8",
-    "2021_AMC_10A_1",
-    "2021_AMC_10A_10",
-    "2021_AMC_10A_2",
-    "2021_AMC_10A_7",
-    "2021_Fall_AMC_10A_6",
-    "2021_Fall_AMC_10B_1",
-    "2021_Fall_AMC_10B_9",
-    "2022_AMC_10B_11",
-    "2022_AMC_10B_4",
-    "2022_AMC_10B_8",
-    "2023_AMC_10A_2",
-    "2023_AMC_10B_4",
-    "2023_AMC_10B_5",
-    "2024_AMC_10A_1",
-    "2024_AMC_10A_23",
-    "2024_AMC_10A_5",
-    "2024_AMC_10B_2",
-    "2024_AMC_10B_23",
-    "2024_AMC_10B_24",
-    "2024_AMC_10B_3",
-    "2024_AMC_10B_4",
-    "2024_AMC_10B_5",
-    "2025_AMC_10A_19",
-    "2025_AMC_10B_1"
-  ],
+  "uncategorized": [],
   "guessed_categories": [
     {
       "problem": "2003_AMC_10B_2",
@@ -197,6 +94,12 @@
     },
     {
       "problem": "2003_AMC_10B_5",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2002_AMC_10A_6",
       "categories": [
         "algebra"
       ]
@@ -238,6 +141,18 @@
       ]
     },
     {
+      "problem": "2003_AMC_10B_14",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2003_AMC_10B_16",
+      "categories": [
+        "combinatorics"
+      ]
+    },
+    {
       "problem": "2003_AMC_10B_17",
       "categories": [
         "geometry"
@@ -268,6 +183,12 @@
       ]
     },
     {
+      "problem": "2003_AMC_10B_22",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
       "problem": "2003_AMC_10B_23",
       "categories": [
         "geometry"
@@ -280,13 +201,25 @@
       ]
     },
     {
+      "problem": "2004_AMC_10B_1",
+      "categories": [
+        "combinatorics"
+      ]
+    },
+    {
       "problem": "2003_AMC_10B_25",
       "categories": [
         "number_theory"
       ]
     },
     {
-      "problem": "2004_AMC_10B_1",
+      "problem": "2004_AMC_10B_2",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2004_AMC_10B_3",
       "categories": [
         "combinatorics"
       ]
@@ -298,33 +231,21 @@
       ]
     },
     {
-      "problem": "2004_AMC_10B_2",
-      "categories": [
-        "number_theory"
-      ]
-    },
-    {
-      "problem": "2004_AMC_10A_5",
-      "categories": [
-        "probability"
-      ]
-    },
-    {
       "problem": "2004_AMC_10B_4",
       "categories": [
         "probability"
       ]
     },
     {
-      "problem": "2005_AMC_10B_4",
-      "categories": [
-        "algebra"
-      ]
-    },
-    {
       "problem": "2005_AMC_10A_4",
       "categories": [
         "geometry"
+      ]
+    },
+    {
+      "problem": "2004_AMC_10A_5",
+      "categories": [
+        "probability"
       ]
     },
     {
@@ -340,15 +261,15 @@
       ]
     },
     {
-      "problem": "2004_AMC_10B_6",
+      "problem": "2005_AMC_10B_3",
       "categories": [
-        "number_theory"
+        "algebra"
       ]
     },
     {
-      "problem": "2005_AMC_10B_5",
+      "problem": "2004_AMC_10B_6",
       "categories": [
-        "algebra"
+        "number_theory"
       ]
     },
     {
@@ -358,7 +279,13 @@
       ]
     },
     {
-      "problem": "2005_AMC_10B_6",
+      "problem": "2005_AMC_10B_4",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2005_AMC_10A_7",
       "categories": [
         "algebra"
       ]
@@ -376,9 +303,27 @@
       ]
     },
     {
-      "problem": "2005_AMC_10B_9",
+      "problem": "2004_AMC_10A_8",
       "categories": [
-        "probability"
+        "combinatorics"
+      ]
+    },
+    {
+      "problem": "2005_AMC_10B_5",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2004_AMC_10B_8",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2005_AMC_10B_6",
+      "categories": [
+        "algebra"
       ]
     },
     {
@@ -388,9 +333,27 @@
       ]
     },
     {
+      "problem": "2005_AMC_10A_11",
+      "categories": [
+        "combinatorics"
+      ]
+    },
+    {
+      "problem": "2004_AMC_10B_10",
+      "categories": [
+        "combinatorics"
+      ]
+    },
+    {
       "problem": "2005_AMC_10A_12",
       "categories": [
         "geometry"
+      ]
+    },
+    {
+      "problem": "2005_AMC_10B_9",
+      "categories": [
+        "probability"
       ]
     },
     {
@@ -400,7 +363,19 @@
       ]
     },
     {
+      "problem": "2004_AMC_10B_13",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
       "problem": "2005_AMC_10B_11",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2004_AMC_10B_14",
       "categories": [
         "algebra"
       ]
@@ -412,27 +387,15 @@
       ]
     },
     {
-      "problem": "2005_AMC_10B_13",
-      "categories": [
-        "number_theory"
-      ]
-    },
-    {
-      "problem": "2004_AMC_10B_13",
-      "categories": [
-        "algebra"
-      ]
-    },
-    {
       "problem": "2004_AMC_10B_15",
       "categories": [
         "algebra"
       ]
     },
     {
-      "problem": "2005_AMC_10B_15",
+      "problem": "2005_AMC_10B_13",
       "categories": [
-        "probability"
+        "number_theory"
       ]
     },
     {
@@ -448,9 +411,9 @@
       ]
     },
     {
-      "problem": "2005_AMC_10B_18",
+      "problem": "2005_AMC_10B_15",
       "categories": [
-        "combinatorics"
+        "probability"
       ]
     },
     {
@@ -460,22 +423,15 @@
       ]
     },
     {
-      "problem": "2005_AMC_10B_19",
+      "problem": "2005_AMC_10B_17",
       "categories": [
         "algebra"
       ]
     },
     {
-      "problem": "2005_AMC_10B_20",
+      "problem": "2005_AMC_10B_18",
       "categories": [
-        "algebra",
-        "number_theory"
-      ]
-    },
-    {
-      "problem": "2004_AMC_10A_22",
-      "categories": [
-        "geometry"
+        "combinatorics"
       ]
     },
     {
@@ -486,7 +442,38 @@
       ]
     },
     {
+      "problem": "2004_AMC_10A_22",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2005_AMC_10B_19",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
       "problem": "2004_AMC_10B_22",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2005_AMC_10B_20",
+      "categories": [
+        "algebra",
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2004_AMC_10B_23",
+      "categories": [
+        "probability"
+      ]
+    },
+    {
+      "problem": "2004_AMC_10B_24",
       "categories": [
         "geometry"
       ]
@@ -498,19 +485,7 @@
       ]
     },
     {
-      "problem": "2004_AMC_10B_23",
-      "categories": [
-        "probability"
-      ]
-    },
-    {
       "problem": "2005_AMC_10B_23",
-      "categories": [
-        "geometry"
-      ]
-    },
-    {
-      "problem": "2004_AMC_10B_24",
       "categories": [
         "geometry"
       ]
@@ -519,6 +494,12 @@
       "problem": "2005_AMC_10B_25",
       "categories": [
         "combinatorics"
+      ]
+    },
+    {
+      "problem": "2007_AMC_10B_2",
+      "categories": [
+        "algebra"
       ]
     },
     {
@@ -534,6 +515,12 @@
       ]
     },
     {
+      "problem": "2007_AMC_10B_5",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
       "problem": "2007_AMC_10B_7",
       "categories": [
         "geometry"
@@ -541,6 +528,12 @@
     },
     {
       "problem": "2007_AMC_10B_8",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2007_AMC_10B_9",
       "categories": [
         "number_theory"
       ]
@@ -594,6 +587,12 @@
       ]
     },
     {
+      "problem": "2006_AMC_10B_24",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
       "problem": "2007_AMC_10B_19",
       "categories": [
         "probability"
@@ -606,9 +605,15 @@
       ]
     },
     {
-      "problem": "2006_AMC_10B_24",
+      "problem": "2008_AMC_10A_1",
       "categories": [
-        "geometry"
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2008_AMC_10A_3",
+      "categories": [
+        "number_theory"
       ]
     },
     {
@@ -624,19 +629,13 @@
       ]
     },
     {
-      "problem": "2007_AMC_10B_25",
+      "problem": "2008_AMC_10A_4",
       "categories": [
-        "number_theory"
+        "algebra"
       ]
     },
     {
-      "problem": "2008_AMC_10A_3",
-      "categories": [
-        "number_theory"
-      ]
-    },
-    {
-      "problem": "2008_AMC_10A_6",
+      "problem": "2009_AMC_10A_1",
       "categories": [
         "algebra"
       ]
@@ -648,13 +647,19 @@
       ]
     },
     {
-      "problem": "2008_AMC_10A_7",
+      "problem": "2007_AMC_10B_25",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2008_AMC_10A_6",
       "categories": [
         "algebra"
       ]
     },
     {
-      "problem": "2009_AMC_10B_1",
+      "problem": "2008_AMC_10A_7",
       "categories": [
         "algebra"
       ]
@@ -663,6 +668,12 @@
       "problem": "2008_AMC_10B_6",
       "categories": [
         "geometry"
+      ]
+    },
+    {
+      "problem": "2009_AMC_10A_3",
+      "categories": [
+        "algebra"
       ]
     },
     {
@@ -678,13 +689,19 @@
       ]
     },
     {
-      "problem": "2008_AMC_10A_9",
+      "problem": "2009_AMC_10B_1",
       "categories": [
-        "number_theory"
+        "algebra"
       ]
     },
     {
       "problem": "2008_AMC_10B_8",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2009_AMC_10B_2",
       "categories": [
         "algebra"
       ]
@@ -696,9 +713,9 @@
       ]
     },
     {
-      "problem": "2008_AMC_10A_10",
+      "problem": "2008_AMC_10A_9",
       "categories": [
-        "geometry"
+        "number_theory"
       ]
     },
     {
@@ -714,7 +731,13 @@
       ]
     },
     {
-      "problem": "2009_AMC_10B_4",
+      "problem": "2009_AMC_10B_3",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2008_AMC_10A_10",
       "categories": [
         "geometry"
       ]
@@ -732,9 +755,9 @@
       ]
     },
     {
-      "problem": "2009_AMC_10B_5",
+      "problem": "2009_AMC_10B_4",
       "categories": [
-        "algebra"
+        "geometry"
       ]
     },
     {
@@ -744,13 +767,19 @@
       ]
     },
     {
+      "problem": "2009_AMC_10A_9",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
       "problem": "2008_AMC_10A_12",
       "categories": [
         "algebra"
       ]
     },
     {
-      "problem": "2009_AMC_10A_9",
+      "problem": "2009_AMC_10B_5",
       "categories": [
         "algebra"
       ]
@@ -762,13 +791,13 @@
       ]
     },
     {
-      "problem": "2009_AMC_10B_6",
+      "problem": "2008_AMC_10A_13",
       "categories": [
         "algebra"
       ]
     },
     {
-      "problem": "2008_AMC_10A_13",
+      "problem": "2009_AMC_10B_6",
       "categories": [
         "algebra"
       ]
@@ -780,9 +809,9 @@
       ]
     },
     {
-      "problem": "2009_AMC_10B_7",
+      "problem": "2008_AMC_10A_14",
       "categories": [
-        "combinatorics"
+        "algebra"
       ]
     },
     {
@@ -792,9 +821,9 @@
       ]
     },
     {
-      "problem": "2008_AMC_10A_14",
+      "problem": "2009_AMC_10B_7",
       "categories": [
-        "algebra"
+        "combinatorics"
       ]
     },
     {
@@ -816,7 +845,19 @@
       ]
     },
     {
+      "problem": "2009_AMC_10A_13",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
       "problem": "2008_AMC_10B_18",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2009_AMC_10B_10",
       "categories": [
         "algebra"
       ]
@@ -840,27 +881,15 @@
       ]
     },
     {
-      "problem": "2008_AMC_10B_21",
-      "categories": [
-        "combinatorics"
-      ]
-    },
-    {
       "problem": "2009_AMC_10A_15",
       "categories": [
         "geometry"
       ]
     },
     {
-      "problem": "2008_AMC_10B_22",
+      "problem": "2008_AMC_10B_21",
       "categories": [
-        "probability"
-      ]
-    },
-    {
-      "problem": "2009_AMC_10B_14",
-      "categories": [
-        "algebra"
+        "combinatorics"
       ]
     },
     {
@@ -870,19 +899,37 @@
       ]
     },
     {
+      "problem": "2008_AMC_10B_22",
+      "categories": [
+        "probability"
+      ]
+    },
+    {
       "problem": "2008_AMC_10B_23",
       "categories": [
         "geometry"
       ]
     },
     {
-      "problem": "2008_AMC_10B_24",
+      "problem": "2009_AMC_10B_14",
       "categories": [
-        "geometry"
+        "algebra"
       ]
     },
     {
       "problem": "2009_AMC_10A_18",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2009_AMC_10B_15",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2009_AMC_10A_20",
       "categories": [
         "algebra"
       ]
@@ -894,15 +941,9 @@
       ]
     },
     {
-      "problem": "2008_AMC_10B_25",
+      "problem": "2008_AMC_10B_24",
       "categories": [
-        "combinatorics"
-      ]
-    },
-    {
-      "problem": "2009_AMC_10A_20",
-      "categories": [
-        "algebra"
+        "geometry"
       ]
     },
     {
@@ -912,15 +953,21 @@
       ]
     },
     {
-      "problem": "2009_AMC_10B_18",
+      "problem": "2008_AMC_10B_25",
       "categories": [
-        "geometry"
+        "combinatorics"
       ]
     },
     {
       "problem": "2010_AMC_10A_1",
       "categories": [
         "algebra"
+      ]
+    },
+    {
+      "problem": "2009_AMC_10B_18",
+      "categories": [
+        "geometry"
       ]
     },
     {
@@ -936,9 +983,15 @@
       ]
     },
     {
-      "problem": "2009_AMC_10B_20",
+      "problem": "2010_AMC_10A_3",
       "categories": [
-        "geometry"
+        "probability"
+      ]
+    },
+    {
+      "problem": "2009_AMC_10B_19",
+      "categories": [
+        "algebra"
       ]
     },
     {
@@ -948,9 +1001,15 @@
       ]
     },
     {
-      "problem": "2009_AMC_10B_21",
+      "problem": "2010_AMC_10B_1",
       "categories": [
-        "number_theory"
+        "other"
+      ]
+    },
+    {
+      "problem": "2009_AMC_10B_20",
+      "categories": [
+        "geometry"
       ]
     },
     {
@@ -966,27 +1025,15 @@
       ]
     },
     {
-      "problem": "2010_AMC_10B_3",
-      "categories": [
-        "combinatorics"
-      ]
-    },
-    {
-      "problem": "2010_AMC_10B_4",
+      "problem": "2010_AMC_10A_6",
       "categories": [
         "algebra"
       ]
     },
     {
-      "problem": "2010_AMC_10A_8",
+      "problem": "2009_AMC_10B_21",
       "categories": [
-        "algebra"
-      ]
-    },
-    {
-      "problem": "2010_AMC_10B_6",
-      "categories": [
-        "geometry"
+        "number_theory"
       ]
     },
     {
@@ -996,25 +1043,25 @@
       ]
     },
     {
-      "problem": "2009_AMC_10B_25",
+      "problem": "2010_AMC_10B_3",
       "categories": [
-        "probability"
+        "combinatorics"
       ]
     },
     {
-      "problem": "2010_AMC_10B_7",
-      "categories": [
-        "geometry"
-      ]
-    },
-    {
-      "problem": "2010_AMC_10B_8",
+      "problem": "2010_AMC_10A_7",
       "categories": [
         "algebra"
       ]
     },
     {
-      "problem": "2011_AMC_10B_2",
+      "problem": "2010_AMC_10B_4",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2011_AMC_10A_2",
       "categories": [
         "algebra"
       ]
@@ -1026,7 +1073,97 @@
       ]
     },
     {
+      "problem": "2010_AMC_10A_8",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2010_AMC_10B_5",
+      "categories": [
+        "combinatorics"
+      ]
+    },
+    {
+      "problem": "2011_AMC_10A_4",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2010_AMC_10B_6",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2011_AMC_10A_5",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2010_AMC_10B_7",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2010_AMC_10A_10",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2011_AMC_10A_6",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2009_AMC_10B_25",
+      "categories": [
+        "probability"
+      ]
+    },
+    {
+      "problem": "2010_AMC_10B_8",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2011_AMC_10A_7",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
       "problem": "2010_AMC_10A_11",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2011_AMC_10B_1",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2011_AMC_10A_8",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2010_AMC_10B_9",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2011_AMC_10B_2",
       "categories": [
         "algebra"
       ]
@@ -1038,7 +1175,13 @@
       ]
     },
     {
-      "problem": "2011_AMC_10A_4",
+      "problem": "2010_AMC_10A_13",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2010_AMC_10B_10",
       "categories": [
         "algebra"
       ]
@@ -1050,79 +1193,7 @@
       ]
     },
     {
-      "problem": "2010_AMC_10A_13",
-      "categories": [
-        "algebra"
-      ]
-    },
-    {
-      "problem": "2011_AMC_10B_5",
-      "categories": [
-        "number_theory"
-      ]
-    },
-    {
-      "problem": "2010_AMC_10B_10",
-      "categories": [
-        "algebra"
-      ]
-    },
-    {
-      "problem": "2011_AMC_10A_5",
-      "categories": [
-        "algebra"
-      ]
-    },
-    {
       "problem": "2010_AMC_10B_11",
-      "categories": [
-        "algebra"
-      ]
-    },
-    {
-      "problem": "2011_AMC_10B_7",
-      "categories": [
-        "geometry"
-      ]
-    },
-    {
-      "problem": "2011_AMC_10A_7",
-      "categories": [
-        "algebra"
-      ]
-    },
-    {
-      "problem": "2010_AMC_10B_12",
-      "categories": [
-        "algebra"
-      ]
-    },
-    {
-      "problem": "2011_AMC_10B_8",
-      "categories": [
-        "geometry"
-      ]
-    },
-    {
-      "problem": "2011_AMC_10A_8",
-      "categories": [
-        "algebra"
-      ]
-    },
-    {
-      "problem": "2010_AMC_10B_13",
-      "categories": [
-        "algebra"
-      ]
-    },
-    {
-      "problem": "2011_AMC_10B_10",
-      "categories": [
-        "algebra"
-      ]
-    },
-    {
-      "problem": "2010_AMC_10B_14",
       "categories": [
         "algebra"
       ]
@@ -1134,21 +1205,21 @@
       ]
     },
     {
-      "problem": "2011_AMC_10B_12",
+      "problem": "2011_AMC_10B_5",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2010_AMC_10B_12",
       "categories": [
         "algebra"
       ]
     },
     {
-      "problem": "2010_AMC_10B_16",
+      "problem": "2011_AMC_10B_6",
       "categories": [
-        "geometry"
-      ]
-    },
-    {
-      "problem": "2011_AMC_10B_13",
-      "categories": [
-        "probability"
+        "algebra"
       ]
     },
     {
@@ -1158,19 +1229,13 @@
       ]
     },
     {
-      "problem": "2011_AMC_10B_14",
+      "problem": "2011_AMC_10B_7",
       "categories": [
         "geometry"
       ]
     },
     {
-      "problem": "2010_AMC_10B_17",
-      "categories": [
-        "algebra"
-      ]
-    },
-    {
-      "problem": "2011_AMC_10B_15",
+      "problem": "2010_AMC_10B_13",
       "categories": [
         "algebra"
       ]
@@ -1182,7 +1247,13 @@
       ]
     },
     {
-      "problem": "2010_AMC_10A_20",
+      "problem": "2011_AMC_10B_8",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2010_AMC_10B_14",
       "categories": [
         "algebra"
       ]
@@ -1192,6 +1263,84 @@
       "categories": [
         "geometry",
         "probability"
+      ]
+    },
+    {
+      "problem": "2010_AMC_10B_15",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2011_AMC_10B_10",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2011_AMC_10A_15",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2010_AMC_10B_16",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2011_AMC_10B_11",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2011_AMC_10B_12",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2011_AMC_10A_16",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2010_AMC_10B_17",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2011_AMC_10B_13",
+      "categories": [
+        "probability"
+      ]
+    },
+    {
+      "problem": "2011_AMC_10B_14",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2011_AMC_10A_17",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2010_AMC_10A_20",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2011_AMC_10B_15",
+      "categories": [
+        "algebra"
       ]
     },
     {
@@ -1207,13 +1356,7 @@
       ]
     },
     {
-      "problem": "2011_AMC_10A_15",
-      "categories": [
-        "algebra"
-      ]
-    },
-    {
-      "problem": "2010_AMC_10A_22",
+      "problem": "2011_AMC_10A_18",
       "categories": [
         "geometry"
       ]
@@ -1225,21 +1368,15 @@
       ]
     },
     {
-      "problem": "2011_AMC_10A_16",
+      "problem": "2010_AMC_10A_22",
       "categories": [
-        "algebra"
+        "geometry"
       ]
     },
     {
-      "problem": "2011_AMC_10B_19",
+      "problem": "2011_AMC_10A_19",
       "categories": [
-        "algebra"
-      ]
-    },
-    {
-      "problem": "2011_AMC_10A_17",
-      "categories": [
-        "algebra"
+        "number_theory"
       ]
     },
     {
@@ -1249,15 +1386,21 @@
       ]
     },
     {
+      "problem": "2011_AMC_10B_19",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
       "problem": "2010_AMC_10A_24",
       "categories": [
         "number_theory"
       ]
     },
     {
-      "problem": "2011_AMC_10A_18",
+      "problem": "2011_AMC_10A_23",
       "categories": [
-        "geometry"
+        "number_theory"
       ]
     },
     {
@@ -1274,12 +1417,6 @@
       ]
     },
     {
-      "problem": "2011_AMC_10A_19",
-      "categories": [
-        "number_theory"
-      ]
-    },
-    {
       "problem": "2010_AMC_10B_24",
       "categories": [
         "algebra"
@@ -1292,7 +1429,37 @@
       ]
     },
     {
+      "problem": "2012_AMC_10A_3",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2012_AMC_10B_1",
+      "categories": [
+        "combinatorics"
+      ]
+    },
+    {
+      "problem": "2013_AMC_10A_1",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2013_AMC_10A_2",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
       "problem": "2012_AMC_10A_5",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2013_AMC_10B_1",
       "categories": [
         "algebra"
       ]
@@ -1304,45 +1471,21 @@
       ]
     },
     {
-      "problem": "2013_AMC_10A_1",
-      "categories": [
-        "algebra"
-      ]
-    },
-    {
-      "problem": "2012_AMC_10A_9",
-      "categories": [
-        "probability"
-      ]
-    },
-    {
-      "problem": "2012_AMC_10A_12",
-      "categories": [
-        "number_theory"
-      ]
-    },
-    {
-      "problem": "2013_AMC_10A_5",
-      "categories": [
-        "algebra"
-      ]
-    },
-    {
       "problem": "2013_AMC_10B_2",
       "categories": [
         "geometry"
       ]
     },
     {
-      "problem": "2013_AMC_10A_6",
+      "problem": "2012_AMC_10A_7",
       "categories": [
         "algebra"
       ]
     },
     {
-      "problem": "2012_AMC_10A_13",
+      "problem": "2013_AMC_10A_4",
       "categories": [
-        "algebra"
+        "combinatorics"
       ]
     },
     {
@@ -1352,15 +1495,9 @@
       ]
     },
     {
-      "problem": "2013_AMC_10A_7",
+      "problem": "2013_AMC_10A_5",
       "categories": [
-        "combinatorics"
-      ]
-    },
-    {
-      "problem": "2012_AMC_10A_14",
-      "categories": [
-        "geometry"
+        "algebra"
       ]
     },
     {
@@ -1370,21 +1507,27 @@
       ]
     },
     {
-      "problem": "2013_AMC_10A_8",
+      "problem": "2012_AMC_10A_9",
+      "categories": [
+        "probability"
+      ]
+    },
+    {
+      "problem": "2013_AMC_10A_6",
       "categories": [
         "algebra"
       ]
     },
     {
-      "problem": "2012_AMC_10A_16",
+      "problem": "2013_AMC_10B_5",
       "categories": [
-        "geometry"
+        "algebra"
       ]
     },
     {
-      "problem": "2013_AMC_10A_9",
+      "problem": "2013_AMC_10A_7",
       "categories": [
-        "algebra"
+        "combinatorics"
       ]
     },
     {
@@ -1394,21 +1537,21 @@
       ]
     },
     {
-      "problem": "2012_AMC_10A_17",
-      "categories": [
-        "number_theory"
-      ]
-    },
-    {
-      "problem": "2013_AMC_10A_10",
+      "problem": "2013_AMC_10A_8",
       "categories": [
         "algebra"
       ]
     },
     {
-      "problem": "2013_AMC_10A_11",
+      "problem": "2012_AMC_10A_12",
       "categories": [
-        "combinatorics"
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2013_AMC_10A_9",
+      "categories": [
+        "algebra"
       ]
     },
     {
@@ -1424,15 +1567,33 @@
       ]
     },
     {
+      "problem": "2012_AMC_10A_13",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2013_AMC_10A_10",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
       "problem": "2013_AMC_10B_10",
       "categories": [
         "algebra"
       ]
     },
     {
-      "problem": "2013_AMC_10A_13",
+      "problem": "2013_AMC_10A_11",
       "categories": [
-        "number_theory"
+        "combinatorics"
+      ]
+    },
+    {
+      "problem": "2012_AMC_10A_14",
+      "categories": [
+        "geometry"
       ]
     },
     {
@@ -1449,7 +1610,25 @@
       ]
     },
     {
-      "problem": "2012_AMC_10A_22",
+      "problem": "2013_AMC_10A_13",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2012_AMC_10A_16",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2013_AMC_10B_13",
+      "categories": [
+        "combinatorics"
+      ]
+    },
+    {
+      "problem": "2012_AMC_10A_17",
       "categories": [
         "number_theory"
       ]
@@ -1461,13 +1640,43 @@
       ]
     },
     {
-      "problem": "2012_AMC_10A_23",
+      "problem": "2013_AMC_10A_17",
       "categories": [
         "combinatorics"
       ]
     },
     {
+      "problem": "2013_AMC_10B_17",
+      "categories": [
+        "combinatorics"
+      ]
+    },
+    {
+      "problem": "2013_AMC_10B_18",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2013_AMC_10B_19",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
       "problem": "2013_AMC_10A_21",
+      "categories": [
+        "combinatorics"
+      ]
+    },
+    {
+      "problem": "2012_AMC_10A_22",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2012_AMC_10A_23",
       "categories": [
         "combinatorics"
       ]
@@ -1480,43 +1689,13 @@
       ]
     },
     {
-      "problem": "2013_AMC_10B_18",
-      "categories": [
-        "number_theory"
-      ]
-    },
-    {
       "problem": "2014_AMC_10B_1",
       "categories": [
         "algebra"
       ]
     },
     {
-      "problem": "2013_AMC_10B_19",
-      "categories": [
-        "algebra"
-      ]
-    },
-    {
-      "problem": "2014_AMC_10B_6",
-      "categories": [
-        "algebra"
-      ]
-    },
-    {
-      "problem": "2014_AMC_10B_7",
-      "categories": [
-        "algebra"
-      ]
-    },
-    {
-      "problem": "2014_AMC_10B_8",
-      "categories": [
-        "algebra"
-      ]
-    },
-    {
-      "problem": "2014_AMC_10B_9",
+      "problem": "2014_AMC_10B_2",
       "categories": [
         "algebra"
       ]
@@ -1528,9 +1707,15 @@
       ]
     },
     {
-      "problem": "2014_AMC_10B_10",
+      "problem": "2014_AMC_10B_3",
       "categories": [
-        "combinatorics"
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2015_AMC_10B_1",
+      "categories": [
+        "algebra"
       ]
     },
     {
@@ -1540,31 +1725,31 @@
       ]
     },
     {
-      "problem": "2014_AMC_10B_11",
+      "problem": "2014_AMC_10B_4",
       "categories": [
         "algebra"
       ]
     },
     {
-      "problem": "2014_AMC_10B_12",
+      "problem": "2015_AMC_10B_2",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2015_AMC_10A_3",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2015_AMC_10B_3",
       "categories": [
         "number_theory"
       ]
     },
     {
-      "problem": "2015_AMC_10A_5",
-      "categories": [
-        "algebra"
-      ]
-    },
-    {
-      "problem": "2014_AMC_10B_14",
-      "categories": [
-        "algebra"
-      ]
-    },
-    {
-      "problem": "2015_AMC_10A_6",
+      "problem": "2014_AMC_10B_6",
       "categories": [
         "algebra"
       ]
@@ -1576,19 +1761,55 @@
       ]
     },
     {
-      "problem": "2015_AMC_10A_7",
+      "problem": "2015_AMC_10A_4",
       "categories": [
         "algebra"
       ]
     },
     {
-      "problem": "2014_AMC_10B_16",
+      "problem": "2014_AMC_10B_7",
       "categories": [
-        "probability"
+        "algebra"
       ]
     },
     {
-      "problem": "2015_AMC_10A_8",
+      "problem": "2015_AMC_10B_5",
+      "categories": [
+        "other"
+      ]
+    },
+    {
+      "problem": "2015_AMC_10A_5",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2014_AMC_10B_8",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2015_AMC_10B_6",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2015_AMC_10B_7",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2014_AMC_10B_9",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2015_AMC_10A_6",
       "categories": [
         "algebra"
       ]
@@ -1600,13 +1821,37 @@
       ]
     },
     {
-      "problem": "2014_AMC_10B_18",
+      "problem": "2014_AMC_10B_10",
+      "categories": [
+        "combinatorics"
+      ]
+    },
+    {
+      "problem": "2015_AMC_10A_7",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2014_AMC_10B_11",
       "categories": [
         "algebra"
       ]
     },
     {
       "problem": "2015_AMC_10B_10",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2015_AMC_10A_8",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2014_AMC_10B_12",
       "categories": [
         "number_theory"
       ]
@@ -1625,15 +1870,27 @@
       ]
     },
     {
+      "problem": "2014_AMC_10B_14",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
       "problem": "2015_AMC_10B_14",
       "categories": [
         "algebra"
       ]
     },
     {
-      "problem": "2014_AMC_10B_24",
+      "problem": "2014_AMC_10B_16",
       "categories": [
-        "combinatorics"
+        "probability"
+      ]
+    },
+    {
+      "problem": "2015_AMC_10B_15",
+      "categories": [
+        "algebra"
       ]
     },
     {
@@ -1643,9 +1900,15 @@
       ]
     },
     {
-      "problem": "2015_AMC_10A_17",
+      "problem": "2014_AMC_10B_17",
       "categories": [
-        "geometry"
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2014_AMC_10B_18",
+      "categories": [
+        "algebra"
       ]
     },
     {
@@ -1655,13 +1918,25 @@
       ]
     },
     {
-      "problem": "2014_AMC_10B_25",
+      "problem": "2014_AMC_10B_20",
       "categories": [
-        "probability"
+        "algebra"
       ]
     },
     {
       "problem": "2015_AMC_10B_20",
+      "categories": [
+        "combinatorics"
+      ]
+    },
+    {
+      "problem": "2015_AMC_10A_17",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2014_AMC_10A_25",
       "categories": [
         "combinatorics"
       ]
@@ -1673,9 +1948,27 @@
       ]
     },
     {
+      "problem": "2014_AMC_10B_24",
+      "categories": [
+        "combinatorics"
+      ]
+    },
+    {
       "problem": "2015_AMC_10B_23",
       "categories": [
         "number_theory"
+      ]
+    },
+    {
+      "problem": "2015_AMC_10B_24",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2014_AMC_10B_25",
+      "categories": [
+        "probability"
       ]
     },
     {
@@ -1685,7 +1978,7 @@
       ]
     },
     {
-      "problem": "2015_AMC_10B_24",
+      "problem": "2015_AMC_10B_25",
       "categories": [
         "geometry"
       ]
@@ -1697,21 +1990,15 @@
       ]
     },
     {
-      "problem": "2016_AMC_10A_7",
+      "problem": "2017_AMC_10A_1",
       "categories": [
         "algebra"
       ]
     },
     {
-      "problem": "2015_AMC_10B_25",
+      "problem": "2016_AMC_10A_7",
       "categories": [
-        "geometry"
-      ]
-    },
-    {
-      "problem": "2016_AMC_10A_9",
-      "categories": [
-        "number_theory"
+        "algebra"
       ]
     },
     {
@@ -1721,13 +2008,37 @@
       ]
     },
     {
+      "problem": "2016_AMC_10A_8",
+      "categories": [
+        "probability"
+      ]
+    },
+    {
+      "problem": "2017_AMC_10A_4",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2016_AMC_10A_9",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
       "problem": "2016_AMC_10A_10",
       "categories": [
         "geometry"
       ]
     },
     {
-      "problem": "2017_AMC_10A_4",
+      "problem": "2017_AMC_10A_6",
+      "categories": [
+        "combinatorics"
+      ]
+    },
+    {
+      "problem": "2017_AMC_10B_2",
       "categories": [
         "algebra"
       ]
@@ -1739,7 +2050,7 @@
       ]
     },
     {
-      "problem": "2017_AMC_10B_2",
+      "problem": "2017_AMC_10A_9",
       "categories": [
         "algebra"
       ]
@@ -1757,13 +2068,13 @@
       ]
     },
     {
-      "problem": "2017_AMC_10A_9",
+      "problem": "2016_AMC_10A_14",
       "categories": [
-        "algebra"
+        "combinatorics"
       ]
     },
     {
-      "problem": "2016_AMC_10A_14",
+      "problem": "2017_AMC_10B_5",
       "categories": [
         "combinatorics"
       ]
@@ -1775,13 +2086,13 @@
       ]
     },
     {
-      "problem": "2016_AMC_10A_16",
+      "problem": "2017_AMC_10B_6",
       "categories": [
         "geometry"
       ]
     },
     {
-      "problem": "2017_AMC_10B_8",
+      "problem": "2016_AMC_10A_16",
       "categories": [
         "geometry"
       ]
@@ -1791,6 +2102,12 @@
       "categories": [
         "number_theory",
         "probability"
+      ]
+    },
+    {
+      "problem": "2017_AMC_10B_8",
+      "categories": [
+        "geometry"
       ]
     },
     {
@@ -1830,6 +2147,18 @@
       ]
     },
     {
+      "problem": "2016_AMC_10A_20",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2017_AMC_10B_13",
+      "categories": [
+        "combinatorics"
+      ]
+    },
+    {
       "problem": "2017_AMC_10B_14",
       "categories": [
         "probability"
@@ -1855,12 +2184,6 @@
       ]
     },
     {
-      "problem": "2017_AMC_10B_18",
-      "categories": [
-        "combinatorics"
-      ]
-    },
-    {
       "problem": "2018_AMC_10A_1",
       "categories": [
         "algebra"
@@ -1873,9 +2196,15 @@
       ]
     },
     {
-      "problem": "2017_AMC_10B_20",
+      "problem": "2017_AMC_10B_18",
       "categories": [
-        "probability"
+        "combinatorics"
+      ]
+    },
+    {
+      "problem": "2018_AMC_10A_3",
+      "categories": [
+        "number_theory"
       ]
     },
     {
@@ -1885,9 +2214,15 @@
       ]
     },
     {
-      "problem": "2017_AMC_10B_21",
+      "problem": "2018_AMC_10B_1",
       "categories": [
-        "geometry"
+        "combinatorics"
+      ]
+    },
+    {
+      "problem": "2017_AMC_10B_20",
+      "categories": [
+        "probability"
       ]
     },
     {
@@ -1897,15 +2232,39 @@
       ]
     },
     {
+      "problem": "2017_AMC_10B_21",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2018_AMC_10B_4",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
       "problem": "2017_AMC_10B_22",
       "categories": [
         "geometry"
       ]
     },
     {
+      "problem": "2018_AMC_10B_5",
+      "categories": [
+        "combinatorics"
+      ]
+    },
+    {
       "problem": "2017_AMC_10B_23",
       "categories": [
         "number_theory"
+      ]
+    },
+    {
+      "problem": "2018_AMC_10B_6",
+      "categories": [
+        "probability"
       ]
     },
     {
@@ -1921,19 +2280,13 @@
       ]
     },
     {
-      "problem": "2018_AMC_10B_4",
+      "problem": "2018_AMC_10B_8",
       "categories": [
         "geometry"
       ]
     },
     {
-      "problem": "2018_AMC_10B_5",
-      "categories": [
-        "combinatorics"
-      ]
-    },
-    {
-      "problem": "2018_AMC_10B_6",
+      "problem": "2018_AMC_10B_9",
       "categories": [
         "probability"
       ]
@@ -1945,19 +2298,19 @@
       ]
     },
     {
-      "problem": "2018_AMC_10B_9",
-      "categories": [
-        "probability"
-      ]
-    },
-    {
-      "problem": "2019_AMC_10B_6",
+      "problem": "2018_AMC_10B_11",
       "categories": [
         "number_theory"
       ]
     },
     {
-      "problem": "2018_AMC_10B_11",
+      "problem": "2018_AMC_10B_13",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2019_AMC_10B_6",
       "categories": [
         "number_theory"
       ]
@@ -1975,9 +2328,15 @@
       ]
     },
     {
-      "problem": "2018_AMC_10B_13",
+      "problem": "2018_AMC_10B_16",
       "categories": [
-        "algebra"
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2018_AMC_10B_17",
+      "categories": [
+        "geometry"
       ]
     },
     {
@@ -1987,27 +2346,21 @@
       ]
     },
     {
+      "problem": "2018_AMC_10B_18",
+      "categories": [
+        "combinatorics"
+      ]
+    },
+    {
       "problem": "2019_AMC_10B_11",
       "categories": [
         "algebra"
       ]
     },
     {
-      "problem": "2018_AMC_10B_16",
-      "categories": [
-        "number_theory"
-      ]
-    },
-    {
       "problem": "2019_AMC_10B_12",
       "categories": [
         "number_theory"
-      ]
-    },
-    {
-      "problem": "2018_AMC_10B_17",
-      "categories": [
-        "geometry"
       ]
     },
     {
@@ -2023,9 +2376,9 @@
       ]
     },
     {
-      "problem": "2018_AMC_10B_18",
+      "problem": "2018_AMC_10B_22",
       "categories": [
-        "combinatorics"
+        "probability"
       ]
     },
     {
@@ -2035,51 +2388,9 @@
       ]
     },
     {
-      "problem": "2019_AMC_10B_16",
-      "categories": [
-        "geometry"
-      ]
-    },
-    {
-      "problem": "2019_AMC_10B_17",
-      "categories": [
-        "probability"
-      ]
-    },
-    {
-      "problem": "2019_AMC_10B_18",
-      "categories": [
-        "geometry"
-      ]
-    },
-    {
-      "problem": "2018_AMC_10B_22",
-      "categories": [
-        "probability"
-      ]
-    },
-    {
-      "problem": "2019_AMC_10B_19",
-      "categories": [
-        "number_theory"
-      ]
-    },
-    {
       "problem": "2018_AMC_10B_23",
       "categories": [
         "number_theory"
-      ]
-    },
-    {
-      "problem": "2019_AMC_10B_20",
-      "categories": [
-        "geometry"
-      ]
-    },
-    {
-      "problem": "2019_AMC_10B_21",
-      "categories": [
-        "probability"
       ]
     },
     {
@@ -2089,15 +2400,21 @@
       ]
     },
     {
+      "problem": "2019_AMC_10B_16",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
       "problem": "2020_AMC_10A_2",
       "categories": [
         "algebra"
       ]
     },
     {
-      "problem": "2019_AMC_10B_23",
+      "problem": "2020_AMC_10A_3",
       "categories": [
-        "geometry"
+        "algebra"
       ]
     },
     {
@@ -2107,9 +2424,9 @@
       ]
     },
     {
-      "problem": "2020_AMC_10B_2",
+      "problem": "2019_AMC_10B_17",
       "categories": [
-        "geometry"
+        "probability"
       ]
     },
     {
@@ -2119,9 +2436,15 @@
       ]
     },
     {
-      "problem": "2019_AMC_10B_24",
+      "problem": "2019_AMC_10B_18",
       "categories": [
-        "algebra"
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2020_AMC_10B_2",
+      "categories": [
+        "geometry"
       ]
     },
     {
@@ -2131,13 +2454,19 @@
       ]
     },
     {
-      "problem": "2020_AMC_10B_4",
+      "problem": "2019_AMC_10B_19",
       "categories": [
-        "geometry"
+        "number_theory"
       ]
     },
     {
-      "problem": "2020_AMC_10B_5",
+      "problem": "2021_AMC_10A_1",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2021_AMC_10A_2",
       "categories": [
         "combinatorics"
       ]
@@ -2149,9 +2478,45 @@
       ]
     },
     {
+      "problem": "2019_AMC_10B_20",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2020_AMC_10B_4",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2020_AMC_10A_8",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2019_AMC_10B_21",
+      "categories": [
+        "probability"
+      ]
+    },
+    {
       "problem": "2021_AMC_10A_3",
       "categories": [
         "number_theory"
+      ]
+    },
+    {
+      "problem": "2020_AMC_10B_5",
+      "categories": [
+        "combinatorics"
+      ]
+    },
+    {
+      "problem": "2020_AMC_10A_9",
+      "categories": [
+        "algebra"
       ]
     },
     {
@@ -2167,31 +2532,7 @@
       ]
     },
     {
-      "problem": "2021_AMC_10B_1",
-      "categories": [
-        "algebra"
-      ]
-    },
-    {
-      "problem": "2020_AMC_10A_9",
-      "categories": [
-        "algebra"
-      ]
-    },
-    {
       "problem": "2021_AMC_10A_5",
-      "categories": [
-        "algebra"
-      ]
-    },
-    {
-      "problem": "2020_AMC_10B_8",
-      "categories": [
-        "geometry"
-      ]
-    },
-    {
-      "problem": "2021_AMC_10B_2",
       "categories": [
         "algebra"
       ]
@@ -2203,15 +2544,15 @@
       ]
     },
     {
-      "problem": "2021_AMC_10B_3",
+      "problem": "2020_AMC_10B_8",
       "categories": [
-        "algebra"
+        "geometry"
       ]
     },
     {
-      "problem": "2021_AMC_10B_4",
+      "problem": "2019_AMC_10B_23",
       "categories": [
-        "combinatorics"
+        "geometry"
       ]
     },
     {
@@ -2221,7 +2562,13 @@
       ]
     },
     {
-      "problem": "2021_AMC_10B_5",
+      "problem": "2021_AMC_10A_7",
+      "categories": [
+        "probability"
+      ]
+    },
+    {
+      "problem": "2019_AMC_10B_24",
       "categories": [
         "algebra"
       ]
@@ -2239,21 +2586,9 @@
       ]
     },
     {
-      "problem": "2021_AMC_10B_6",
-      "categories": [
-        "algebra"
-      ]
-    },
-    {
       "problem": "2020_AMC_10B_12",
       "categories": [
         "combinatorics"
-      ]
-    },
-    {
-      "problem": "2021_AMC_10B_7",
-      "categories": [
-        "geometry"
       ]
     },
     {
@@ -2269,9 +2604,9 @@
       ]
     },
     {
-      "problem": "2021_AMC_10B_8",
+      "problem": "2021_AMC_10B_1",
       "categories": [
-        "geometry"
+        "algebra"
       ]
     },
     {
@@ -2281,9 +2616,9 @@
       ]
     },
     {
-      "problem": "2021_AMC_10B_9",
+      "problem": "2021_AMC_10A_10",
       "categories": [
-        "geometry"
+        "number_theory"
       ]
     },
     {
@@ -2293,9 +2628,21 @@
       ]
     },
     {
+      "problem": "2021_AMC_10B_2",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
       "problem": "2021_AMC_10A_11",
       "categories": [
         "number_theory"
+      ]
+    },
+    {
+      "problem": "2021_AMC_10B_3",
+      "categories": [
+        "algebra"
       ]
     },
     {
@@ -2305,7 +2652,124 @@
       ]
     },
     {
+      "problem": "2021_AMC_10B_4",
+      "categories": [
+        "combinatorics"
+      ]
+    },
+    {
+      "problem": "2020_AMC_10B_16",
+      "categories": [
+        "algebra",
+        "combinatorics"
+      ]
+    },
+    {
+      "problem": "2021_AMC_10B_5",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2021_AMC_10A_13",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2020_AMC_10A_17",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2020_AMC_10B_17",
+      "categories": [
+        "geometry",
+        "combinatorics"
+      ]
+    },
+    {
+      "problem": "2021_AMC_10B_6",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2020_AMC_10A_18",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2021_AMC_10B_7",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2021_AMC_10A_15",
+      "categories": [
+        "combinatorics"
+      ]
+    },
+    {
+      "problem": "2020_AMC_10A_19",
+      "categories": [
+        "geometry",
+        "combinatorics"
+      ]
+    },
+    {
+      "problem": "2021_AMC_10B_8",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2020_AMC_10B_18",
+      "categories": [
+        "probability"
+      ]
+    },
+    {
+      "problem": "2021_AMC_10A_16",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2020_AMC_10B_19",
+      "categories": [
+        "probability"
+      ]
+    },
+    {
+      "problem": "2021_AMC_10B_9",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2020_AMC_10A_20",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2020_AMC_10B_20",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
       "problem": "2021_AMC_10B_10",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2021_AMC_10A_17",
       "categories": [
         "geometry"
       ]
@@ -2317,10 +2781,15 @@
       ]
     },
     {
-      "problem": "2020_AMC_10B_16",
+      "problem": "2020_AMC_10A_21",
       "categories": [
-        "algebra",
-        "combinatorics"
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2020_AMC_10B_22",
+      "categories": [
+        "number_theory"
       ]
     },
     {
@@ -2330,117 +2799,14 @@
       ]
     },
     {
-      "problem": "2021_AMC_10A_13",
+      "problem": "2021_AMC_10A_19",
       "categories": [
+        "algebra",
         "geometry"
-      ]
-    },
-    {
-      "problem": "2020_AMC_10B_17",
-      "categories": [
-        "geometry",
-        "combinatorics"
       ]
     },
     {
       "problem": "2021_AMC_10B_13",
-      "categories": [
-        "number_theory"
-      ]
-    },
-    {
-      "problem": "2020_AMC_10A_18",
-      "categories": [
-        "number_theory"
-      ]
-    },
-    {
-      "problem": "2020_AMC_10B_18",
-      "categories": [
-        "probability"
-      ]
-    },
-    {
-      "problem": "2020_AMC_10A_19",
-      "categories": [
-        "geometry",
-        "combinatorics"
-      ]
-    },
-    {
-      "problem": "2021_AMC_10A_15",
-      "categories": [
-        "combinatorics"
-      ]
-    },
-    {
-      "problem": "2021_AMC_10B_14",
-      "categories": [
-        "geometry"
-      ]
-    },
-    {
-      "problem": "2020_AMC_10B_19",
-      "categories": [
-        "probability"
-      ]
-    },
-    {
-      "problem": "2021_AMC_10B_15",
-      "categories": [
-        "algebra"
-      ]
-    },
-    {
-      "problem": "2021_AMC_10A_16",
-      "categories": [
-        "algebra"
-      ]
-    },
-    {
-      "problem": "2020_AMC_10B_20",
-      "categories": [
-        "geometry"
-      ]
-    },
-    {
-      "problem": "2021_AMC_10B_16",
-      "categories": [
-        "number_theory"
-      ]
-    },
-    {
-      "problem": "2020_AMC_10A_20",
-      "categories": [
-        "geometry"
-      ]
-    },
-    {
-      "problem": "2021_AMC_10B_17",
-      "categories": [
-        "probability"
-      ]
-    },
-    {
-      "problem": "2021_AMC_10A_17",
-      "categories": [
-        "geometry"
-      ]
-    },
-    {
-      "problem": "2020_AMC_10A_21",
-      "categories": [
-        "algebra"
-      ]
-    },
-    {
-      "problem": "2021_AMC_10B_18",
-      "categories": [
-        "probability"
-      ]
-    },
-    {
-      "problem": "2020_AMC_10B_22",
       "categories": [
         "number_theory"
       ]
@@ -2452,26 +2818,7 @@
       ]
     },
     {
-      "problem": "2021_AMC_10A_19",
-      "categories": [
-        "algebra",
-        "geometry"
-      ]
-    },
-    {
-      "problem": "2021_AMC_10B_19",
-      "categories": [
-        "algebra"
-      ]
-    },
-    {
       "problem": "2020_AMC_10B_23",
-      "categories": [
-        "geometry"
-      ]
-    },
-    {
-      "problem": "2021_AMC_10B_20",
       "categories": [
         "geometry"
       ]
@@ -2483,7 +2830,7 @@
       ]
     },
     {
-      "problem": "2021_AMC_10B_21",
+      "problem": "2021_AMC_10B_14",
       "categories": [
         "geometry"
       ]
@@ -2495,10 +2842,15 @@
       ]
     },
     {
-      "problem": "2021_AMC_10B_22",
+      "problem": "2021_AMC_10B_15",
       "categories": [
-        "number_theory",
-        "probability"
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2021_AMC_10B_16",
+      "categories": [
+        "number_theory"
       ]
     },
     {
@@ -2508,9 +2860,9 @@
       ]
     },
     {
-      "problem": "2021_AMC_10B_23",
+      "problem": "2021_AMC_10B_17",
       "categories": [
-        "geometry"
+        "probability"
       ]
     },
     {
@@ -2526,9 +2878,27 @@
       ]
     },
     {
+      "problem": "2021_AMC_10B_18",
+      "categories": [
+        "probability"
+      ]
+    },
+    {
+      "problem": "2021_Fall_AMC_10B_1",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
       "problem": "2021_Fall_AMC_10A_2",
       "categories": [
         "geometry"
+      ]
+    },
+    {
+      "problem": "2021_AMC_10B_19",
+      "categories": [
+        "algebra"
       ]
     },
     {
@@ -2545,9 +2915,15 @@
       ]
     },
     {
-      "problem": "2021_AMC_10A_25",
+      "problem": "2021_Fall_AMC_10B_3",
       "categories": [
-        "combinatorics"
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2021_AMC_10B_20",
+      "categories": [
+        "geometry"
       ]
     },
     {
@@ -2557,19 +2933,19 @@
       ]
     },
     {
-      "problem": "2021_Fall_AMC_10B_3",
+      "problem": "2021_AMC_10A_25",
       "categories": [
-        "number_theory"
-      ]
-    },
-    {
-      "problem": "2022_AMC_10B_1",
-      "categories": [
-        "algebra"
+        "combinatorics"
       ]
     },
     {
       "problem": "2021_Fall_AMC_10B_4",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2021_AMC_10B_21",
       "categories": [
         "geometry"
       ]
@@ -2581,7 +2957,26 @@
       ]
     },
     {
-      "problem": "2022_AMC_10B_2",
+      "problem": "2021_AMC_10B_22",
+      "categories": [
+        "number_theory",
+        "probability"
+      ]
+    },
+    {
+      "problem": "2021_Fall_AMC_10B_6",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2021_Fall_AMC_10A_6",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2021_AMC_10B_23",
       "categories": [
         "geometry"
       ]
@@ -2593,9 +2988,9 @@
       ]
     },
     {
-      "problem": "2022_AMC_10B_3",
+      "problem": "2021_Fall_AMC_10A_7",
       "categories": [
-        "number_theory"
+        "geometry"
       ]
     },
     {
@@ -2605,21 +3000,9 @@
       ]
     },
     {
-      "problem": "2021_Fall_AMC_10B_6",
+      "problem": "2021_Fall_AMC_10B_7",
       "categories": [
-        "number_theory"
-      ]
-    },
-    {
-      "problem": "2021_Fall_AMC_10A_7",
-      "categories": [
-        "geometry"
-      ]
-    },
-    {
-      "problem": "2022_AMC_10A_5",
-      "categories": [
-        "geometry"
+        "combinatorics"
       ]
     },
     {
@@ -2629,15 +3012,15 @@
       ]
     },
     {
-      "problem": "2022_AMC_10B_5",
+      "problem": "2022_AMC_10A_5",
       "categories": [
-        "algebra"
+        "geometry"
       ]
     },
     {
-      "problem": "2021_Fall_AMC_10B_7",
+      "problem": "2021_Fall_AMC_10B_8",
       "categories": [
-        "combinatorics"
+        "number_theory"
       ]
     },
     {
@@ -2653,13 +3036,7 @@
       ]
     },
     {
-      "problem": "2021_Fall_AMC_10B_8",
-      "categories": [
-        "number_theory"
-      ]
-    },
-    {
-      "problem": "2022_AMC_10B_6",
+      "problem": "2021_Fall_AMC_10B_9",
       "categories": [
         "algebra"
       ]
@@ -2672,21 +3049,21 @@
       ]
     },
     {
+      "problem": "2021_Fall_AMC_10B_10",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
       "problem": "2021_Fall_AMC_10A_11",
       "categories": [
         "algebra"
       ]
     },
     {
-      "problem": "2022_AMC_10B_7",
+      "problem": "2022_AMC_10B_1",
       "categories": [
         "algebra"
-      ]
-    },
-    {
-      "problem": "2021_Fall_AMC_10B_10",
-      "categories": [
-        "number_theory"
       ]
     },
     {
@@ -2696,15 +3073,27 @@
       ]
     },
     {
+      "problem": "2021_Fall_AMC_10B_11",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2022_AMC_10B_2",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
       "problem": "2021_Fall_AMC_10A_12",
       "categories": [
         "number_theory"
       ]
     },
     {
-      "problem": "2021_Fall_AMC_10B_11",
+      "problem": "2022_AMC_10B_3",
       "categories": [
-        "geometry"
+        "number_theory"
       ]
     },
     {
@@ -2714,31 +3103,31 @@
       ]
     },
     {
-      "problem": "2022_AMC_10A_10",
-      "categories": [
-        "geometry"
-      ]
-    },
-    {
       "problem": "2021_Fall_AMC_10B_12",
       "categories": [
         "algebra"
       ]
     },
     {
-      "problem": "2022_AMC_10B_9",
+      "problem": "2022_AMC_10B_4",
       "categories": [
-        "algebra"
-      ]
-    },
-    {
-      "problem": "2022_AMC_10A_11",
-      "categories": [
-        "algebra"
+        "number_theory"
       ]
     },
     {
       "problem": "2021_Fall_AMC_10A_14",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2022_AMC_10A_10",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2022_AMC_10B_5",
       "categories": [
         "algebra"
       ]
@@ -2750,15 +3139,27 @@
       ]
     },
     {
+      "problem": "2022_AMC_10A_11",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
       "problem": "2021_Fall_AMC_10A_15",
       "categories": [
         "geometry"
       ]
     },
     {
-      "problem": "2022_AMC_10B_10",
+      "problem": "2022_AMC_10B_6",
       "categories": [
         "algebra"
+      ]
+    },
+    {
+      "problem": "2021_Fall_AMC_10B_14",
+      "categories": [
+        "probability"
       ]
     },
     {
@@ -2774,25 +3175,13 @@
       ]
     },
     {
-      "problem": "2021_Fall_AMC_10B_14",
+      "problem": "2022_AMC_10B_7",
       "categories": [
-        "probability"
+        "algebra"
       ]
     },
     {
       "problem": "2022_AMC_10A_13",
-      "categories": [
-        "geometry"
-      ]
-    },
-    {
-      "problem": "2022_AMC_10B_12",
-      "categories": [
-        "probability"
-      ]
-    },
-    {
-      "problem": "2021_Fall_AMC_10A_17",
       "categories": [
         "geometry"
       ]
@@ -2804,15 +3193,9 @@
       ]
     },
     {
-      "problem": "2022_AMC_10B_13",
+      "problem": "2021_Fall_AMC_10A_17",
       "categories": [
-        "number_theory"
-      ]
-    },
-    {
-      "problem": "2022_AMC_10A_14",
-      "categories": [
-        "combinatorics"
+        "geometry"
       ]
     },
     {
@@ -2822,15 +3205,15 @@
       ]
     },
     {
-      "problem": "2022_AMC_10B_14",
+      "problem": "2022_AMC_10A_14",
       "categories": [
         "combinatorics"
       ]
     },
     {
-      "problem": "2022_AMC_10A_15",
+      "problem": "2022_AMC_10B_8",
       "categories": [
-        "geometry"
+        "number_theory"
       ]
     },
     {
@@ -2854,7 +3237,19 @@
       ]
     },
     {
-      "problem": "2022_AMC_10B_15",
+      "problem": "2022_AMC_10A_15",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2022_AMC_10B_9",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2022_AMC_10B_10",
       "categories": [
         "algebra"
       ]
@@ -2866,14 +3261,7 @@
       ]
     },
     {
-      "problem": "2022_AMC_10A_17",
-      "categories": [
-        "geometry",
-        "number_theory"
-      ]
-    },
-    {
-      "problem": "2022_AMC_10B_16",
+      "problem": "2021_Fall_AMC_10B_18",
       "categories": [
         "geometry"
       ]
@@ -2885,15 +3273,22 @@
       ]
     },
     {
-      "problem": "2021_Fall_AMC_10B_18",
+      "problem": "2022_AMC_10B_11",
       "categories": [
-        "geometry"
+        "algebra"
       ]
     },
     {
-      "problem": "2022_AMC_10A_18",
+      "problem": "2022_AMC_10A_17",
       "categories": [
-        "geometry"
+        "geometry",
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2022_AMC_10B_12",
+      "categories": [
+        "probability"
       ]
     },
     {
@@ -2910,13 +3305,13 @@
       ]
     },
     {
-      "problem": "2022_AMC_10A_19",
+      "problem": "2022_AMC_10A_18",
       "categories": [
-        "number_theory"
+        "geometry"
       ]
     },
     {
-      "problem": "2022_AMC_10B_17",
+      "problem": "2022_AMC_10B_13",
       "categories": [
         "number_theory"
       ]
@@ -2928,21 +3323,27 @@
       ]
     },
     {
-      "problem": "2022_AMC_10A_20",
-      "categories": [
-        "algebra"
-      ]
-    },
-    {
       "problem": "2021_Fall_AMC_10B_20",
       "categories": [
         "probability"
       ]
     },
     {
-      "problem": "2022_AMC_10A_21",
+      "problem": "2022_AMC_10A_19",
       "categories": [
-        "geometry"
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2022_AMC_10B_14",
+      "categories": [
+        "combinatorics"
+      ]
+    },
+    {
+      "problem": "2022_AMC_10A_20",
+      "categories": [
+        "algebra"
       ]
     },
     {
@@ -2952,15 +3353,9 @@
       ]
     },
     {
-      "problem": "2022_AMC_10B_18",
+      "problem": "2022_AMC_10B_15",
       "categories": [
         "algebra"
-      ]
-    },
-    {
-      "problem": "2021_Fall_AMC_10A_23",
-      "categories": [
-        "number_theory"
       ]
     },
     {
@@ -2970,7 +3365,26 @@
       ]
     },
     {
-      "problem": "2022_AMC_10B_19",
+      "problem": "2021_Fall_AMC_10A_23",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2022_AMC_10A_21",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2021_Fall_AMC_10B_23",
+      "categories": [
+        "geometry",
+        "probability"
+      ]
+    },
+    {
+      "problem": "2022_AMC_10B_16",
       "categories": [
         "geometry"
       ]
@@ -2982,14 +3396,13 @@
       ]
     },
     {
-      "problem": "2021_Fall_AMC_10B_23",
+      "problem": "2022_AMC_10B_17",
       "categories": [
-        "geometry",
-        "probability"
+        "number_theory"
       ]
     },
     {
-      "problem": "2022_AMC_10B_20",
+      "problem": "2021_Fall_AMC_10B_25",
       "categories": [
         "geometry"
       ]
@@ -3001,37 +3414,37 @@
       ]
     },
     {
-      "problem": "2021_Fall_AMC_10B_25",
-      "categories": [
-        "geometry"
-      ]
-    },
-    {
-      "problem": "2022_AMC_10B_22",
-      "categories": [
-        "geometry"
-      ]
-    },
-    {
       "problem": "2022_AMC_10A_25",
       "categories": [
         "geometry"
       ]
     },
     {
-      "problem": "2022_AMC_10B_23",
-      "categories": [
-        "probability"
-      ]
-    },
-    {
-      "problem": "2023_AMC_10B_2",
+      "problem": "2022_AMC_10B_18",
       "categories": [
         "algebra"
       ]
     },
     {
-      "problem": "2022_AMC_10B_24",
+      "problem": "2023_AMC_10A_2",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2022_AMC_10B_19",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2024_AMC_10A_1",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2023_AMC_10B_2",
       "categories": [
         "algebra"
       ]
@@ -3043,15 +3456,15 @@
       ]
     },
     {
-      "problem": "2023_AMC_10B_3",
-      "categories": [
-        "geometry"
-      ]
-    },
-    {
       "problem": "2024_AMC_10A_2",
       "categories": [
         "algebra"
+      ]
+    },
+    {
+      "problem": "2022_AMC_10B_20",
+      "categories": [
+        "geometry"
       ]
     },
     {
@@ -3067,6 +3480,12 @@
       ]
     },
     {
+      "problem": "2023_AMC_10B_3",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
       "problem": "2023_AMC_10A_5",
       "categories": [
         "number_theory"
@@ -3079,6 +3498,12 @@
       ]
     },
     {
+      "problem": "2023_AMC_10B_4",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
       "problem": "2023_AMC_10A_6",
       "categories": [
         "algebra",
@@ -3086,21 +3511,27 @@
       ]
     },
     {
-      "problem": "2023_AMC_10B_6",
+      "problem": "2024_AMC_10A_5",
       "categories": [
         "algebra"
       ]
     },
     {
-      "problem": "2024_AMC_10B_1",
+      "problem": "2023_AMC_10B_5",
       "categories": [
-        "combinatorics"
+        "algebra"
       ]
     },
     {
-      "problem": "2023_AMC_10B_7",
+      "problem": "2022_AMC_10B_22",
       "categories": [
         "geometry"
+      ]
+    },
+    {
+      "problem": "2023_AMC_10B_6",
+      "categories": [
+        "algebra"
       ]
     },
     {
@@ -3116,9 +3547,9 @@
       ]
     },
     {
-      "problem": "2023_AMC_10B_8",
+      "problem": "2023_AMC_10B_7",
       "categories": [
-        "number_theory"
+        "geometry"
       ]
     },
     {
@@ -3129,15 +3560,21 @@
       ]
     },
     {
-      "problem": "2023_AMC_10B_9",
-      "categories": [
-        "number_theory"
-      ]
-    },
-    {
       "problem": "2024_AMC_10A_7",
       "categories": [
         "algebra"
+      ]
+    },
+    {
+      "problem": "2022_AMC_10B_23",
+      "categories": [
+        "probability"
+      ]
+    },
+    {
+      "problem": "2023_AMC_10B_8",
+      "categories": [
+        "number_theory"
       ]
     },
     {
@@ -3153,13 +3590,43 @@
       ]
     },
     {
+      "problem": "2022_AMC_10B_24",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2023_AMC_10B_9",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2024_AMC_10A_9",
+      "categories": [
+        "combinatorics"
+      ]
+    },
+    {
+      "problem": "2023_AMC_10A_10",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
       "problem": "2023_AMC_10B_10",
       "categories": [
         "geometry"
       ]
     },
     {
-      "problem": "2024_AMC_10A_9",
+      "problem": "2024_AMC_10A_10",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2024_AMC_10A_11",
       "categories": [
         "combinatorics"
       ]
@@ -3171,45 +3638,15 @@
       ]
     },
     {
-      "problem": "2023_AMC_10A_10",
-      "categories": [
-        "algebra"
-      ]
-    },
-    {
-      "problem": "2024_AMC_10A_10",
-      "categories": [
-        "number_theory"
-      ]
-    },
-    {
-      "problem": "2024_AMC_10B_6",
-      "categories": [
-        "geometry"
-      ]
-    },
-    {
-      "problem": "2024_AMC_10A_11",
-      "categories": [
-        "combinatorics"
-      ]
-    },
-    {
-      "problem": "2023_AMC_10B_12",
-      "categories": [
-        "algebra"
-      ]
-    },
-    {
-      "problem": "2024_AMC_10B_7",
-      "categories": [
-        "number_theory"
-      ]
-    },
-    {
       "problem": "2023_AMC_10A_11",
       "categories": [
         "geometry"
+      ]
+    },
+    {
+      "problem": "2024_AMC_10B_1",
+      "categories": [
+        "combinatorics"
       ]
     },
     {
@@ -3219,15 +3656,15 @@
       ]
     },
     {
-      "problem": "2024_AMC_10B_8",
+      "problem": "2023_AMC_10B_12",
       "categories": [
-        "number_theory"
+        "algebra"
       ]
     },
     {
-      "problem": "2023_AMC_10B_13",
+      "problem": "2024_AMC_10B_2",
       "categories": [
-        "geometry"
+        "number_theory"
       ]
     },
     {
@@ -3237,21 +3674,21 @@
       ]
     },
     {
-      "problem": "2024_AMC_10B_9",
-      "categories": [
-        "algebra"
-      ]
-    },
-    {
       "problem": "2024_AMC_10A_13",
       "categories": [
         "geometry"
       ]
     },
     {
-      "problem": "2024_AMC_10B_10",
+      "problem": "2023_AMC_10B_13",
       "categories": [
         "geometry"
+      ]
+    },
+    {
+      "problem": "2024_AMC_10B_3",
+      "categories": [
+        "algebra"
       ]
     },
     {
@@ -3268,15 +3705,9 @@
       ]
     },
     {
-      "problem": "2024_AMC_10A_14",
+      "problem": "2024_AMC_10B_4",
       "categories": [
-        "geometry"
-      ]
-    },
-    {
-      "problem": "2023_AMC_10B_15",
-      "categories": [
-        "number_theory"
+        "probability"
       ]
     },
     {
@@ -3286,13 +3717,37 @@
       ]
     },
     {
-      "problem": "2023_AMC_10B_16",
+      "problem": "2024_AMC_10A_14",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2024_AMC_10B_5",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2023_AMC_10B_15",
       "categories": [
         "number_theory"
       ]
     },
     {
+      "problem": "2024_AMC_10B_6",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
       "problem": "2024_AMC_10A_15",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2024_AMC_10B_7",
       "categories": [
         "number_theory"
       ]
@@ -3304,7 +3759,25 @@
       ]
     },
     {
+      "problem": "2023_AMC_10B_16",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2024_AMC_10B_8",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
       "problem": "2024_AMC_10A_16",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2023_AMC_10A_17",
       "categories": [
         "geometry"
       ]
@@ -3316,19 +3789,25 @@
       ]
     },
     {
+      "problem": "2024_AMC_10B_9",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
       "problem": "2024_AMC_10A_17",
       "categories": [
         "probability"
       ]
     },
     {
-      "problem": "2023_AMC_10A_17",
+      "problem": "2023_AMC_10A_18",
       "categories": [
         "geometry"
       ]
     },
     {
-      "problem": "2023_AMC_10A_18",
+      "problem": "2024_AMC_10B_10",
       "categories": [
         "geometry"
       ]
@@ -3340,22 +3819,15 @@
       ]
     },
     {
-      "problem": "2023_AMC_10B_18",
-      "categories": [
-        "number_theory"
-      ]
-    },
-    {
       "problem": "2023_AMC_10A_19",
       "categories": [
         "geometry"
       ]
     },
     {
-      "problem": "2023_AMC_10B_19",
+      "problem": "2023_AMC_10B_18",
       "categories": [
-        "geometry",
-        "probability"
+        "number_theory"
       ]
     },
     {
@@ -3366,7 +3838,14 @@
       ]
     },
     {
-      "problem": "2024_AMC_10B_16",
+      "problem": "2023_AMC_10B_19",
+      "categories": [
+        "geometry",
+        "probability"
+      ]
+    },
+    {
+      "problem": "2023_AMC_10A_21",
       "categories": [
         "algebra"
       ]
@@ -3384,21 +3863,9 @@
       ]
     },
     {
-      "problem": "2023_AMC_10A_21",
+      "problem": "2023_AMC_10B_21",
       "categories": [
-        "algebra"
-      ]
-    },
-    {
-      "problem": "2024_AMC_10B_17",
-      "categories": [
-        "combinatorics"
-      ]
-    },
-    {
-      "problem": "2024_AMC_10B_18",
-      "categories": [
-        "combinatorics"
+        "probability"
       ]
     },
     {
@@ -3408,21 +3875,27 @@
       ]
     },
     {
-      "problem": "2023_AMC_10B_21",
+      "problem": "2023_AMC_10A_23",
       "categories": [
-        "probability"
+        "number_theory"
       ]
     },
     {
-      "problem": "2024_AMC_10B_19",
+      "problem": "2024_AMC_10B_16",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2023_AMC_10A_24",
       "categories": [
         "geometry"
       ]
     },
     {
-      "problem": "2023_AMC_10A_23",
+      "problem": "2024_AMC_10B_17",
       "categories": [
-        "number_theory"
+        "combinatorics"
       ]
     },
     {
@@ -3439,13 +3912,7 @@
       ]
     },
     {
-      "problem": "2023_AMC_10A_24",
-      "categories": [
-        "geometry"
-      ]
-    },
-    {
-      "problem": "2024_AMC_10B_20",
+      "problem": "2024_AMC_10B_18",
       "categories": [
         "combinatorics"
       ]
@@ -3457,7 +3924,19 @@
       ]
     },
     {
-      "problem": "2024_AMC_10B_21",
+      "problem": "2024_AMC_10A_23",
+      "categories": [
+        "number_theory"
+      ]
+    },
+    {
+      "problem": "2023_AMC_10A_25",
+      "categories": [
+        "geometry"
+      ]
+    },
+    {
+      "problem": "2024_AMC_10B_19",
       "categories": [
         "geometry"
       ]
@@ -3469,19 +3948,19 @@
       ]
     },
     {
-      "problem": "2023_AMC_10A_25",
-      "categories": [
-        "geometry"
-      ]
-    },
-    {
       "problem": "2024_AMC_10A_24",
       "categories": [
         "probability"
       ]
     },
     {
-      "problem": "2024_AMC_10B_22",
+      "problem": "2025_AMC_10A_1",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
+      "problem": "2024_AMC_10B_20",
       "categories": [
         "combinatorics"
       ]
@@ -3494,9 +3973,9 @@
       ]
     },
     {
-      "problem": "2025_AMC_10A_1",
+      "problem": "2024_AMC_10B_21",
       "categories": [
-        "algebra"
+        "geometry"
       ]
     },
     {
@@ -3506,10 +3985,21 @@
       ]
     },
     {
-      "problem": "2024_AMC_10B_25",
+      "problem": "2025_AMC_10B_1",
       "categories": [
-        "geometry",
-        "number_theory"
+        "probability"
+      ]
+    },
+    {
+      "problem": "2024_AMC_10B_22",
+      "categories": [
+        "combinatorics"
+      ]
+    },
+    {
+      "problem": "2025_AMC_10A_3",
+      "categories": [
+        "geometry"
       ]
     },
     {
@@ -3519,9 +4009,9 @@
       ]
     },
     {
-      "problem": "2025_AMC_10A_3",
+      "problem": "2024_AMC_10B_23",
       "categories": [
-        "geometry"
+        "algebra"
       ]
     },
     {
@@ -3538,6 +4028,12 @@
       ]
     },
     {
+      "problem": "2024_AMC_10B_24",
+      "categories": [
+        "algebra"
+      ]
+    },
+    {
       "problem": "2025_AMC_10B_4",
       "categories": [
         "number_theory"
@@ -3547,6 +4043,13 @@
       "problem": "2025_AMC_10A_5",
       "categories": [
         "algebra"
+      ]
+    },
+    {
+      "problem": "2024_AMC_10B_25",
+      "categories": [
+        "geometry",
+        "number_theory"
       ]
     },
     {
@@ -3598,27 +4101,27 @@
       ]
     },
     {
-      "problem": "2025_AMC_10A_9",
-      "categories": [
-        "algebra"
-      ]
-    },
-    {
       "problem": "2025_AMC_10B_10",
       "categories": [
         "algebra"
       ]
     },
     {
-      "problem": "2025_AMC_10A_10",
+      "problem": "2025_AMC_10A_9",
       "categories": [
-        "geometry"
+        "algebra"
       ]
     },
     {
       "problem": "2025_AMC_10B_11",
       "categories": [
         "probability"
+      ]
+    },
+    {
+      "problem": "2025_AMC_10A_10",
+      "categories": [
+        "geometry"
       ]
     },
     {
@@ -3670,21 +4173,15 @@
       ]
     },
     {
-      "problem": "2025_AMC_10A_15",
-      "categories": [
-        "geometry"
-      ]
-    },
-    {
       "problem": "2025_AMC_10B_16",
       "categories": [
         "combinatorics"
       ]
     },
     {
-      "problem": "2025_AMC_10A_16",
+      "problem": "2025_AMC_10A_15",
       "categories": [
-        "probability"
+        "geometry"
       ]
     },
     {
@@ -3694,15 +4191,21 @@
       ]
     },
     {
-      "problem": "2025_AMC_10A_17",
+      "problem": "2025_AMC_10A_16",
       "categories": [
-        "number_theory"
+        "probability"
       ]
     },
     {
       "problem": "2025_AMC_10B_18",
       "categories": [
         "algebra"
+      ]
+    },
+    {
+      "problem": "2025_AMC_10A_17",
+      "categories": [
+        "number_theory"
       ]
     },
     {
@@ -3730,15 +4233,14 @@
       ]
     },
     {
-      "problem": "2025_AMC_10B_22",
+      "problem": "2025_AMC_10A_19",
       "categories": [
-        "number_theory"
+        "algebra"
       ]
     },
     {
-      "problem": "2025_AMC_10A_20",
+      "problem": "2025_AMC_10B_22",
       "categories": [
-        "geometry",
         "number_theory"
       ]
     },
@@ -3749,15 +4251,22 @@
       ]
     },
     {
-      "problem": "2025_AMC_10A_21",
+      "problem": "2025_AMC_10A_20",
       "categories": [
-        "algebra"
+        "geometry",
+        "number_theory"
       ]
     },
     {
       "problem": "2025_AMC_10B_24",
       "categories": [
         "probability"
+      ]
+    },
+    {
+      "problem": "2025_AMC_10A_21",
+      "categories": [
+        "algebra"
       ]
     },
     {
