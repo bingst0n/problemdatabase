@@ -255,7 +255,8 @@
     filters.versions = new Set($$('input[data-filter=version]:checked').map(i => i.value));
     filters.difficulties = new Set($$('input[data-filter=difficulty]:checked').map(i => i.value));
     filters.categories = new Set($$('input[data-filter=category]:checked').map(i => i.value));
-    if ($('#problem').hidden) renderResults(state.lastQuery);
+    if (!$('#random').hidden) paintPool();
+    else if ($('#problem').hidden) renderResults(state.lastQuery);
     else navigate(state.lastQuery ? '#/search/' + encodeURIComponent(state.lastQuery) : '#/');
   }
 
@@ -265,6 +266,7 @@
     $('#status').hidden = view !== 'status';
     $('#results').hidden = view !== 'results';
     $('#problem').hidden = view !== 'problem';
+    $('#random').hidden = view !== 'random';
   }
 
   function tagNodes(p) {
@@ -307,54 +309,18 @@
     }
   }
 
-  function renderProblem(id) {
-    const p = state.byId.get(id);
-    const art = $('#problem');
-    art.replaceChildren();
-    if (!p) {
-      art.append(h('p', { class: 'status' }, 'No problem with id ', h('code', {}, id), '. ', h('a', { href: '#/' }, 'Back to all problems')));
-      document.title = 'imodb';
-      show('problem');
-      return;
-    }
-    const siblings = state.problems.filter(x => x.contest_id === p.contest_id).sort((a, b) => a.number - b.number);
-    const prev = siblings.filter(x => x.number < p.number).pop();   // nearest, so a missing page does not break the chain
-    const next = siblings.find(x => x.number > p.number);
-
-    const back = state.lastQuery ? '#/search/' + encodeURIComponent(state.lastQuery) : '#/';
-    art.append(h('nav', { class: 'crumbs' }, h('a', { href: back }, '← Back to results')));
-
-    art.append(h('header', { class: 'problem-head' },
+  function problemHead(p) {
+    return h('header', { class: 'problem-head' },
       h('h1', {}, p._contestName + ' ', h('span', {}, '· Problem ' + p.number)),
       h('div', { class: 'tags' }, tagNodes(p)),
-      h('a', { class: 'source', href: p.url, target: '_blank', rel: 'noopener' }, 'View on AoPS ↗')));
+      h('a', { class: 'source', href: p.url, target: '_blank', rel: 'noopener' }, 'View on AoPS ↗'));
+  }
 
-    const statement = h('section', { class: 'card statement', html: p.statement_html || '<p><em>No statement was extracted for this problem.</em></p>' });
-    art.append(statement);
+  function statementCard(p) {
+    return h('section', { class: 'card statement', html: p.statement_html || '<p><em>No statement was extracted for this problem.</em></p>' });
+  }
 
-    const choices = h('section', { class: 'card choices' });
-    let list = null;
-    if (p.choices && p.choices.length) {
-      list = h('ol', {}, p.choices.map(c => h('li', { 'data-label': c.label },
-        h('span', { class: 'choice-label' }, '(' + c.label + ')'),
-        h('span', { class: 'tex' }, c.tex))));
-      choices.append(list);
-    } else if (p.choices_tex) {
-      choices.append(h('div', { class: 'tex-display' }, p.choices_tex));
-      choices.append(h('p', { class: 'unparsed' }, 'The choices could not be split automatically; shown as one line.'));
-    } else {
-      choices.append(h('p', { class: 'unparsed' }, 'No answer choices were found on the wiki page.'));
-    }
-    const answerText = h('span', { class: 'answer-text' });
-    const checkbox = h('input', { type: 'checkbox', id: 'show-answer' });
-    checkbox.addEventListener('change', () => {
-      const on = checkbox.checked;
-      if (list) for (const li of $$('li', list)) li.classList.toggle('correct', on && li.dataset.label === p.answer);
-      answerText.textContent = !on ? '' : (p.answer ? 'Answer: (' + p.answer + ')' : 'Answer not available');
-    });
-    choices.append(h('div', { class: 'answer-row' }, h('label', {}, checkbox, ' Show answer'), answerText));
-    art.append(choices);
-
+  function solutionsCard(p) {
     const solBox = h('div', { class: 'solution-list', hidden: true });
     const count = p.solution_count || 0;
     const solBtn = h('button', { class: 'ghost', type: 'button' }, count ? 'Show solutions (' + count + ')' : 'Show solutions');
@@ -382,8 +348,53 @@
       }
       solBtn.textContent = (solBox.hidden ? 'Show' : 'Hide') + ' solutions' + (count ? ' (' + count + ')' : '');
     });
-    art.append(h('section', { class: 'card solutions' },
-      h('div', { class: 'solutions-head' }, h('h2', { style: 'margin:0;font-size:1.05rem' }, 'Solutions'), solBtn), solBox));
+    return h('section', { class: 'card solutions' },
+      h('div', { class: 'solutions-head' }, h('h2', { style: 'margin:0;font-size:1.05rem' }, 'Solutions'), solBtn), solBox);
+  }
+
+  function renderProblem(id) {
+    const p = state.byId.get(id);
+    const art = $('#problem');
+    art.replaceChildren();
+    if (!p) {
+      art.append(h('p', { class: 'status' }, 'No problem with id ', h('code', {}, id), '. ', h('a', { href: '#/' }, 'Back to all problems')));
+      document.title = 'imodb';
+      show('problem');
+      return;
+    }
+    const siblings = state.problems.filter(x => x.contest_id === p.contest_id).sort((a, b) => a.number - b.number);
+    const prev = siblings.filter(x => x.number < p.number).pop();   // nearest, so a missing page does not break the chain
+    const next = siblings.find(x => x.number > p.number);
+
+    const back = state.lastQuery ? '#/search/' + encodeURIComponent(state.lastQuery) : '#/';
+    art.append(h('nav', { class: 'crumbs' }, h('a', { href: back }, '← Back to results')));
+
+    art.append(problemHead(p));
+    art.append(statementCard(p));
+
+    const choices = h('section', { class: 'card choices' });
+    let list = null;
+    if (p.choices && p.choices.length) {
+      list = h('ol', {}, p.choices.map(c => h('li', { 'data-label': c.label },
+        h('span', { class: 'choice-label' }, '(' + c.label + ')'),
+        h('span', { class: 'tex' }, c.tex))));
+      choices.append(list);
+    } else if (p.choices_tex) {
+      choices.append(h('div', { class: 'tex-display' }, p.choices_tex));
+      choices.append(h('p', { class: 'unparsed' }, 'The choices could not be split automatically; shown as one line.'));
+    } else {
+      choices.append(h('p', { class: 'unparsed' }, 'No answer choices were found on the wiki page.'));
+    }
+    const answerText = h('span', { class: 'answer-text' });
+    const checkbox = h('input', { type: 'checkbox', id: 'show-answer' });
+    checkbox.addEventListener('change', () => {
+      const on = checkbox.checked;
+      if (list) for (const li of $$('li', list)) li.classList.toggle('correct', on && li.dataset.label === p.answer);
+      answerText.textContent = !on ? '' : (p.answer ? 'Answer: (' + p.answer + ')' : 'Answer not available');
+    });
+    choices.append(h('div', { class: 'answer-row' }, h('label', {}, checkbox, ' Show answer'), answerText));
+    art.append(choices);
+    art.append(solutionsCard(p));
 
     art.append(h('nav', { class: 'pager' },
       prev ? h('a', { href: '#/problem/' + prev.id }, '← Problem ' + prev.number) : h('span'),
@@ -406,6 +417,126 @@
     show('status');
   }
 
+  // ------------------------------------------------------------------ random problem quiz
+
+  const TIMER_MINUTES = [1, 2, 3, 5, 10];
+  const quiz = { minutes: 3, seen: new Set(), lastId: null, tick: null };
+
+  const clockText = s => Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0');
+
+  function stopClock() {
+    clearInterval(quiz.tick);
+    quiz.tick = null;
+  }
+
+  // Sidebar filters only (the search box is ignored), and only problems that can be graded.
+  function quizPool() {
+    const parsed = parseQuery('');
+    return state.problems.filter(p => p.choices && p.choices.length && p.answer && matches(p, parsed));
+  }
+
+  function paintPool() {
+    const line = $('#pool-count');
+    if (!line) return;  // mid-quiz: new filters only take effect on the next draw
+    const n = quizPool().length;
+    line.textContent = n
+      ? 'Drawing from ' + n + (n === 1 ? ' problem that matches' : ' problems that match') + ' the filters in the sidebar.'
+      : 'No problems match the filters in the sidebar. Loosen them to draw a problem.';
+    $('#quiz-start').disabled = !n;
+  }
+
+  function renderRandomSetup() {
+    const sel = h('select', { onchange: (e) => { quiz.minutes = +e.target.value; } },
+      TIMER_MINUTES.map(m => h('option', { value: m }, m + ' min')), h('option', { value: 0 }, 'No limit'));
+    sel.value = quiz.minutes;
+    $('#random').replaceChildren(h('section', { class: 'card quiz-setup' },
+      h('h1', {}, 'Random problem'),
+      h('p', { id: 'pool-count' }),
+      h('div', { class: 'quiz-actions' },
+        h('label', {}, 'Timer ', sel),
+        h('button', { type: 'button', id: 'quiz-start', class: 'primary', onclick: startQuiz }, 'Start'))));
+    paintPool();
+    show('random');
+    document.title = 'Random problem · imodb';
+  }
+
+  function startQuiz() {
+    const pool = quizPool();
+    if (!pool.length) return renderRandomSetup();  // filters were narrowed to nothing mid-quiz
+    let fresh = pool.filter(p => !quiz.seen.has(p.id));
+    if (!fresh.length) {
+      quiz.seen.clear();
+      fresh = pool.length > 1 ? pool.filter(p => p.id !== quiz.lastId) : pool;
+    }
+    const p = fresh[Math.floor(Math.random() * fresh.length)];
+    quiz.seen.add(p.id);
+    quiz.lastId = p.id;
+    renderQuiz(p);
+  }
+
+  function renderQuiz(p) {
+    const box = $('#random');
+    const limit = quiz.minutes * 60000, start = performance.now();
+    let wrong = 0;
+    const clock = h('span', { class: 'clock', role: 'timer' });
+    // Recomputed from the wall clock every tick, so throttled background timers cannot make it drift.
+    const tick = () => {
+      const t = performance.now() - start;
+      clock.textContent = !limit ? clockText(Math.floor(t / 1000))
+        : t < limit ? clockText(Math.ceil((limit - t) / 1000))
+        : '+' + clockText(Math.floor((t - limit) / 1000));
+      clock.classList.toggle('over', limit > 0 && t >= limit);
+      return t;
+    };
+    const giveUp = h('button', { type: 'button', class: 'ghost' }, 'Give up');
+    const buttons = p.choices.map(c => h('button', { type: 'button', class: 'choice', 'data-label': c.label },
+      h('span', { class: 'choice-label' }, '(' + c.label + ')'),
+      h('span', { class: 'tex' }, c.tex)));
+    const result = h('p', { class: 'quiz-result', 'aria-live': 'polite' });
+    const actions = h('div', { class: 'quiz-actions', hidden: true },
+      h('button', { type: 'button', class: 'primary', onclick: startQuiz }, 'Next problem'),
+      h('button', { type: 'button', class: 'ghost', onclick: () => navigate('#/random') }, 'Change settings'),
+      h('a', { href: '#/problem/' + p.id }, 'Full problem page →'));
+
+    const finish = (correct) => {
+      const t = tick();
+      stopClock();
+      for (const b of buttons) {
+        b.disabled = true;
+        if (b.dataset.label === p.answer) b.classList.add('correct');
+      }
+      result.classList.toggle('ok', correct);
+      result.textContent = !correct ? 'The answer was (' + p.answer + ').'
+        : 'Correct in ' + clockText(Math.floor(t / 1000))
+          + (wrong ? ' · ' + wrong + (wrong === 1 ? ' wrong try' : ' wrong tries') : '')
+          + (limit && t >= limit ? ' · over time' : '');
+      giveUp.hidden = true;
+      actions.hidden = false;
+      box.append(solutionsCard(p));
+    };
+    for (const b of buttons) {
+      b.addEventListener('click', () => {
+        if (b.dataset.label === p.answer) return finish(true);
+        wrong++;
+        b.classList.add('wrong');
+        b.disabled = true;
+      });
+    }
+    giveUp.addEventListener('click', () => finish(false));
+
+    box.replaceChildren(
+      h('div', { class: 'quiz-bar' }, clock, giveUp),
+      problemHead(p),
+      statementCard(p),
+      h('section', { class: 'card choices' }, h('div', { class: 'quiz-choices' }, buttons), result),
+      actions);
+    renderMath(box);
+    tick();
+    quiz.tick = setInterval(tick, 250);
+    show('random');
+    window.scrollTo(0, 0);
+  }
+
   // ------------------------------------------------------------------ routing
 
   function route() {
@@ -415,6 +546,11 @@
       hash = decodeURIComponent(hash);
     } catch (e) {
       hash = '';  // malformed percent-escape: fall back to the full list rather than a blank page
+    }
+    stopClock();
+    if (hash === '#/random') {
+      renderRandomSetup();
+      return;
     }
     let m;
     if ((m = hash.match(/^#\/problem\/(.+)$/))) {
@@ -470,6 +606,7 @@
   async function init() {
     initTheme();
     $('#search-form').addEventListener('submit', onSubmit);
+    $('#random-btn').addEventListener('click', () => navigate('#/random'));
     document.addEventListener('keydown', (e) => {
       if (e.key === '/' && document.activeElement !== $('#q') && !/input|textarea|select/i.test(document.activeElement.tagName)) {
         e.preventDefault(); $('#q').focus();
